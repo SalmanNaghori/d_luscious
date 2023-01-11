@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "592208170519",
+    "project_id": "d-luscious",
+    "storage_bucket": "d-luscious.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:592208170519:android:b2b71124e7809d52405652",
+        "android_client_info": {
+          "package_name": "com.example.d_luscious"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "592208170519-nt1o8vn8htr2jnmb8j4qv2j9auj4q8gi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.d_luscious",
+            "certificate_hash": "7504c4bcc406556bb32a9ee0eaa4336bae60a4a2"
+          }
+        },
+        {
+          "client_id": "592208170519-h61mpal3hob72k648j0f552q1359hqoo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB93aAfjDmyUuVe8dbK7_nkevp4PoGylcs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "592208170519-h61mpal3hob72k648j0f552q1359hqoo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
