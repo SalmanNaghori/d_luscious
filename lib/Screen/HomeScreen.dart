@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:d_luscious/Screen/Provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -13,9 +14,17 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   late final PageController pageController;
+
   ScrollController _scrollController = ScrollController();
   int pageNo = 0;
 
+  List<String> listImages = [
+    "https://media.istockphoto.com/id/1408284950/photo/gulab-jamun-with-nuts-served-in-a-dish-isolated-on-napkin-side-view-on-dark-background-indian.jpg?b=1&s=170667a&w=0&k=20&c=JZ5cOreQ3eVfg3nsujNiWTfflLw-M3BvHSygip-lalE=",
+    "https://as1.ftcdn.net/v2/jpg/01/95/70/12/1000_F_195701243_4uXJILIWRX6B6GUy4t9HQZt6HomkZbzT.jpg",
+    "https://t3.ftcdn.net/jpg/02/54/45/12/240_F_254451278_7AAYmhYkBEVQ9MYnZYIomTI5WdFCif1g.jpg",
+    "https://images.unsplash.com/photo-1602833280958-1657662ccc58?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80",
+    "https://t4.ftcdn.net/jpg/03/08/40/45/240_F_308404590_cKgzFkCSG93RG6ycBbQknhpr0y7pwmzP.jpg"
+  ];
   Timer? carasouelTmer;
 
   Timer getTimer() {
@@ -171,8 +180,7 @@ class _HomeState extends State<Home> {
                               right: 8, left: 8, top: 24, bottom: 12),
                           decoration: BoxDecoration(
                             image: DecorationImage(
-                                image: NetworkImage(
-                                    "https://media.istockphoto.com/id/1408284950/photo/gulab-jamun-with-nuts-served-in-a-dish-isolated-on-napkin-side-view-on-dark-background-indian.jpg?b=1&s=170667a&w=0&k=20&c=JZ5cOreQ3eVfg3nsujNiWTfflLw-M3BvHSygip-lalE="),
+                                image: NetworkImage(listImages[index]),
                                 fit: BoxFit.cover),
                             borderRadius: BorderRadius.circular(10.0),
                           ),
@@ -204,9 +212,47 @@ class _HomeState extends State<Home> {
                   ),
                 ),
               ),
+              Container(
+                padding:
+                    EdgeInsets.only(left: 30, bottom: 1, right: 20, top: 10),
+                alignment: Alignment.topLeft,
+                child: Text("Time Saving Recipes",
+                    style: TextStyle(
+                        fontSize: 30,
+                        fontFamily: "chewy",
+                        color: Color(0xffF5A342))),
+              ),
               const Padding(
                 padding: EdgeInsets.all(24.0),
                 child: GridB(),
+              ),
+              Container(
+                padding:
+                    EdgeInsets.only(left: 30, bottom: 1, right: 20, top: 10),
+                alignment: Alignment.topLeft,
+                child: Text("Recommended For you",
+                    style: TextStyle(
+                        fontSize: 30,
+                        fontFamily: "chewy",
+                        color: Color(0xffF5A342))),
+              ),
+              const Padding(
+                padding: EdgeInsets.all(24.0),
+                child: GridB1(),
+              ),
+              Container(
+                padding:
+                    EdgeInsets.only(left: 30, bottom: 1, right: 20, top: 10),
+                alignment: Alignment.topLeft,
+                child: Text("Tranding",
+                    style: TextStyle(
+                        fontSize: 30,
+                        fontFamily: "chewy",
+                        color: Color(0xffF5A342))),
+              ),
+              const Padding(
+                padding: EdgeInsets.all(24.0),
+                child: GridB2(),
               ),
             ],
           ),
@@ -326,44 +372,20 @@ class GridB extends StatefulWidget {
 class _GridBState extends State<GridB> {
   final List<Map<String, dynamic>> gridMap = [
     {
-      "title": "white sneaker with adidas logo",
+      "title": "Cucumber Raita",
       "images":
-          "https://img.freepik.com/premium-photo/chole-bhature-chick-pea-curry-fried-puri-served-terracotta-crockery-white-background-selective-focus_466689-24961.jpg?size=626&ext=jpg&ga=GA1.1.2117775926.1669325345&semt=sph",
+          "https://as1.ftcdn.net/v2/jpg/01/95/70/12/1000_F_195701243_4uXJILIWRX6B6GUy4t9HQZt6HomkZbzT.jpg",
     },
     {
-      "title": "Black Jeans with blue stripes",
+      "title": "Paneer Tikka Kabab",
       "images":
-          "https://images.unsplash.com/photo-1602833280958-1657662ccc58?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80",
+          "https://media.istockphoto.com/id/1303442507/photo/spicy-indian-paneer-tikka-masala-on-a-skewer-on-wooden-platter.jpg?s=612x612&w=0&k=20&c=eijXsF8w-86CwaxsNszS58TsmDUX2c-LysPEEuUablo=",
     },
-    {
-      "title": "Red shoes with black stripes",
-      "images":
-          "https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c2hvZXN8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
-    },
-    {
-      "title": "Gamma shoes with beta brand.",
-      "images":
-          "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
-    },
-    {
-      "title": "Alpha t-shirt for alpha testers.",
-      "images":
-          "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
-    },
-    {
-      "title": "Beta jeans for beta testers",
-      "images":
-          "https://images.unsplash.com/photo-1602293589930-45aad59ba3ab?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
-    },
-    {
-      "title": "V&V  model white t shirts.",
-      "images":
-          "https://images.unsplash.com/photo-1554568218-0f1715e72254?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
-    }
   ];
 
   @override
   Widget build(BuildContext context) {
+    final provider = FavoriteProvider.of(context);
     return GridView.builder(
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
@@ -371,7 +393,7 @@ class _GridBState extends State<GridB> {
         crossAxisCount: 2,
         crossAxisSpacing: 12.0,
         mainAxisSpacing: 12.0,
-        mainAxisExtent: 310,
+        mainAxisExtent: 275,
       ),
       itemCount: gridMap.length,
       itemBuilder: (_, index) {
@@ -410,21 +432,114 @@ class _GridBState extends State<GridB> {
                             ),
                           ),
                     ),
-                    const SizedBox(
-                      height: 8.0,
+                    // Text(
+                    //   "${gridMap.elementAt(index)['price']}",
+                    //   style: Theme.of(context).textTheme.subtitle2!.merge(
+                    //         TextStyle(
+                    //           fontWeight: FontWeight.w700,
+                    //           color: Colors.grey.shade500,
+                    //         ),
+                    //       ),
+                    // ),
+                    Row(
+                      children: [
+                        IconButton(
+                          onPressed: () {},
+                          icon: provider.isExist(gridMap.elementAt(index))
+                              ? const Icon(Icons.favorite, color: Colors.red)
+                              : const Icon(Icons.favorite_border),
+                        ),
+                      ],
                     ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+}
+
+class GridB1 extends StatefulWidget {
+  const GridB1({Key? key}) : super(key: key);
+
+  @override
+  State<GridB1> createState() => _GridB1State();
+}
+
+class _GridB1State extends State<GridB1> {
+  final List<Map<String, dynamic>> gridMap = [
+    {
+      "title": "White Sauce Pasta",
+      "images":
+          "https://t4.ftcdn.net/jpg/00/65/59/93/240_F_65599346_xxwNpdbxHN2WKXSpWpUYMiBAghUdPoGD.jpg",
+    },
+    {
+      "title": "Veg Hakka Nopdles",
+      "images":
+          "https://previews.123rf.com/images/espies/espies2111/espies211102772/178163328-schezwan-noodles-or-szechwan-vegetable-hakka-noodles-or-chow-mein-is-a-popular-indo-chinese-recipes-.jpg",
+    },
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView.builder(
+      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        crossAxisSpacing: 12.0,
+        mainAxisSpacing: 12.0,
+        mainAxisExtent: 275,
+      ),
+      itemCount: gridMap.length,
+      itemBuilder: (_, index) {
+        return Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(
+              16.0,
+            ),
+            color: Colors.amberAccent.shade100,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(16.0),
+                  topRight: Radius.circular(16.0),
+                ),
+                child: Image.network(
+                  "${gridMap.elementAt(index)['images']}",
+                  height: 170,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
                     Text(
-                      "${gridMap.elementAt(index)['price']}",
-                      style: Theme.of(context).textTheme.subtitle2!.merge(
-                            TextStyle(
+                      "${gridMap.elementAt(index)['title']}",
+                      style: Theme.of(context).textTheme.subtitle1!.merge(
+                            const TextStyle(
                               fontWeight: FontWeight.w700,
-                              color: Colors.grey.shade500,
                             ),
                           ),
                     ),
-                    const SizedBox(
-                      height: 8.0,
-                    ),
+                    // Text(
+                    //   "${gridMap.elementAt(index)['price']}",
+                    //   style: Theme.of(context).textTheme.subtitle2!.merge(
+                    //         TextStyle(
+                    //           fontWeight: FontWeight.w700,
+                    //           color: Colors.grey.shade500,
+                    //         ),
+                    //       ),
+                    // ),
                     Row(
                       children: [
                         IconButton(
@@ -433,11 +548,102 @@ class _GridBState extends State<GridB> {
                             CupertinoIcons.heart,
                           ),
                         ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+}
+
+class GridB2 extends StatefulWidget {
+  const GridB2({Key? key}) : super(key: key);
+
+  @override
+  State<GridB2> createState() => _GridB2State();
+}
+
+class _GridB2State extends State<GridB2> {
+  final List<Map<String, dynamic>> gridMap = [
+    {
+      "title": "Spring Rolls",
+      "images":
+          "https://as2.ftcdn.net/v2/jpg/02/14/90/07/1000_F_214900725_8X4DfrIsIdScBl4hDZ3Uqv5WywlOPhCN.jpg",
+    },
+    {
+      "title": "Tacos",
+      "images":
+          "https://as2.ftcdn.net/v2/jpg/01/13/63/63/1000_F_113636348_FPQO3sUu2ZA3HR9zOzM4lnSiWEdsoqwu.jpg",
+    },
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView.builder(
+      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        crossAxisSpacing: 12.0,
+        mainAxisSpacing: 12.0,
+        mainAxisExtent: 275,
+      ),
+      itemCount: gridMap.length,
+      itemBuilder: (_, index) {
+        return Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(
+              16.0,
+            ),
+            color: Colors.amberAccent.shade100,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(16.0),
+                  topRight: Radius.circular(16.0),
+                ),
+                child: Image.network(
+                  "${gridMap.elementAt(index)['images']}",
+                  height: 170,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "${gridMap.elementAt(index)['title']}",
+                      style: Theme.of(context).textTheme.subtitle1!.merge(
+                            const TextStyle(
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                    ),
+                    // Text(
+                    //   "${gridMap.elementAt(index)['price']}",
+                    //   style: Theme.of(context).textTheme.subtitle2!.merge(
+                    //         TextStyle(
+                    //           fontWeight: FontWeight.w700,
+                    //           color: Colors.grey.shade500,
+                    //         ),
+                    //       ),
+                    // ),
+                    Row(
+                      children: [
                         IconButton(
                           onPressed: () {},
-                          icon: Icon(
-                            CupertinoIcons.cart,
-                          ),
+                          icon: Icon(Icons.favorite_border),
                         ),
                       ],
                     ),
