@@ -1,12 +1,17 @@
 import 'dart:async';
 
-import 'package:d_luscious/Screen/Provider.dart';
+import 'package:d_luscious/Screen/CategoryScreen.dart';
+import 'package:d_luscious/Screen/Favorite.dart';
+
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+  const Home({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<Home> createState() => _HomeState();
@@ -281,7 +286,13 @@ class _HomeState extends State<Home> {
                 ),
               ),
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => FavoriteList(),
+                      ));
+                },
                 icon: const Icon(
                   CupertinoIcons.heart,
                 ),
@@ -290,9 +301,15 @@ class _HomeState extends State<Home> {
                 width: 50,
               ),
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CategoryScreen(),
+                      ));
+                },
                 icon: const Icon(
-                  CupertinoIcons.cart,
+                  CupertinoIcons.circle_grid_3x3_fill,
                 ),
               ),
               IconButton(
@@ -363,13 +380,16 @@ class FabExt extends StatelessWidget {
 }
 
 class GridB extends StatefulWidget {
-  const GridB({Key? key}) : super(key: key);
+  const GridB({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<GridB> createState() => _GridBState();
 }
 
 class _GridBState extends State<GridB> {
+  List<bool> listIsFavTimeSaving = [false, false];
   final List<Map<String, dynamic>> gridMap = [
     {
       "title": "Cucumber Raita",
@@ -385,7 +405,6 @@ class _GridBState extends State<GridB> {
 
   @override
   Widget build(BuildContext context) {
-    final provider = FavoriteProvider.of(context);
     return GridView.builder(
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
@@ -444,10 +463,20 @@ class _GridBState extends State<GridB> {
                     Row(
                       children: [
                         IconButton(
-                          onPressed: () {},
-                          icon: provider.isExist(gridMap.elementAt(index))
-                              ? const Icon(Icons.favorite, color: Colors.red)
-                              : const Icon(Icons.favorite_border),
+                          onPressed: () {
+                            setState(() {
+                              listIsFavTimeSaving[index] =
+                                  !listIsFavTimeSaving[index];
+                            });
+                          },
+                          icon: listIsFavTimeSaving[index]
+                              ? Icon(
+                                  Icons.favorite,
+                                  color: Colors.red,
+                                )
+                              : Icon(
+                                  Icons.favorite_border,
+                                ),
                         ),
                       ],
                     ),
