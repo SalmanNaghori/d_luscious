@@ -42,7 +42,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 fontFamily: 'Chewy', fontSize: 40, color: Color(0xffF5A342)),
           ),
         ]),
-        nextScreen: LoginScreen(),
+        nextScreen: Home(),
         duration: 4000,
         splashTransition: SplashTransition.fadeTransition,
         pageTransitionType: PageTransitionType.fade,
