@@ -7,6 +7,10 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:url_launcher/link.dart';
 
 class butterChicken extends StatelessWidget {
+
+  butterChicken(Map<String, dynamic> gridMap);
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

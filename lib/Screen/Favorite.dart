@@ -8,6 +8,7 @@ class FavoriteList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<bool> listIsFavTimeSaving = [false, false];
     return Scaffold(
         appBar: AppBar(title: Text("Favourite")),
         body: GridView.builder(
@@ -24,6 +25,7 @@ class FavoriteList extends StatelessWidget {
           itemBuilder: (_, index) {
             return Container(
               // favoriteList:true,
+
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(
                   16.0,

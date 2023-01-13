@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:d_luscious/Screen/CategoryScreen.dart';
 import 'package:d_luscious/Screen/Favorite.dart';
+import 'package:d_luscious/Screen/SearchScreen.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -267,9 +268,15 @@ class _HomeState extends State<Home> {
           ? FloatingActionButtonLocation.centerDocked
           : FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => SearchPage(),
+              ));
+        },
         child: const Icon(
-          Icons.add,
+          Icons.search,
         ),
       ),
       bottomNavigationBar: AnimatedContainer(
@@ -499,6 +506,7 @@ class GridB1 extends StatefulWidget {
 }
 
 class _GridB1State extends State<GridB1> {
+  List<bool> listIsFavTimeSaving = [false, false];
   final List<Map<String, dynamic>> gridMap = [
     {
       "title": "White Sauce Pasta",
@@ -572,10 +580,18 @@ class _GridB1State extends State<GridB1> {
                     Row(
                       children: [
                         IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            CupertinoIcons.heart,
-                          ),
+                          onPressed: () {
+                            setState(() {
+                              listIsFavTimeSaving[index] =
+                                  !listIsFavTimeSaving[index];
+                            });
+                          },
+                          icon: listIsFavTimeSaving[index]
+                              ? Icon(
+                                  Icons.favorite,
+                                  color: Colors.red,
+                                )
+                              : Icon(Icons.favorite_border),
                         ),
                       ],
                     ),
@@ -598,6 +614,7 @@ class GridB2 extends StatefulWidget {
 }
 
 class _GridB2State extends State<GridB2> {
+  List<bool> listIsFavTimeSaving = [false, false];
   final List<Map<String, dynamic>> gridMap = [
     {
       "title": "Spring Rolls",
@@ -671,8 +688,18 @@ class _GridB2State extends State<GridB2> {
                     Row(
                       children: [
                         IconButton(
-                          onPressed: () {},
-                          icon: Icon(Icons.favorite_border),
+                          onPressed: () {
+                            setState(() {
+                              listIsFavTimeSaving[index] =
+                                  !listIsFavTimeSaving[index];
+                            });
+                          },
+                          icon: listIsFavTimeSaving[index]
+                              ? Icon(
+                                  Icons.favorite,
+                                  color: Colors.red,
+                                )
+                              : Icon(Icons.favorite_border),
                         ),
                       ],
                     ),
