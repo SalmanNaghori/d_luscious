@@ -10,7 +10,24 @@ class kheer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          "Kheer",
+          style: const TextStyle(
+            color: Colors.black,
+            fontSize: 20,
+            //make underline
+            decorationStyle: TextDecorationStyle.double, //double underline
+            //text decoration 'underline' color
+            decorationThickness: 1.5,
+          ),
+        ),
+        leading: const BackButton(
+          color: Colors.black,
+        ),
+        backgroundColor: Colors.white,
+      ),
       body: Padding(
         padding: EdgeInsets.only(top: 5),
         child: ListView(
@@ -102,7 +119,7 @@ class kheer extends StatelessWidget {
                             Text(
                               "Kheer",
                               style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 24,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -116,12 +133,15 @@ class kheer extends StatelessWidget {
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                          vertical: 10,
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                            vertical: 10,
+                          ),
+                          child: Text(
+                              " • 2 liters full-cream milk\n •	1 can/400 grams sweetened condensed milk\n •	1 tsp. cardamom powder\n •	1 cup of sugar\n •	1 cup Basmati rice\n •	50 grams almonds blanched and slivered\n •	50 grams raisins\n •	A few strands of saffron\n • Optional: rose petals to garnish\n"),
                         ),
-                        child: Text(
-                            "• 2 liters full-cream milk\n •	1 can/400 grams sweetened condensed milk\n •	1 tsp. cardamom powder\n •	1 cup of sugar\n •	1 cup Basmati rice\n •	50 grams almonds blanched and slivered\n •	50 grams raisins\n •	A few strands of saffron\n • Optional: rose petals to garnish\n"),
                       ),
                       new Container(
                         alignment: Alignment.bottomLeft,
@@ -135,7 +155,7 @@ class kheer extends StatelessWidget {
                           vertical: 10,
                         ),
                         child: Text(
-                          "1.	Wash the rice well and soak for half an hour in enough water to cover it fully.\n 2.	Put the milk, condensed milk and sugar in a deep, thick-bottomed pan and boil. When the milk comes to a boil, add the rice and simmer. Cook till the milk thickens and reduces to half its original volume.\n 3.	Add the almonds, raisins, and cardamom and cook for 5 more minutes.\n 4.	Turn off the cooktop and add the saffron. Stir well.\n 5.	Allow the kheer to cool, then chill.\n 6.	Serve cold garnished with rose petals.\n",
+                          "1.	Wash the rice well and soak for half an hour in enough water to cover it fully.\n\n 2.	Put the milk, condensed milk and sugar in a deep, thick-bottomed pan and boil. When the milk comes to a boil, add the rice and simmer. Cook till the milk thickens and reduces to half its original volume.\n\n 3.	Add the almonds, raisins, and cardamom and cook for 5 more minutes.\n\n 4.	Turn off the cooktop and add the saffron. Stir well.\n\n 5.	Allow the kheer to cool, then chill.\n\n 6.	Serve cold garnished with rose petals.\n",
                         ),
                       ),
                       Padding(
@@ -152,7 +172,7 @@ class kheer extends StatelessWidget {
                             builder: (context, followlink) => GestureDetector(
                                   onTap: followlink,
                                   child: Text(
-                                    'open link',
+                                    'Open Link',
                                     style: TextStyle(
                                       fontSize: 32,
                                       color: Colors.blue,

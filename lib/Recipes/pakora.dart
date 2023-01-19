@@ -6,13 +6,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:url_launcher/link.dart';
 
-class butterChicken extends StatelessWidget {
-  butterChicken(Map<String, dynamic> gridMap);
+class PakoraScreen extends StatelessWidget {
+  PakoraScreen();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          "Pakora",
+          style: const TextStyle(
+            color: Colors.black,
+            fontSize: 20,
+            //make underline
+            decorationStyle: TextDecorationStyle.double, //double underline
+            //text decoration 'underline' color
+            decorationThickness: 1.5,
+          ),
+        ),
+        leading: const BackButton(
+          color: Colors.black,
+        ),
+        backgroundColor: Colors.white,
+      ),
       body: Padding(
         padding: EdgeInsets.only(top: 5),
         child: ListView(
@@ -104,7 +121,7 @@ class butterChicken extends StatelessWidget {
                             Text(
                               "Pakora",
                               style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 24,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -118,12 +135,15 @@ class butterChicken extends StatelessWidget {
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                          vertical: 10,
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                            vertical: 10,
+                          ),
+                          child: Text(
+                              " • 2 tsp olive oil\n • 2 clove garlic\n • 1 tsp mixed herbs\n • 1 tsp chilli flakes\n • ½ onion\n • 1½ rajma / kidney beans\n • ½ capsicum\n • ½ carrot\n • 3 tbsp sweet corn\n • ½ tsp salt\n • 1 onion\n • 1 tomato\n • 4 jalapeno\n • 1 tsp chilli sauce\n • 1 tsp lemon juice\n • ¼ tsp salt\n • For Guacamole (Optional)\n • 1 avocado\n • 2 tbsp onion\n • ¼ tsp mixed herbs\n • ¼ tsp salt\n • 1 tsp lemon juice\n • 5 to 6 tortillas\n • Tomato sauce\n • Cheese\n • Oil\n"),
                         ),
-                        child: Text(
-                            "• 2 tsp olive oil\n • 2 clove garlic\n • 1 tsp mixed herbs\n • 1 tsp chilli flakes\n • ½ onion\n • 1½ rajma / kidney beans\n • ½ capsicum\n • ½ carrot\n • 3 tbsp sweet corn\n • ½ tsp salt\n • 1 onion\n • 1 tomato\n • 4 jalapeno\n • 1 tsp chilli sauce\n • 1 tsp lemon juice\n • ¼ tsp salt\n • For Guacamole (Optional)\n • 1 avocado\n • 2 tbsp onion\n • ¼ tsp mixed herbs\n • ¼ tsp salt\n • 1 tsp lemon juice\n • 5 to 6 tortillas\n • Tomato sauce\n • Cheese\n • Oil\n"),
                       ),
                       new Container(
                         alignment: Alignment.bottomLeft,
@@ -137,7 +157,7 @@ class butterChicken extends StatelessWidget {
                           vertical: 10,
                         ),
                         child: Text(
-                          " how to prepare veggies stuffing:\n • firstly, in a pan heat 2 tsp olive oil.\n • add 2 clove garlic, 1 tsp mixed herbs and 1 tsp chilli flakes. saute until the spices turn aromatic.\n • add ½ onion and saute until it shrinks slightly.\n • further, add 1½ rajma and saute for 2 minutes. make sure you have soaked rajma overnight and boiled well. you can alternatively use canned rajma here.\n • now add ½ green capsicum, ½ yellow capsicum, ½ carrot, chopped, 3 tbsp sweet corn and ½ tsp salt.\n • saute for a minute making sure the vegetables are crunchy.\n • veggies are ready. keep aside.\n how to make salsa or desi style onion tomato salad:\n • firstly, in a bowl take 1 onion, 1 tomato and 4 jalapeno.\n • also add 1 tsp chilli sauce, 1 tsp lemon juice and ¼ tsp salt.\n • mix well and salsa is ready. keep aside.\n how to make guacamole or avocado dip:\n • firstly, mash 1 avocado using a fork.\n • add 2 tbsp onion, ¼ tsp mixed herbs, ¼ tsp salt and 1 tsp lemon juice.\n • mix well making sure everything is well combined. you can also add ¼ tsp pepper.\n • finally, guacamole is ready. keep aside.\n how to prepare desi style tacos:\n • firstly, take leftover roti and spread 1 tsp tomato sauce.\n • now on one side place 2 tbsp cheese.\n • top with 2 tbsp prepared veggies and 1 tbsp salsa.\n • further top with chopped lettuce and 2 tbsp cheese.\n • fold half and is ready to toast on the pan.\n • brush with oil and toast on low to medium flame until the tacos turn crispy.\n • finally, enjoy roti tacos with guacamole and tomato sauce.\n",
+                          " how to prepare veggies stuffing:\n\n 1 firstly, in a pan heat 2 tsp olive oil.\n\n 2 add 2 clove garlic, 1 tsp mixed herbs and 1 tsp chilli flakes. saute until the spices turn aromatic.\n\n 3 add ½ onion and saute until it shrinks slightly.\n\n 4 further, add 1½ rajma and saute for 2 minutes. make sure you have soaked rajma overnight and boiled well. you can alternatively use canned rajma here.\n\n 5 now add ½ green capsicum, ½ yellow capsicum, ½ carrot, chopped, 3 tbsp sweet corn and ½ tsp salt.\n\n 6 saute for a minute making sure the vegetables are crunchy.\n\n 7 veggies are ready. keep aside.\n\n how to make salsa or desi style onion tomato salad:\n\n 8 firstly, in a bowl take 1 onion, 1 tomato and 4 jalapeno.\n\n 9 also add 1 tsp chilli sauce, 1 tsp lemon juice and ¼ tsp salt.\n\n 10 mix well and salsa is ready. keep aside.\n\n how to make guacamole or avocado dip:\n\n 1 firstly, mash 1 avocado using a fork.\n\n 2 add 2 tbsp onion, ¼ tsp mixed herbs, ¼ tsp salt and 1 tsp lemon juice.\n\n 1 mix well making sure everything is well combined. you can also add ¼ tsp pepper.\n\n 3 finally, guacamole is ready. keep aside.\n\n how to prepare desi style tacos:\n\n 1 firstly, take leftover roti and spread 1 tsp tomato sauce.\n\n 2 now on one side place 2 tbsp cheese.\n\n 3 top with 2 tbsp prepared veggies and 1 tbsp salsa.\n\n 4 further top with chopped lettuce and 2 tbsp cheese.\n\n 5 fold half and is ready to toast on the pan.\n\n 6 brush with oil and toast on low to medium flame until the tacos turn crispy.\n\n 7 finally, enjoy roti tacos with guacamole and tomato sauce.\n",
                         ),
                       ),
                       Padding(
@@ -154,7 +174,7 @@ class butterChicken extends StatelessWidget {
                             builder: (context, followlink) => GestureDetector(
                                   onTap: followlink,
                                   child: Text(
-                                    'open link',
+                                    'Open Link',
                                     style: TextStyle(
                                       fontSize: 32,
                                       color: Colors.blue,

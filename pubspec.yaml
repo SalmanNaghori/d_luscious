@@ -50,6 +50,8 @@ dependencies:
   clippy_flutter: ^1.1.1
   url_launcher: ^6.1.7
   flutter_rating_bar: ^4.0.1
+  animated_splash: ^1.0.0
+  http:
 
 dev_dependencies:
   flutter_test:

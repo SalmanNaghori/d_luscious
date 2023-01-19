@@ -10,7 +10,24 @@ class vegcheesesandwich extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          "Cheese Sandwich",
+          style: const TextStyle(
+            color: Colors.black,
+            fontSize: 20,
+            //make underline
+            decorationStyle: TextDecorationStyle.double, //double underline
+            //text decoration 'underline' color
+            decorationThickness: 1.5,
+          ),
+        ),
+        leading: const BackButton(
+          color: Colors.black,
+        ),
+        backgroundColor: Colors.white,
+      ),
       body: Padding(
         padding: EdgeInsets.only(top: 5),
         child: ListView(
@@ -102,7 +119,7 @@ class vegcheesesandwich extends StatelessWidget {
                             Text(
                               "Veg Cheese Sandwich",
                               style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 24,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -116,12 +133,15 @@ class vegcheesesandwich extends StatelessWidget {
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                          vertical: 10,
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                            vertical: 10,
+                          ),
+                          child: Text(
+                              " • 4 bread slices\n • 2 tsp oil\n •	½ onion\n •	½ cup corn\n • 1 carrot\n • ½ capsicum\n • 1 bunch spinach\n •	1 tsp crushed pepper\n • ½ tsp mixed herbs\n •	salt to taste\n •	2 tbsp tomato sauce\n •	2 tbsp green chutney\n • ¼ cup mozzarella or cheddar cheese\n • 2 tsp butter\n"),
                         ),
-                        child: Text(
-                            "• 4 bread slices\n • 2 tsp oil\n •	½ onion\n •	½ cup corn\n • 1 carrot\n • ½ capsicum\n • 1 bunch spinach\n •	1 tsp crushed pepper\n • ½ tsp mixed herbs\n •	salt to taste\n •	2 tbsp tomato sauce\n •	2 tbsp green chutney\n • ¼ cup mozzarella or cheddar cheese\n • 2 tsp butter\n"),
                       ),
                       new Container(
                         alignment: Alignment.bottomLeft,
@@ -135,7 +155,7 @@ class vegcheesesandwich extends StatelessWidget {
                           vertical: 10,
                         ),
                         child: Text(
-                          "•	1. firstly, in a large kadai heat oil and fry onions.\n • 2. further add corn, carrot and capsicum. fry for a minute till the veggies are half cooked yet crunchy.\n • 3. now add chopped spinach and fry till they shrink in size.\n • 4. also add pepper, mixed herbs and salt. give a good mix.\n • 5. now take 2 breads and on one spread tomato sauce and green chutney on the other.\n • 6. also place the prepared stuffing and spread uniformly on the bread slice.\n • 7. further, grate the cheese over the stuffing.\n • 8. cover with the other slice of bread and grill or toast on tawa.\n • 9. spread butter on both the outer sides of bread to make sandwich more crispy and golden.\n • 10.furthermore, close the griller and grill till the cheese melts and bread turn golden brown.\n • 11. now cut the bread into half and serve.\n •	12. finally, serve hot or pack for kids lunch box.\n",
+                          " 1. firstly, in a large kadai heat oil and fry onions.\n\n 2. further add corn, carrot and capsicum. fry for a minute till the veggies are half cooked yet crunchy.\n\n 3. now add chopped spinach and fry till they shrink in size.\n\n 4. also add pepper, mixed herbs and salt. give a good mix.\n\n 5. now take 2 breads and on one spread tomato sauce and green chutney on the other.\n\n 6. also place the prepared stuffing and spread uniformly on the bread slice.\n\n 7. further, grate the cheese over the stuffing.\n\n 8. cover with the other slice of bread and grill or toast on tawa.\n\n 9. spread butter on both the outer sides of bread to make sandwich more crispy and golden.\n\n 10.furthermore, close the griller and grill till the cheese melts and bread turn golden brown.\n\n 11. now cut the bread into half and serve.\n\n 12. finally, serve hot or pack for kids lunch box.\n",
                         ),
                       ),
                       Padding(
@@ -152,7 +172,7 @@ class vegcheesesandwich extends StatelessWidget {
                             builder: (context, followlink) => GestureDetector(
                                   onTap: followlink,
                                   child: Text(
-                                    'open link',
+                                    'Open Link',
                                     style: TextStyle(
                                       fontSize: 32,
                                       color: Colors.blue,

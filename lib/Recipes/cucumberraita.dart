@@ -10,7 +10,24 @@ class cucumberpage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          "Cucumber Raita",
+          style: const TextStyle(
+            color: Colors.black,
+            fontSize: 20,
+            //make underline
+            decorationStyle: TextDecorationStyle.double, //double underline
+            //text decoration 'underline' color
+            decorationThickness: 1.5,
+          ),
+        ),
+        leading: const BackButton(
+          color: Colors.black,
+        ),
+        backgroundColor: Colors.white,
+      ),
       body: Padding(
         padding: EdgeInsets.only(top: 5),
         child: ListView(
@@ -102,7 +119,7 @@ class cucumberpage extends StatelessWidget {
                             Text(
                               "Cucumber Raita",
                               style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 24,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -117,11 +134,9 @@ class cucumberpage extends StatelessWidget {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.symmetric(
-                          vertical: 10,
-                        ),
+                        padding: EdgeInsets.only(right: 130, top: 10),
                         child: Text(
-                            "⚈ 1 large cucumber\n ⚈ 2 teaspoons kosher salt\n ⚈ 1 large sprig fresh mint\n ⚈ 1/2 teaspoon garam masala\n ⚈ 1 pinch freshly ground black pepper\n ⚈ 1 cup Greek yogurt\n ⚈ 1 squeeze lime juice\n"),
+                            "• 1 large cucumber\n • 2 teaspoons kosher salt\n • 1 large sprig fresh mint\n • 1/2 teaspoon garam masala\n • 1 pinch freshly ground black pepper\n • 1 cup Greek yogurt\n • 1 squeeze lime juice\n"),
                       ),
                       new Container(
                         alignment: Alignment.bottomLeft,
@@ -152,7 +167,7 @@ class cucumberpage extends StatelessWidget {
                             builder: (context, followlink) => GestureDetector(
                                   onTap: followlink,
                                   child: Text(
-                                    'open link',
+                                    'Open Link',
                                     style: TextStyle(
                                       fontSize: 32,
                                       color: Colors.blue,

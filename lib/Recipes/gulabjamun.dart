@@ -10,7 +10,24 @@ class gulabjamun extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          "Gulab Jamun",
+          style: const TextStyle(
+            color: Colors.black,
+            fontSize: 20,
+            //make underline
+            decorationStyle: TextDecorationStyle.double, //double underline
+            //text decoration 'underline' color
+            decorationThickness: 1.5,
+          ),
+        ),
+        leading: const BackButton(
+          color: Colors.black,
+        ),
+        backgroundColor: Colors.white,
+      ),
       body: Padding(
         padding: EdgeInsets.only(top: 5),
         child: ListView(
@@ -102,7 +119,7 @@ class gulabjamun extends StatelessWidget {
                             Text(
                               "Gulab Jamun",
                               style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 24,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -116,12 +133,13 @@ class gulabjamun extends StatelessWidget {
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                          vertical: 10,
+                      Container(
+                        alignment: Alignment.topLeft,
+                        child: Padding(
+                          padding: EdgeInsets.only(top: 10),
+                          child: Text(
+                              ''' • 1 cup dry milk powder\n • 3 tablespoons all-purpose flour\n • 2 tablespoons ghee (clarified butter), melted   \n • ½ teaspoon baking powder\n • ½ cup warm milk\n • 1 tablespoon chopped almonds (Optional)\n • 1 tablespoon chopped pistachio nuts (Optional)\n • 1 tablespoon golden raisins (Optional)\n • 1 pinch ground cardamom\n • 1 quart vegetable oil for deep frying\n • 1 ¼ cups white sugar\n • 7 fluid ounces water\n • 1 teaspoon rose water\n • 1 pinch ground cardamom\n'''),
                         ),
-                        child: Text(
-                            "• 1 cup dry milk powder\n • 3 tablespoons all-purpose flour\n • 2 tablespoons ghee (clarified butter), melted\n • ½ teaspoon baking powder\n • ½ cup warm milk\n • 1 tablespoon chopped almonds (Optional)\n • 1 tablespoon chopped pistachio nuts (Optional)\n • 1 tablespoon golden raisins (Optional)\n • 1 pinch ground cardamom\n • 1 quart vegetable oil for deep frying\n • 1 ¼ cups white sugar\n • 7 fluid ounces water\n • 1 teaspoon rose water\n • 1 pinch ground cardamom\n"),
                       ),
                       new Container(
                         alignment: Alignment.bottomLeft,
@@ -135,7 +153,7 @@ class gulabjamun extends StatelessWidget {
                           vertical: 10,
                         ),
                         child: Text(
-                          "1.Take the grated Khoya in a medium size deep bowl.\n 2.Add baking soda and maida. Combine them thoroughly but gently using a spoon.\n 3.Add a teaspoon of milk to it and knead all of them together to make a smooth and soft dough. Add another teaspoon of milk if required.\n 4.Make sure that the dough is a bit softer to avoid cracking of ball while deep frying.\n 5.Divide the dough into equal parts and make smooth surfaced balls out of it.\n 6.Now heat ghee in a pan over medium flame and add the Jamun balls to deep-fry them. Cook evenly until it becomes golden brown.\n 7.Make sure that you do not cook on high flame otherwise the balls will burn.\n 8.Now drain and let them cool for few minutes.\n 9.Then immerse the gulab jamuns in the warm sugar syrup for at least 30 minutes. It increases in size when it soaks the sugar syrup.\n 10.Hot and tasty sweet dish is ready to serve.\n",
+                          " 1.Take the grated Khoya in a medium size deep bowl.\n\n 2.Add baking soda and maida. Combine them thoroughly but gently using a spoon.\n\n 3.Add a teaspoon of milk to it and knead all of them together to make a smooth and soft dough. Add another teaspoon of milk if required.\n\n 4.Make sure that the dough is a bit softer to avoid cracking of ball while deep frying.\n\n 5.Divide the dough into equal parts and make smooth surfaced balls out of it.\n\n 6.Now heat ghee in a pan over medium flame and add the Jamun balls to deep-fry them. Cook evenly until it becomes golden brown.\n\n 7.Make sure that you do not cook on high flame otherwise the balls will burn.\n\n 8.Now drain and let them cool for few minutes.\n\n 9.Then immerse the gulab jamuns in the warm sugar syrup for at least 30 minutes. It increases in size when it soaks the sugar syrup.\n\n 10.Hot and tasty sweet dish is ready to serve.\n",
                         ),
                       ),
                       Padding(
@@ -152,7 +170,7 @@ class gulabjamun extends StatelessWidget {
                             builder: (context, followlink) => GestureDetector(
                                   onTap: followlink,
                                   child: Text(
-                                    'open link',
+                                    'Open Link',
                                     style: TextStyle(
                                       fontSize: 32,
                                       color: Colors.blue,

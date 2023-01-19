@@ -10,7 +10,25 @@ class FavoriteList extends StatelessWidget {
   Widget build(BuildContext context) {
     List<bool> listIsFavTimeSaving = [false, false];
     return Scaffold(
-        appBar: AppBar(title: Text("Favourite")),
+        appBar: AppBar(
+          centerTitle: true,
+          title: const Text(
+            "Favorite",
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              fontSize: 30,
+              //make underline
+              decorationStyle: TextDecorationStyle.double, //double underline
+              //text decoration 'underline' color
+              decorationThickness: 1.5,
+            ),
+          ),
+          leading: const BackButton(
+            color: Colors.black,
+          ),
+          backgroundColor: Colors.white,
+        ),
         body: GridView.builder(
           padding: EdgeInsets.all(10),
           physics: const NeverScrollableScrollPhysics(),
@@ -19,7 +37,7 @@ class FavoriteList extends StatelessWidget {
             crossAxisCount: 2,
             crossAxisSpacing: 15.0,
             mainAxisSpacing: 15.0,
-            mainAxisExtent: 275,
+            mainAxisExtent: 260,
           ),
           itemCount: gridMap.length,
           itemBuilder: (_, index) {
@@ -30,7 +48,7 @@ class FavoriteList extends StatelessWidget {
                 borderRadius: BorderRadius.circular(
                   16.0,
                 ),
-                color: Colors.amberAccent.shade100,
+                color: Colors.white,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,6 +88,7 @@ class FavoriteList extends StatelessWidget {
                         //       ),
                         // ),
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             IconButton(
                               onPressed: () {},
