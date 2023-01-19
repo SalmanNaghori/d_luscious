@@ -1,16 +1,43 @@
-import 'dart:io';
-
 import 'package:clippy_flutter/arc.dart';
+import 'package:d_luscious/CategoriesList/AppetizerScreen.dart';
+import 'package:d_luscious/CategoriesList/MainCourseScreen.dart';
+import 'package:d_luscious/Screen/CategoryScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:url_launcher/link.dart';
 
-class broccolisoup extends StatelessWidget {
+class broccolisoup extends StatefulWidget {
+  const broccolisoup({
+    Key? key,
+  }) : super(key: key);
+  @override
+  State<broccolisoup> createState() => _broccolisoupState();
+}
+
+class _broccolisoupState extends State<broccolisoup> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          "Broccoli",
+          style: const TextStyle(
+            color: Colors.black,
+
+            fontSize: 20,
+            //make underline
+            decorationStyle: TextDecorationStyle.double, //double underline
+            //text decoration 'underline' color
+            decorationThickness: 1.5,
+          ),
+        ),
+        leading: const BackButton(
+          color: Colors.black,
+        ),
+        backgroundColor: Colors.white,
+      ),
       body: Padding(
         padding: EdgeInsets.only(top: 5),
         child: ListView(
@@ -102,7 +129,7 @@ class broccolisoup extends StatelessWidget {
                             Text(
                               "Broccoli-Cheddar Soup",
                               style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 24,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -121,7 +148,7 @@ class broccolisoup extends StatelessWidget {
                           vertical: 10,
                         ),
                         child: Text(
-                            "• 2 tablespoons unsalted butter\n • 1 cup chopped yellow onion (about 1 medium onion)\n • 2 teaspoons finely chopped garlic (about 2 garlic cloves)\n • 1 cup chopped peeled russet potato (from 1 small potato)\n • 1/2 cup chopped carrot (about 1 large carrot)\n • 2 cups chicken broth or vegetable broth\n • 2 cups half-and-half\n • 1 teaspoon kosher salt\n • 4 cups chopped broccoli florets (from 1 [12-oz.] head])\n • 8 ounces sharp Cheddar cheese, shredded (about 2 cups), plus more for serving\n"),
+                            " • 2 tablespoons unsalted butter\n • 1 cup chopped yellow onion (about 1 medium onion)\n • 2 teaspoons finely chopped garlic (about 2 garlic cloves)\n • 1 cup chopped peeled russet potato (from 1 small potato)\n • 1/2 cup chopped carrot (about 1 large carrot)\n • 2 cups chicken broth or vegetable broth\n • 2 cups half-and-half\n • 1 teaspoon kosher salt\n • 4 cups chopped broccoli florets (from 1 [12-oz.] head])\n • 8 ounces sharp Cheddar cheese, shredded (about 2 cups), plus more for serving\n"),
                       ),
                       new Container(
                         alignment: Alignment.bottomLeft,
@@ -135,7 +162,7 @@ class broccolisoup extends StatelessWidget {
                           vertical: 10,
                         ),
                         child: Text(
-                          "1. Melt butter in a large Dutch oven over medium until foamy. Add onion, and cook, stirring often, until softened and translucent, about 4 minutes. Add garlic, and cook, stirring constantly, until fragrant, about 1 minute. Add potato and carrot; cook, stirring often, 1 minute. Increase heat to high; stir in broth, half-and-half, and salt, and bring to a boil. Reduce heat to medium, cover, and simmer until potato and carrot are tender, about 10 minutes.\n 2. Add broccoli, and continue to simmer, uncovered, until broccoli is tender and bright green, about 5 to 6 minutes. Working in batches, if needed, pour soup into a blender. Secure lid on blender, and remove center piece to allow steam to escape. Place a clean towel over opening. Process until smooth, about 30 to 45 seconds, and return to Dutch oven.\n 3. Heat soup over medium-low; gradually add cheese, stirring until completely melted after each addition. Serve soup topped with sprinkled cheese.\n",
+                          "1. Melt butter in a large Dutch oven over medium until foamy. Add onion, and cook, stirring often, until softened and translucent, about 4 minutes. Add garlic, and cook, stirring constantly, until fragrant, about 1 minute. Add potato and carrot; cook, stirring often, 1 minute. Increase heat to high; stir in broth, half-and-half, and salt, and bring to a boil. Reduce heat to medium, cover, and simmer until potato and carrot are tender, about 10 minutes.\n\n 2. Add broccoli, and continue to simmer, uncovered, until broccoli is tender and bright green, about 5 to 6 minutes. Working in batches, if needed, pour soup into a blender. Secure lid on blender, and remove center piece to allow steam to escape. Place a clean towel over opening. Process until smooth, about 30 to 45 seconds, and return to Dutch oven.\n\n 3. Heat soup over medium-low; gradually add cheese, stirring until completely melted after each addition. Serve soup topped with sprinkled cheese.\n",
                         ),
                       ),
                       Padding(
@@ -152,8 +179,9 @@ class broccolisoup extends StatelessWidget {
                             builder: (context, followlink) => GestureDetector(
                                   onTap: followlink,
                                   child: Text(
-                                    'open link',
+                                    'Open Link',
                                     style: TextStyle(
+                                      fontWeight: FontWeight.bold,
                                       fontSize: 32,
                                       color: Colors.blue,
                                       decoration: TextDecoration.underline,

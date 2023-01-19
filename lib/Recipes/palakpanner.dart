@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:clippy_flutter/arc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +8,24 @@ class palakpanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          "Palak Paneer",
+          style: const TextStyle(
+            color: Colors.black,
+            fontSize: 20,
+            //make underline
+            decorationStyle: TextDecorationStyle.double, //double underline
+            //text decoration 'underline' color
+            decorationThickness: 1.5,
+          ),
+        ),
+        leading: const BackButton(
+          color: Colors.black,
+        ),
+        backgroundColor: Colors.white,
+      ),
       body: Padding(
         padding: EdgeInsets.only(top: 5),
         child: ListView(
@@ -18,7 +33,7 @@ class palakpanner extends StatelessWidget {
             Padding(
                 padding: EdgeInsets.all(10),
                 child: Image.network(
-                    "https://media.istockphoto.com/id/1265831709/photo/broccoli-and-cheddar-cheese-soup.jpg?s=612x612&w=is&k=20&c=94_0Urj09HWTSPupihYwjhARJbNTzETFGbtha0Kvysc=")),
+                    "https://as2.ftcdn.net/v2/jpg/02/70/49/01/1000_F_270490182_2ZuHrJ3TqFSFVgTswX7QwqGYkyPxlCAd.jpg")),
             Arc(
               edge: Edge.TOP,
               arcType: ArcType.CONVEY,
@@ -100,9 +115,9 @@ class palakpanner extends StatelessWidget {
                           // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "Palak Panner",
+                              "Palak Paneer",
                               style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 24,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -135,7 +150,7 @@ class palakpanner extends StatelessWidget {
                           vertical: 10,
                         ),
                         child: Text(
-                          "1. Heat 1 tablespoon olive oil in a skillet over medium heat; cook and stir onion until slightly tender, about 5 minutes. Add garlic, coriander, turmeric, garam masala, red pepper flakes, curry powder, cumin, and salt; cook and stir until fragrant, about 1 minute.\n 2. Mix water, spinach, tomatoes, and ginger into the onion mixture; simmer for 20 minutes. Remove from heat and cool slightly, about 5 minutes.\n 3. Transfer spinach mixture to a blender and blend until smooth.\n 4. Heat remaining 1 tablespoon olive oil in a skillet over medium heat; cook and stir paneer until lightly browned, about 5 minutes. Stir pureed spinach mixture into skillet with paneer. Cook until heated through, 3 to 5 minutes.\n",
+                          "1. Heat 1 tablespoon olive oil in a skillet over medium heat; cook and stir onion until slightly tender, about 5 minutes. Add garlic, coriander, turmeric, garam masala, red pepper flakes, curry powder, cumin, and salt; cook and stir until fragrant, about 1 minute.\n\n 2. Mix water, spinach, tomatoes, and ginger into the onion mixture; simmer for 20 minutes. Remove from heat and cool slightly, about 5 minutes.\n\n 3. Transfer spinach mixture to a blender and blend until smooth.\n\n 4. Heat remaining 1 tablespoon olive oil in a skillet over medium heat; cook and stir paneer until lightly browned, about 5 minutes. Stir pureed spinach mixture into skillet with paneer. Cook until heated through, 3 to 5 minutes.\n",
                         ),
                       ),
                       Padding(
@@ -152,7 +167,7 @@ class palakpanner extends StatelessWidget {
                             builder: (context, followlink) => GestureDetector(
                                   onTap: followlink,
                                   child: Text(
-                                    'open link',
+                                    'Open Link',
                                     style: TextStyle(
                                       fontSize: 32,
                                       color: Colors.blue,

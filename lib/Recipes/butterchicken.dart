@@ -10,7 +10,24 @@ class butterchicken extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          "Butter Chicken",
+          style: const TextStyle(
+            color: Colors.black,
+            fontSize: 20,
+            //make underline
+            decorationStyle: TextDecorationStyle.double, //double underline
+            //text decoration 'underline' color
+            decorationThickness: 1.5,
+          ),
+        ),
+        leading: const BackButton(
+          color: Colors.black,
+        ),
+        backgroundColor: Colors.white,
+      ),
       body: Padding(
         padding: EdgeInsets.only(top: 5),
         child: ListView(
@@ -102,7 +119,7 @@ class butterchicken extends StatelessWidget {
                             Text(
                               "Butter Chicken",
                               style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 24,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -116,12 +133,15 @@ class butterchicken extends StatelessWidget {
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                          vertical: 10,
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                            vertical: 10,
+                          ),
+                          child: Text(
+                              "For the marinade: \n • Raw Chicken\n • 2 tsp Red Chilli Powder \n • 2 tsp Ginger-Garlic Paste\n • 2 tsp Salt\n • 2 tsp Lemon Juice\n • 1/2 cup Curd\n • 1/2 tsp Garam Masala\n • 1 tsp Kasuri Methi\n • 2 tsp Mustard Oil \n\n For gravy:\n • 2 tsp Oil\n • 2 to taste Butter Cubes\n • 3 gram Cloves\n • 1 Cinnamon Stick, sliced\n • 1 tsp Mace\n • 7 Cardamom\n • 4 Tomatoes, chopped\n •1 tsp Garlic\n • 1 tsp Ginger\n • 1 tsp Ginger-Garlic Paste\n • 1 1/2 tsp Red Chilli Powder\n • 1 tsp Kasuri Methi\n • 2 tsp Honey\n • 1 Green Chilli\n • 2 tsp Cardamom Powder\n • 1 tbsp Cream\n"),
                         ),
-                        child: Text(
-                            "For the marinade:\n • Raw Chicken\n • 2 tsp Red Chilli Powder\n • 2 tsp Ginger-Garlic Paste\n • 2 tsp Salt\n • 2 tsp Lemon Juice\n • 1/2 cup Curd\n • 1/2 tsp Garam Masala\n • 1 tsp Kasuri Methi\n • 2 tsp Mustard Oil\n For gravy:\n • 2 tsp Oil\n • 2 to taste Butter Cubes\n • 3 gram Cloves\n • 1 Cinnamon Stick, sliced\n • 1 tsp Mace\n • 7 Cardamom\n • 4 Tomatoes, chopped\n •1 tsp Garlic\n • 1 tsp Ginger\n • 1 tsp Ginger-Garlic Paste\n • 1 1/2 tsp Red Chilli Powder\n • 1 tsp Kasuri Methi\n • 2 tsp Honey\n • 1 Green Chilli\n • 2 tsp Cardamom Powder\n • 1 tbsp Cream\n"),
                       ),
                       new Container(
                         alignment: Alignment.bottomLeft,
@@ -135,7 +155,7 @@ class butterchicken extends StatelessWidget {
                           vertical: 10,
                         ),
                         child: Text(
-                          "For marination:\n 1.In a mixing bowl, put raw chicken pieces and add salt, red chilli powder, ginger garlic paste and lemon juice. Mix well.\n 2.Refrigerate for about 15-20 minutes.\n 3.Now add curd to the refrigerated mix. Followed by salt, ginger garlic paste, red chilli powder, garam masala, kasturi methi and mustard oil. Mix well and refrigerate again for an hour.\n 4.Roast the marinated chicken in an oven for about 30 minutes until it is three-fourth done.\n Prepare the chicken gravy:\n 1.Heat 2 tsp of oil in a pan with butter.\n 2.Add cloves, cinnamon stick, mace and cardamom. Saute and then add chopped tomatoes, garlic and ginger. Mix well and then grind well.\n 3.In another pan, heat another two cubes of butter, along with ginger garlic paste.\n 4.Add the tomato puree made from the mixture. Now add red chilli powder, kasuri methi, honey and finally the roasted chicken pieces. Let it simmer.\n 5.Add green chilli, cardamom powder and cream. Mix well.\n 6.Serve with a teaspoon of cream over.\n",
+                          "For marination:\n\n 1.In a mixing bowl, put raw chicken pieces and add salt, red chilli powder, ginger garlic paste and lemon juice. Mix well.\n\n 2.Refrigerate for about 15-20 minutes.\n\n 3.Now add curd to the refrigerated mix. Followed by salt, ginger garlic paste, red chilli powder, garam masala, kasturi methi and mustard oil. Mix well and refrigerate again for an hour.\n\n 4.Roast the marinated chicken in an oven for about 30 minutes until it is three-fourth done.\n\n Prepare the chicken gravy:\n\n 1.Heat 2 tsp of oil in a pan with butter.\n\n 2.Add cloves, cinnamon stick, mace and cardamom. Saute and then add chopped tomatoes, garlic and ginger. Mix well and then grind well.\n\n 3.In another pan, heat another two cubes of butter, along with ginger garlic paste.\n\n 4.Add the tomato puree made from the mixture. Now add red chilli powder, kasuri methi, honey and finally the roasted chicken pieces. Let it simmer.\n\n 5.Add green chilli, cardamom powder and cream. Mix well.\n\n 6.Serve with a teaspoon of cream over.\n",
                         ),
                       ),
                       Padding(
@@ -152,7 +172,7 @@ class butterchicken extends StatelessWidget {
                             builder: (context, followlink) => GestureDetector(
                                   onTap: followlink,
                                   child: Text(
-                                    'open link',
+                                    'Open Link',
                                     style: TextStyle(
                                       fontSize: 32,
                                       color: Colors.blue,

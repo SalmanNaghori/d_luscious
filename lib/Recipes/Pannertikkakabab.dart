@@ -10,7 +10,24 @@ class pannertikkakabab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          "Paneer Tikka Kabab",
+          style: const TextStyle(
+            color: Colors.black,
+            fontSize: 20,
+            //make underline
+            decorationStyle: TextDecorationStyle.double, //double underline
+            //text decoration 'underline' color
+            decorationThickness: 1.5,
+          ),
+        ),
+        leading: const BackButton(
+          color: Colors.black,
+        ),
+        backgroundColor: Colors.white,
+      ),
       body: Padding(
         padding: EdgeInsets.only(top: 5),
         child: ListView(
@@ -102,7 +119,7 @@ class pannertikkakabab extends StatelessWidget {
                             Text(
                               "Paneer Tikka Kabab",
                               style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 24,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -116,12 +133,15 @@ class pannertikkakabab extends StatelessWidget {
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                          vertical: 10,
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                            vertical: 10,
+                          ),
+                          child: Text(
+                              "• 1 large cucumber\n • 2 teaspoons kosher salt\n • 1 large sprig fresh mint\n • 1/2 teaspoon garam masala\n • 1 pinch freshly ground black pepper\n • 1 cup Greek yogurt\n • 1 squeeze lime juice\n"),
                         ),
-                        child: Text(
-                            "⚈ 1 large cucumber\n ⚈ 2 teaspoons kosher salt\n ⚈ 1 large sprig fresh mint\n ⚈ 1/2 teaspoon garam masala\n ⚈ 1 pinch freshly ground black pepper\n ⚈ 1 cup Greek yogurt\n ⚈ 1 squeeze lime juice\n"),
                       ),
                       new Container(
                         alignment: Alignment.bottomLeft,
@@ -135,7 +155,7 @@ class pannertikkakabab extends StatelessWidget {
                           vertical: 10,
                         ),
                         child: Text(
-                          "1.	Gather the ingredients.\n  2.	Peel and grate the cucumber into a bowl Sprinkle with the salt and stir.Leave to stand for 10 minutes for the salt to draw out excess water from the cucumber.\n 3.	While the cucumber is soaking, pull the leaves from the mint stalks then finely chop.\n 4.	Place the salt-soaked grated cucumber into a sieve over a small bowl.Press gently with the back of a tablespoon to squeeze out any remaining moisture.Be careful not to press too hard or you risk mashing the flesh of the cucumber into a pulp—it needs to remain firm.\n  5.	Add the chopped mint leaves, garam masala, and pepper to the thick Greek yogurt and stir.\n 6.	Add the drained cucumber to the yogurt and spices mix and stir well. Add a little squeeze of lime juice to taste.Serve or if not using immediately, cover with plastic wrap and pop the raita into the fridge. The raita will keep well for a couple of days in the refrigerator.",
+                          " 1.	Gather the ingredients.\n\n 2.	Peel and grate the cucumber into a bowl Sprinkle with the salt and stir.Leave to stand for 10 minutes for the salt to draw out excess water from the cucumber.\n\n 3.	While the cucumber is soaking, pull the leaves from the mint stalks then finely chop.\n\n 4.	Place the salt-soaked grated cucumber into a sieve over a small bowl.Press gently with the back of a tablespoon to squeeze out any remaining moisture.Be careful not to press too hard or you risk mashing the flesh of the cucumber into a pulp—it needs to remain firm.\n\n  5.	Add the chopped mint leaves, garam masala, and pepper to the thick Greek yogurt and stir.\n\n 6.	Add the drained cucumber to the yogurt and spices mix and stir well. Add a little squeeze of lime juice to taste.Serve or if not using immediately, cover with plastic wrap and pop the raita into the fridge. The raita will keep well for a couple of days in the refrigerator.",
                         ),
                       ),
                       Padding(
@@ -152,7 +172,7 @@ class pannertikkakabab extends StatelessWidget {
                             builder: (context, followlink) => GestureDetector(
                                   onTap: followlink,
                                   child: Text(
-                                    'open link',
+                                    'Open Link',
                                     style: TextStyle(
                                       fontSize: 32,
                                       color: Colors.blue,

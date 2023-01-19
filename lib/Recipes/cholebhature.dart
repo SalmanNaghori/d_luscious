@@ -10,7 +10,24 @@ class Cholebhature extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          "Chole Bhature",
+          style: const TextStyle(
+            color: Colors.black,
+            fontSize: 20,
+            //make underline
+            decorationStyle: TextDecorationStyle.double, //double underline
+            //text decoration 'underline' color
+            decorationThickness: 1.5,
+          ),
+        ),
+        leading: const BackButton(
+          color: Colors.black,
+        ),
+        backgroundColor: Colors.white,
+      ),
       body: Padding(
         padding: EdgeInsets.only(top: 5),
         child: ListView(
@@ -102,7 +119,7 @@ class Cholebhature extends StatelessWidget {
                             Text(
                               "Chole Bhature",
                               style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 24,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -121,7 +138,7 @@ class Cholebhature extends StatelessWidget {
                           vertical: 10,
                         ),
                         child: Text(
-                            "• 2 cup Chickpeas\n • 2 tsp Oil\n • 1 Bay leaf\n • 1 Cinnamon stick\n • 3-4 Cloves\n • 1 tsp Whole pepper corns\n • 3 Green cardamom\n • 2 Black cardamom\n • 1 tsp Turmeric powder\n • 1 tsp Chilli powder\n • 1 tsp Coriander powder\n • 1 tsp Cumin powder\n • 1 tsp Cumin seeds\n • 1/2 tsp Asafoetida\n • taste Salt\n • 1 cup Onions, chopped\n • 1 cup Tomatoes, chopped\n • 1 tsp Ginger, chopped\n • 1 tsp Garlic, chopped\n • 1 tsp Ajwain\n • 1 tsp Lime juice\n • 1 Green chili, chopped\n • 1 Tea bag\n • 1 tbsp Butter\n • 2 cups Refined flour\n • 1/2 tsp Yeast (dissolved for 10 minutes in luke warm water)\n • 1/2 cup Whole wheat flour\n • A pinch of Salt\n• Water (to knead)\n • Oil (for frying)\n"),
+                            " • 2 cup Chickpeas\n • 2 tsp Oil\n • 1 Bay leaf\n • 1 Cinnamon stick\n • 3-4 Cloves\n • 1 tsp Whole pepper corns\n • 3 Green cardamom\n • 2 Black cardamom\n • 1 tsp Turmeric powder\n • 1 tsp Chilli powder\n • 1 tsp Coriander powder\n • 1 tsp Cumin powder\n • 1 tsp Cumin seeds\n • 1/2 tsp Asafoetida\n • taste Salt\n • 1 cup Onions, chopped\n • 1 cup Tomatoes, chopped\n • 1 tsp Ginger, chopped\n • 1 tsp Garlic, chopped\n • 1 tsp Ajwain\n • 1 tsp Lime juice\n • 1 Green chili, chopped\n • 1 Tea bag\n • 1 tbsp Butter\n • 2 cups Refined flour\n • 1/2 tsp Yeast (dissolved for 10 minutes in luke warm water)\n • 1/2 cup Whole wheat flour\n • A pinch of Salt\n• Water (to knead)\n • Oil (for frying)\n"),
                       ),
                       new Container(
                         alignment: Alignment.bottomLeft,
@@ -135,7 +152,7 @@ class Cholebhature extends StatelessWidget {
                           vertical: 10,
                         ),
                         child: Text(
-                          "In a pan add oil, bay leaf, cinnamon, cumin seeds, cloves, whole pepper corns, green and black cardamom.\n 1.After it browns, add chopped onions and saute. Add chopped ginger and garlic.\n 2.Now, add turmeric, chili powder, coriander powder, cumin powder, asafoetida and salt. Fry the ingredients together.\n 3.For de-glazing the pan, add a little water.\n 4.Now, add the chole (soaked overnight and pressure cooked) to the masala.\n 5.After stirring well, add tomatoes, a little sugar and salt to the chole.\n 6.Now, add ajwain, chopped green chilies and water for the base.\n 7.To get the color in the chole, add a tea bag to the masala.\n 8.Simmer the chole gently for an hour and cover it.\n 9.Add lime juice and a dollop of butter to it.\n 10.Garnish the chole with coriander and butter and serve them hot with bhaturas.\n To prepare the bhaturas:\n 1.Knead the whole wheat flour, maida and salt together with adequate amount of water.\n 2.Sprinkle the yeast on top. Leave it for 2-3 hours for the yeast to work.\n 3.Divide it into equal portions. Roll out in an oval or round shape.\n 4.Deep fry till golden brown, like a puri. Serve and enjoy!\n",
+                          "In a pan add oil, bay leaf, cinnamon, cumin seeds, cloves, whole pepper corns, green and black cardamom: \n\n 1.After it browns, add chopped onions and saute. Add chopped ginger and garlic.\n\n 2.Now, add turmeric, chili powder, coriander powder, cumin powder, asafoetida and salt. Fry the ingredients together.\n\n 3.For de-glazing the pan, add a little water.\n\n 4.Now, add the chole (soaked overnight and pressure cooked) to the masala.\n\n 5.After stirring well, add tomatoes, a little sugar and salt to the chole.\n\n 6.Now, add ajwain, chopped green chilies and water for the base.\n\n 7.To get the color in the chole, add a tea bag to the masala.\n\n 8.Simmer the chole gently for an hour and cover it.\n\n 9.Add lime juice and a dollop of butter to it.\n\n 10.Garnish the chole with coriander and butter and serve them hot with bhaturas.\n\n To prepare the bhaturas:\n \n1.Knead the whole wheat flour, maida and salt together with adequate amount of water.\n\n 2.Sprinkle the yeast on top. Leave it for 2-3 hours for the yeast to work.\n\n 3.Divide it into equal portions. Roll out in an oval or round shape.\n\n 4.Deep fry till golden brown, like a puri. Serve and enjoy!\n",
                         ),
                       ),
                       Padding(
@@ -152,7 +169,7 @@ class Cholebhature extends StatelessWidget {
                             builder: (context, followlink) => GestureDetector(
                                   onTap: followlink,
                                   child: Text(
-                                    'open link',
+                                    'Open Link',
                                     style: TextStyle(
                                       fontSize: 32,
                                       color: Colors.blue,

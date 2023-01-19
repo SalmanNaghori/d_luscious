@@ -10,7 +10,24 @@ class pancakes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          "Pancakes",
+          style: const TextStyle(
+            color: Colors.black,
+            fontSize: 20,
+            //make underline
+            decorationStyle: TextDecorationStyle.double, //double underline
+            //text decoration 'underline' color
+            decorationThickness: 1.5,
+          ),
+        ),
+        leading: const BackButton(
+          color: Colors.black,
+        ),
+        backgroundColor: Colors.white,
+      ),
       body: Padding(
         padding: EdgeInsets.only(top: 5),
         child: ListView(
@@ -102,7 +119,7 @@ class pancakes extends StatelessWidget {
                             Text(
                               "Pancakes",
                               style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 24,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -116,12 +133,15 @@ class pancakes extends StatelessWidget {
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                          vertical: 10,
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                            vertical: 10,
+                          ),
+                          child: Text(
+                              "• 1 cup all-purpose flour\n • 2 tablespoons sugar\n • 2 teaspoons baking powder\n • 1/2 teaspoon salt\n • 1 large egg, slightly beaten\n •	2 tablespoons vegetable oil\n • 3/4 cup milk\n"),
                         ),
-                        child: Text(
-                            "• 1 cup all-purpose flour\n • 2 tablespoons sugar\n • 2 teaspoons baking powder\n • 1/2 teaspoon salt\n • 1 large egg, slightly beaten\n •	2 tablespoons vegetable oil\n • 3/4 cup milk\n"),
                       ),
                       new Container(
                         alignment: Alignment.bottomLeft,
@@ -135,7 +155,7 @@ class pancakes extends StatelessWidget {
                           vertical: 10,
                         ),
                         child: Text(
-                          "1.	Gather the ingredients.\n 2. Combine the flour, sugar, baking powder, and salt. Whisk or stir to blend thoroughly.\n 3. Stir in egg, oil, and the milk. Mix lightly, just enough to blend.\n 4.	When ready to cook, grease a griddle with butter.\n 5. Using a 1/4 cup measuring scoop, measure out pancakes onto the griddle to cook.\n 6. Cook the pancakes, flipping them when you see bubbles breaking all over the tops.\n 7. Continue till the underside is brown.\n",
+                          "1.	Gather the ingredients.\n\n 2. Combine the flour, sugar, baking powder, and salt. Whisk or stir to blend thoroughly.\n\n 3. Stir in egg, oil, and the milk. Mix lightly, just enough to blend.\n\n 4.	When ready to cook, grease a griddle with butter.\n\n 5. Using a 1/4 cup measuring scoop, measure out pancakes onto the griddle to cook.\n\n 6. Cook the pancakes, flipping them when you see bubbles breaking all over the tops.\n\n 7. Continue till the underside is brown.\n",
                         ),
                       ),
                       Padding(
@@ -152,7 +172,7 @@ class pancakes extends StatelessWidget {
                             builder: (context, followlink) => GestureDetector(
                                   onTap: followlink,
                                   child: Text(
-                                    'open link',
+                                    'Open Link',
                                     style: TextStyle(
                                       fontSize: 32,
                                       color: Colors.blue,

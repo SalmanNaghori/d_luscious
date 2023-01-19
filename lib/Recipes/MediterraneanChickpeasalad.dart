@@ -10,7 +10,24 @@ class MediterraneanChickpeasalad extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          "Mediterranean Chickpea",
+          style: const TextStyle(
+            color: Colors.black,
+            fontSize: 20,
+            //make underline
+            decorationStyle: TextDecorationStyle.double, //double underline
+            //text decoration 'underline' color
+            decorationThickness: 1.5,
+          ),
+        ),
+        leading: const BackButton(
+          color: Colors.black,
+        ),
+        backgroundColor: Colors.white,
+      ),
       body: Padding(
         padding: EdgeInsets.only(top: 5),
         child: ListView(
@@ -102,7 +119,7 @@ class MediterraneanChickpeasalad extends StatelessWidget {
                             Text(
                               " Mediterranean Chickpea salad",
                               style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 24,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -130,12 +147,15 @@ class MediterraneanChickpeasalad extends StatelessWidget {
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                          vertical: 10,
-                        ),
-                        child: Text(
-                          "• Drain Chickpeas for 30 min in water.\n • Slice and dice all the vegetables mentioned.\n • Prepare Lemon vinaigrette.\n • Toss all of these in a bowl.\n • Season up with some cheese.\n • Garnish with fresh parsley.\n",
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                            vertical: 10,
+                          ),
+                          child: Text(
+                            " 1 Drain Chickpeas for 30 min in water.\n\n 2 Slice and dice all the vegetables mentioned.\n\n 3 Prepare Lemon vinaigrette.\n\n 4 Toss all of these in a bowl.\n\n 5 Season up with some cheese.\n\n 6 Garnish with fresh parsley.\n",
+                          ),
                         ),
                       ),
                       Padding(
@@ -152,7 +172,7 @@ class MediterraneanChickpeasalad extends StatelessWidget {
                             builder: (context, followlink) => GestureDetector(
                                   onTap: followlink,
                                   child: Text(
-                                    'open link',
+                                    'Open Link',
                                     style: TextStyle(
                                       fontSize: 32,
                                       color: Colors.blue,
