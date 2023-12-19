@@ -1,9 +1,8 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-import '../Screen/HomeScreen.dart';
+import '../home/HomeScreen.dart';
 import 'ForgotPasswordScreen.dart';
 import 'SignUpScreen.dart';
 
@@ -149,7 +148,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                        const    ForgotPasswordScreen()));
+                                            const ForgotPasswordScreen()));
                               },
                               child: Text(
                                 "Forgot Password",
@@ -175,7 +174,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                    const      RegistrationScreen()));
+                                          const RegistrationScreen()));
                             },
                             child: Text(
                               "SignUp",

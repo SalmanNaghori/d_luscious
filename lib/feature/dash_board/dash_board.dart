@@ -1,3 +1,4 @@
+import 'package:d_luscious/core/constant/colors_const.dart';
 import 'package:d_luscious/feature/dash_board/dash_board_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,8 +8,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../core/constant/app_string.dart';
 import '../../core/widgets/appbard.dart';
 import '../Screen/CategoryScreen.dart';
-import '../Screen/Favorite.dart';
-import '../Screen/HomeScreen.dart';
+import '../favorite/Favorite.dart';
+import '../home/HomeScreen.dart';
 import '../Screen/SearchScreen.dart';
 import '../Screen/user_profile_screen.dart';
 
@@ -100,7 +101,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           backgroundColor: Colors.pink,
         ),
       ],
-      selectedItemColor: Colors.blue,
+      selectedItemColor: ConstColor.primaryColor,
     );
   }
 

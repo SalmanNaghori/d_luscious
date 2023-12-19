@@ -1,5 +1,5 @@
 import 'package:d_luscious/feature/Screen/CategoryScreen.dart';
-import 'package:d_luscious/feature/Screen/Favorite.dart';
+import 'package:d_luscious/feature/favorite/Favorite.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -39,4 +39,3 @@ const String DASHBOARD_1 = '/Dashboard1';
 const String SIGNUP_STEP1 = '/SignUp1';
 const String DASHBOARD_2 = '/Dashboard2';
 const String No_INTERNET_ROUTE = '/NoInternetScreen';
-

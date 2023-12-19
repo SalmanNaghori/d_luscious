@@ -1,58 +1,87 @@
 import 'package:d_luscious/feature/model/recipe_model.dart';
 
 class Const {
-  List<RecipeType> dummyRecipeTypes = [
+  static List<RecipeType> recipeTypes = [
     RecipeType(
-      "Breakfast",
-      [
-        Recipe("Scrambled Eggs", false, "https://example.com/eggs.jpg"),
-        Recipe("Pancakes", true, "https://example.com/pancakes.jpg"),
+      typeName: "Breakfast",
+      recipes: [
         Recipe(
-            "Fruit Smoothie", true, "https://example.com/fruit_smoothie.jpg"),
-      ],
-    ),
-    RecipeType(
-      "Time-Saving",
-      [
+            name: "Pancakes",
+            isLiked: false,
+            image:
+                "https://images.unsplash.com/photo-1490457843367-34b21b6ccd85?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGFuY2FrZXMlMjAzNTQyJUUyJTgwJThBJUMzJTk3JUUyJTgwJThBMjk0N3xlbnwwfHwwfHx8MA%3D%3D"),
         Recipe(
-            "Quick Omelette", true, "https://example.com/quick_omelette.jpg"),
-        Recipe("Instant Oatmeal", false,
-            "https://example.com/instant_oatmeal.jpg"),
-        Recipe("Avocado Toast", true, "https://example.com/avocado_toast.jpg"),
-      ],
-    ),
-    RecipeType(
-      "Spicy",
-      [
-        Recipe("Spicy Chicken Curry", true,
-            "https://example.com/chicken_curry.jpg"),
-        Recipe("Hot Chili", false, "https://example.com/hot_chili.jpg"),
-        Recipe("Jalapeno Poppers", true,
-            "https://example.com/jalapeno_poppers.jpg"),
-      ],
-    ),
-    RecipeType(
-      "Lunch",
-      [
-        Recipe("Chicken Salad", false, "https://example.com/chicken_salad.jpg"),
+            name: "Omelette",
+            isLiked: false,
+            image:
+                "https://images.unsplash.com/photo-1510693206972-df098062cb71?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8b21lbGV0dGV8ZW58MHx8MHx8fDA%3D"),
         Recipe(
-            "Vegetable Wrap", true, "https://example.com/vegetable_wrap.jpg"),
-        Recipe("Caprese Sandwich", false,
-            "https://example.com/caprese_sandwich.jpg"),
+            name: "Smoothie",
+            isLiked: false,
+            image:
+                "https://images.unsplash.com/photo-1610622930110-3c076902312a?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8c21vb3RoaWV8ZW58MHx8MHx8fDA%3D"),
       ],
     ),
     RecipeType(
-      "Dinner",
-      [
-        Recipe("Grilled Salmon", true, "https://example.com/salmon.jpg"),
-        Recipe("Pasta Alfredo", false, "https://example.com/pasta_alfredo.jpg"),
+      typeName: "Lunch",
+      recipes: [
         Recipe(
-            "Stir-Fried Tofu", true, "https://example.com/stir_fried_tofu.jpg"),
+            name: "Spaghetti",
+            isLiked: true,
+            image:
+                "https://images.unsplash.com/photo-1598866594230-a7c12756260f?q=80&w=2808&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"),
+        Recipe(
+            name: "Salad",
+            isLiked: false,
+            image:
+                "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"),
+        Recipe(
+            name: "Sandwich",
+            isLiked: true,
+            image:
+                "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?q=80&w=2946&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"),
       ],
     ),
-    // Add more recipe types and recipes as needed
-    // ...
-
-    // Repeat the above pattern to create a total of 10 different sets of dummy data
+    RecipeType(
+      typeName: "Dinner",
+      recipes: [
+        Recipe(
+            name: "Grilled Chicken",
+            isLiked: false,
+            image:
+                "https://plus.unsplash.com/premium_photo-1661419883163-bb4df1c10109?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8R3JpbGxlZCUyMENoaWNrZW58ZW58MHx8MHx8fDA%3D"),
+        Recipe(
+            name: "Vegetable Stir-Fry",
+            isLiked: true,
+            image:
+                "https://images.unsplash.com/photo-1552914343-54bcc3ba07f8?q=80&w=2884&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"),
+        Recipe(
+            name: "Pizza",
+            isLiked: true,
+            image:
+                "https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"),
+      ],
+    ),
+    RecipeType(
+      typeName: "Dessert",
+      recipes: [
+        Recipe(
+            name: "Chocolate Cake",
+            isLiked: true,
+            image:
+                "https://images.unsplash.com/photo-1605807646983-377bc5a76493?q=80&w=2824&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"),
+        Recipe(
+            name: "Ice Cream",
+            isLiked: true,
+            image:
+                "https://images.unsplash.com/photo-1580915411954-282cb1b0d780?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"),
+        Recipe(
+            name: "Fruit Tart",
+            isLiked: false,
+            image:
+                "https://images.unsplash.com/photo-1620980776848-84ac10194945?q=80&w=2624&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"),
+      ],
+    ),
+    // Add more RecipeType with recipes as needed
   ];
 }
