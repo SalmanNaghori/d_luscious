@@ -1,9 +1,11 @@
-import 'package:d_luscious/Authenticate/ForgotPasswordScreen.dart';
-import 'package:d_luscious/Authenticate/SignUpScreen.dart';
-import 'package:d_luscious/Screen/HomeScreen.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+
+import '../Screen/HomeScreen.dart';
+import 'ForgotPasswordScreen.dart';
+import 'SignUpScreen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -147,7 +149,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            ForgotPasswordScreen()));
+                                        const    ForgotPasswordScreen()));
                               },
                               child: Text(
                                 "Forgot Password",
@@ -173,7 +175,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          RegistrationScreen()));
+                                    const      RegistrationScreen()));
                             },
                             child: Text(
                               "SignUp",
@@ -203,7 +205,7 @@ class _LoginScreenState extends State<LoginScreen> {
             .then((uid) => {
                   Fluttertoast.showToast(msg: "Login Successful"),
                   Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => Home())),
+                      MaterialPageRoute(builder: (context) => HomeScreenTab())),
                 });
       } on FirebaseAuthException catch (error) {
         switch (error.code) {

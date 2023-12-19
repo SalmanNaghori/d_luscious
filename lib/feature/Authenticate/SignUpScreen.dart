@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:d_luscious/Authenticate/LoginScreen.dart';
-import 'package:d_luscious/Screen/HomeScreen.dart';
+import 'package:d_luscious/feature/Authenticate/LoginScreen.dart';
+
 import 'package:d_luscious/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

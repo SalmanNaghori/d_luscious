@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
-import '../model/appitizermodel.dart';
+import 'appitizermodel.dart';
 
 class NetworkRequest {
   static const String url =

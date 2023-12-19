@@ -1,36 +1,23 @@
+import 'package:d_luscious/core/constant/app_string.dart';
+import 'package:d_luscious/core/widgets/appbard.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:d_luscious/Screen/HomeScreen.dart';
 
-class FavoriteList extends StatelessWidget {
-  const FavoriteList({super.key});
+
+class FavoriteScreenTab extends StatefulWidget {
+  const FavoriteScreenTab({super.key});
 
   @override
+  State<FavoriteScreenTab> createState() => _FavoriteScreenTabState();
+}
+
+class _FavoriteScreenTabState extends State<FavoriteScreenTab> {
+  @override
   Widget build(BuildContext context) {
-    List<bool> listIsFavTimeSaving = [false, false];
+    // List<bool> listIsFavTimeSaving = [false, false];
     return Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: const Text(
-            "Favorite",
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-              fontSize: 30,
-              //make underline
-              decorationStyle: TextDecorationStyle.double, //double underline
-              //text decoration 'underline' color
-              decorationThickness: 1.5,
-            ),
-          ),
-          leading: const BackButton(
-            color: Colors.black,
-          ),
-          backgroundColor: Colors.white,
-        ),
+        appBar: CustomAppBar.blankAppBar(title: AppString.favorite),
         body: GridView.builder(
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

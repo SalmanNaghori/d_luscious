@@ -1,5 +1,7 @@
-import 'package:d_luscious/model/menu_item.dart';
+
 import 'package:flutter/material.dart';
+
+import '../model/menu_item.dart';
 
 class MenuItems {
   static const List<MenuItemabc> itemsFirst = [

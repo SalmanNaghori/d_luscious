@@ -1,17 +1,14 @@
-import 'dart:async';
-import 'package:animated_splash_screen/animated_splash_screen.dart';
-import 'package:d_luscious/Authenticate/LoginScreen.dart';
-import 'package:d_luscious/Authenticate/LoginScreen.dart';
-import 'package:d_luscious/Screen/HomeScreen.dart';
-import 'package:page_transition/page_transition.dart';
-import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
-
+//
+//
+// import 'package:animated_splash_screen/animated_splash_screen.dart';
+// import 'package:flutter/material.dart';
+// import 'package:lottie/lottie.dart';
+//
 // class SplashScreen extends StatefulWidget {
 //   @override
 //   _SplashScreenState createState() => _SplashScreenState();
 // }
-
+//
 // class _SplashScreenState extends State<SplashScreen> {
 //   @override
 //   void initState() {
@@ -21,7 +18,7 @@ import 'package:lottie/lottie.dart';
 //     //     () => Navigator.of(context).pushReplacement(MaterialPageRoute(
 //     //         builder: (BuildContext context) => HomeScreen())));
 //   }
-
+//
 //   @override
 //   Widget build(BuildContext context) {
 //     return Center(
@@ -42,10 +39,10 @@ import 'package:lottie/lottie.dart';
 //                 fontFamily: 'Chewy', fontSize: 40, color: Color(0xffF5A342)),
 //           ),
 //         ]),
-//         nextScreen: Home(),
+//         // nextScreen: Home(),
 //         duration: 4000,
 //         splashTransition: SplashTransition.fadeTransition,
-//         pageTransitionType: PageTransitionType.fade,
+//         // pageTransitionType: PageTransitionType.fade,
 //         splashIconSize: 600,
 //         animationDuration: const Duration(seconds: 2),
 //       ),

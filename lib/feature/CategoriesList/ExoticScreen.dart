@@ -1,21 +1,13 @@
-import 'package:d_luscious/Recipes/MediterraneanChickpeasalad.dart';
-import 'package:d_luscious/Recipes/Pannertikkakabab.dart';
-import 'package:d_luscious/Recipes/Tacos.dart';
-import 'package:d_luscious/Recipes/butterchicken.dart';
-import 'package:d_luscious/Recipes/cholebhature.dart';
-import 'package:d_luscious/Recipes/cucumberraita.dart';
-import 'package:d_luscious/Recipes/gulabjamun.dart';
-import 'package:d_luscious/Recipes/kheer.dart';
-import 'package:d_luscious/Recipes/pakora.dart';
-import 'package:d_luscious/Recipes/palakpanner.dart';
-import 'package:d_luscious/Recipes/pancakes.dart';
-import 'package:d_luscious/Recipes/springrolls.dart';
-import 'package:d_luscious/Recipes/vegcheesesandwich.dart';
-import 'package:d_luscious/Recipes/veghakkanoodles.dart';
-import 'package:d_luscious/search_model/model.dart';
+
+import 'package:d_luscious/feature/search_model/model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+
+import '../Recipes/Tacos.dart';
+import '../Recipes/pancakes.dart';
+import '../Recipes/springrolls.dart';
+import '../Recipes/veghakkanoodles.dart';
 
 class ExoticScreen extends StatefulWidget {
   const ExoticScreen({super.key});
@@ -23,6 +15,7 @@ class ExoticScreen extends StatefulWidget {
   @override
   State<ExoticScreen> createState() => _ExoticScreenState();
 }
+
 
 final List<Gridmap_c> sub_exo = [
   Gridmap_c(

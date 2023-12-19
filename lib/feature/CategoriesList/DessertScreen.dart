@@ -1,17 +1,12 @@
-import 'package:d_luscious/Recipes/Pannertikkakabab.dart';
-import 'package:d_luscious/Recipes/butterchicken.dart';
-import 'package:d_luscious/Recipes/cholebhature.dart';
-import 'package:d_luscious/Recipes/cucumberraita.dart';
-import 'package:d_luscious/Recipes/gulabjamun.dart';
-import 'package:d_luscious/Recipes/kheer.dart';
-import 'package:d_luscious/Recipes/pakora.dart';
-import 'package:d_luscious/Recipes/palakpanner.dart';
-import 'package:d_luscious/Recipes/pancakes.dart';
-import 'package:d_luscious/Recipes/vegcheesesandwich.dart';
-import 'package:d_luscious/search_model/model.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+
+import '../Recipes/gulabjamun.dart';
+import '../Recipes/kheer.dart';
+import '../Recipes/pancakes.dart';
+import '../search_model/model.dart';
 
 class DessertScreen extends StatefulWidget {
   const DessertScreen({super.key});
