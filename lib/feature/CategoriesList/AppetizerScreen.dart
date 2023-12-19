@@ -1,53 +1,89 @@
-import 'package:d_luscious/Recipes/Broccoli-Cheddar%20soup.dart';
-import 'package:d_luscious/Recipes/MediterraneanChickpeasalad.dart';
-import 'package:d_luscious/Recipes/Pannertikkakabab.dart';
-import 'package:d_luscious/Recipes/butterchicken.dart';
-import 'package:d_luscious/Recipes/cholebhature.dart';
-import 'package:d_luscious/Recipes/cucumberraita.dart';
-import 'package:d_luscious/Recipes/gulabjamun.dart';
-import 'package:d_luscious/Recipes/kheer.dart';
-import 'package:d_luscious/Recipes/pakora.dart';
-import 'package:d_luscious/Recipes/palakpanner.dart';
-import 'package:d_luscious/Recipes/pancakes.dart';
-import 'package:d_luscious/Recipes/vegcheesesandwich.dart';
-import 'package:d_luscious/search_model/model.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
-class HealthScreen extends StatefulWidget {
-  const HealthScreen({super.key});
+import '../Recipes/Pannertikkakabab.dart';
+import '../Recipes/cucumberraita.dart';
+import '../Recipes/kheer.dart';
+import '../Recipes/pakora.dart';
+import '../Recipes/springrolls.dart';
+import '../Recipes/vegcheesesandwich.dart';
+import '../search_model/model.dart';
+
+class Appetizer extends StatefulWidget {
+  const Appetizer({
+    super.key,
+  });
 
   @override
-  State<HealthScreen> createState() => _HealthScreenState();
+  State<Appetizer> createState() => _AppetizerState();
 }
 
-final List<Gridmap_c> sub_health = [
+final List<Gridmap_c> sub_ap = [
   Gridmap_c(
-      title: "Cucumber Raita",
+      title: "Cheese Sandwich",
       images:
-          "https://thumbs.dreamstime.com/b/indian-spicy-sauce-raita-herbs-cucumber-close-up-b-bowl-table-horizontal-top-view-above-111769331.jpg",
-      page: cucumberpage()),
+          "https://media.istockphoto.com/id/155388694/photo/panini-sandwiches.jpg?s=612x612&w=is&k=20&c=c4C9u4yFVIhZyoqJ-DsrdRWUOVd0iIs2CCJVlo79tpY=",
+      page: vegcheesesandwich()),
   Gridmap_c(
-      title: "Mediterranean Salad",
+      title: "Pakora",
       images:
-          "https://media.istockphoto.com/id/157995701/photo/tuna-and-chickpea-salad.jpg?s=612x612&w=is&k=20&c=5I_V1wgHP9KtNn3PrhJcTlaBCQOg9AgMsEon_LuQk_Y=",
-      page: MediterraneanChickpeasalad()),
+          "https://media.istockphoto.com/id/177314242/photo/vegetable-pakora.jpg?s=612x612&w=is&k=20&c=zEyqDHzekDiFzPGRunZ4cttgsdjZu55d43cFnIju4L4=",
+      page: PakoraScreen()),
   Gridmap_c(
-      title: "Broccoli Soup",
+      title: "Paneer Tikka Kabab",
       images:
-          "https://media.istockphoto.com/id/1265831709/photo/broccoli-and-cheddar-cheese-soup.jpg?s=612x612&w=is&k=20&c=94_0Urj09HWTSPupihYwjhARJbNTzETFGbtha0Kvysc=",
-      page: broccolisoup()),
+          "https://media.istockphoto.com/id/1303442507/photo/spicy-indian-paneer-tikka-masala-on-a-skewer-on-wooden-platter.jpg?s=612x612&w=0&k=20&c=eijXsF8w-86CwaxsNszS58TsmDUX2c-LysPEEuUablo=",
+      page: pannertikkakabab()),
+  Gridmap_c(
+      title: "Spring Rolls",
+      images:
+          "https://as2.ftcdn.net/v2/jpg/02/14/90/07/1000_F_214900725_8X4DfrIsIdScBl4hDZ3Uqv5WywlOPhCN.jpg",
+      page: springrolls()),
 ];
 
-class _HealthScreenState extends State<HealthScreen> {
+class _AppetizerState extends State<Appetizer> {
+  List<Map<String, dynamic>> gridMap = [];
+  //final List<Categorymodel> categorymodellist
+  List<Widget> selectpage = [new cucumberpage(), kheer()];
+  String title = "";
+
+  @override
+  void initState() {
+    // print(widget.id);
+    // gridMap = mainData[widget.id];
+    // switch (widget.id) {
+    //   case 0:
+    //     title = "Appetizer";
+    //     break;
+    //   case 1:
+    //     title = "Main Course";
+    //     break;
+    //   case 2:
+    //     title = "SnackS";
+    //     break;
+    //   case 3:
+    //     title = "Dessert";
+    //     break;
+    //   case 4:
+    //     title = "Healthy";
+    //     break;
+    //   case 5:
+    //     title = "Exotic";
+    //     break;
+    //   default:
+    // }
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
           title: Text(
-            "Healthy",
+            "Appetizers",
             style: const TextStyle(
               color: Colors.black,
               fontWeight: FontWeight.w700,
@@ -73,12 +109,12 @@ class _HealthScreenState extends State<HealthScreen> {
             mainAxisSpacing: 15.0,
             mainAxisExtent: 220,
           ),
-          itemCount: sub_health.length,
+          itemCount: sub_ap.length,
           itemBuilder: (_, index) {
             return InkWell(
               onTap: () {
                 Navigator.of(context).push(
-                    MaterialPageRoute(builder: (_) => sub_health[index].page));
+                    MaterialPageRoute(builder: (_) => sub_ap[index].page));
               },
               child: Container(
                 // favoriteList:true,
@@ -98,7 +134,7 @@ class _HealthScreenState extends State<HealthScreen> {
                         topRight: Radius.circular(16.0),
                       ),
                       child: Image.network(
-                        sub_health[index].images,
+                        sub_ap[index].images,
                         height: 170,
                         width: double.infinity,
                         fit: BoxFit.cover,
@@ -110,9 +146,11 @@ class _HealthScreenState extends State<HealthScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            sub_health[index].title,
+                            sub_ap[index].title,
                             style: Theme.of(context).textTheme.subtitle1!.merge(
-                                  const TextStyle(),
+                                  const TextStyle(
+                                      // fontWeight: FontWeight.w700,
+                                      ),
                                 ),
                           ),
                           // Text(

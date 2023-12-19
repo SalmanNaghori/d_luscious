@@ -4,14 +4,8 @@ import 'package:d_luscious/CategoriesList/HealthyScreen.dart';
 import 'package:d_luscious/CategoriesList/MainCourseScreen.dart';
 import 'package:d_luscious/CategoriesList/SnacksScreen.dart';
 import 'package:d_luscious/CategoriesList/dessertScreen.dart';
-import 'package:d_luscious/Recipes/pakora.dart';
-import 'package:d_luscious/model/appitizermodel.dart';
 import 'package:d_luscious/search_model/model.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:intl/date_symbol_data_local.dart';
 
 class CategoryScreen extends StatefulWidget {
   const CategoryScreen({super.key});
@@ -174,7 +168,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                         children: [
                           Text(
                             subdetails[index].title,
-                            style: Theme.of(context).textTheme.subtitle1!.merge(
+                            style: Theme.of(context).textTheme.titleMedium!.merge(
                                   const TextStyle(),
                                 ),
                           ),
