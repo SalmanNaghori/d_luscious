@@ -241,18 +241,19 @@ class _HomeScreenTabState extends State<HomeScreenTab> {
               height: 20,
             ),
             ListView.builder(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: Const.recipeTypes.length,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.only(top: 20),
-                    child: RecipeItemWidget(
-                      recipeModel: Const.recipeTypes[index],
-                    ),
-                  );
-                }),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: Const.recipeTypes.length,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: RecipeItemWidget(
+                    recipeModel: Const.recipeTypes[index],
+                  ),
+                );
+              },
+            ),
             const SizedBox(
               height: 20,
             ),

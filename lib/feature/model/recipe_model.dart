@@ -16,10 +16,12 @@ class RecipeType {
 }
 
 class Recipe {
+  int id;
   String name;
   bool? isLiked;
   String image;
   Recipe({
+    required this.id,
     required this.name,
     this.isLiked,
     required this.image,

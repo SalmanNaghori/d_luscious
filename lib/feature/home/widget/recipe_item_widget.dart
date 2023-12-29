@@ -1,20 +1,30 @@
 import 'package:d_luscious/core/constant/colors_const.dart';
+import 'package:d_luscious/feature/model/favorite_model.dart';
 import 'package:d_luscious/feature/model/recipe_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+class FavoriteManager {
+  static final ValueNotifier<List<int>> favoriteRecipeIds =
+      ValueNotifier<List<int>>([]);
+}
+
+class FavoriteScreenData {
+  static final ValueNotifier<List<Favorite>> favorite =
+      ValueNotifier<List<Favorite>>([]);
+}
+
 class RecipeItemWidget extends StatelessWidget {
   final RecipeType recipeModel;
 
-  RecipeItemWidget({
+  const RecipeItemWidget({
     Key? key,
     required this.recipeModel,
   }) : super(key: key);
 
-  final ValueNotifier<bool> isFavorite = ValueNotifier<bool>(false);
-
   @override
   Widget build(BuildContext context) {
+    print(FavoriteScreenData.favorite.value.toString());
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -39,10 +49,8 @@ class RecipeItemWidget extends StatelessWidget {
           itemBuilder: (_, index) {
             final recipeName = recipeModel.recipes[index].name;
             final recipeImage = recipeModel.recipes[index].image;
-            var recipeIsLike = recipeModel.recipes[index].isLiked;
-            if (recipeModel.recipes[index].isLiked == false) {
-              isFavorite.value = recipeIsLike!;
-            }
+            var recipeId = recipeModel.recipes[index].id;
+
             return Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(
@@ -102,20 +110,49 @@ class RecipeItemWidget extends StatelessWidget {
                         ),
                         GestureDetector(
                           onTap: () {
-                            isFavorite.value = recipeIsLike!;
+                            // Access the global list of favorite recipe IDs
+                            List<int> updatedFavorites = List<int>.from(
+                                FavoriteManager.favoriteRecipeIds.value);
 
-                            print("===========isLike: ${isFavorite.value}");
+                            if (updatedFavorites.contains(recipeId)) {
+                              updatedFavorites.remove(recipeId);
+                              int indexToRemove = FavoriteScreenData
+                                  .favorite.value
+                                  .indexWhere((fav) =>
+                                      fav.id == recipeModel.recipes[index].id);
+
+                              if (indexToRemove != -1) {
+                                FavoriteScreenData.favorite.value
+                                    .removeAt(indexToRemove);
+                                print("Removed $recipeId from favorites");
+                              } else {
+                                print("Favorite not found in the list");
+                              }
+                              print("Removed $recipeId from favorites");
+                            } else {
+                              updatedFavorites.add(recipeId);
+                              FavoriteScreenData.favorite.value.add(Favorite(
+                                  id: recipeModel.recipes[index].id,
+                                  name: recipeName,
+                                  image: recipeImage));
+                              print("Added $recipeId to favorites");
+                            }
+
+                            // Update the global list
+                            FavoriteManager.favoriteRecipeIds.value =
+                                updatedFavorites;
                           },
-                          child: ValueListenableBuilder(
-                              valueListenable: isFavorite,
-                              builder: (context, recipeIsFav, _) {
-                                return recipeIsFav == recipeIsLike
-                                    ? Icon(
-                                        CupertinoIcons.heart_fill,
-                                        color: ConstColor.redColor,
-                                      )
-                                    : Icon(CupertinoIcons.heart);
-                              }),
+                          child: ValueListenableBuilder<List<int>>(
+                            valueListenable: FavoriteManager.favoriteRecipeIds,
+                            builder: (context, favoriteRecipeIds, _) {
+                              return favoriteRecipeIds.contains(recipeId)
+                                  ? const Icon(
+                                      CupertinoIcons.heart_fill,
+                                      color: ConstColor.redColor,
+                                    )
+                                  : const Icon(CupertinoIcons.heart);
+                            },
+                          ),
                         ),
                       ],
                     ),

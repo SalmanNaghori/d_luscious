@@ -1,7 +1,9 @@
 import 'package:d_luscious/core/constant/app_string.dart';
+import 'package:d_luscious/core/constant/const.dart';
 import 'package:d_luscious/core/widgets/appbard.dart';
+import 'package:d_luscious/feature/favorite/widget/favorite_item_widget.dart';
+import 'package:d_luscious/feature/home/widget/recipe_item_widget.dart';
 import 'package:flutter/material.dart';
-
 
 class FavoriteScreenTab extends StatefulWidget {
   const FavoriteScreenTab({super.key});
@@ -16,80 +18,9 @@ class _FavoriteScreenTabState extends State<FavoriteScreenTab> {
     // List<bool> listIsFavTimeSaving = [false, false];
     return Scaffold(
         appBar: CustomAppBar.blankAppBar(title: AppString.favorite),
-        body: GridView.builder(
-          padding: const EdgeInsets.all(10),
-          physics: const NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 15.0,
-            mainAxisSpacing: 15.0,
-            mainAxisExtent: 260,
-          ),
-          itemCount: gridMap.length,
-          itemBuilder: (_, index) {
-            return Container(
-              // favoriteList:true,
-
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(
-                  16.0,
-                ),
-                color: Colors.white,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(16.0),
-                      topRight: Radius.circular(16.0),
-                    ),
-                    child: Image.network(
-                      "${gridMap.elementAt(index)['images']}",
-                      height: 170,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "${gridMap.elementAt(index)['title']}",
-                          style: Theme.of(context).textTheme.subtitle1!.merge(
-                                const TextStyle(
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                        ),
-                        // Text(
-                        //   "${gridMap.elementAt(index)['price']}",
-                        //   style: Theme.of(context).textTheme.subtitle2!.merge(
-                        //         TextStyle(
-                        //           fontWeight: FontWeight.w700,
-                        //           color: Colors.grey.shade500,
-                        //         ),
-                        //       ),
-                        // ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            IconButton(
-                              onPressed: () {},
-                              icon: Icon(Icons.favorite_border),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            );
-          },
+        body: Padding(
+          padding: const EdgeInsets.all(8),
+          child: FavoriteItemWidget(),
         ));
   }
 }
