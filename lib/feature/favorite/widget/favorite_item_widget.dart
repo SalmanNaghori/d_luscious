@@ -1,13 +1,14 @@
-import 'package:d_luscious/feature/home/widget/recipe_item_widget.dart';
+import 'package:d_luscious/core/constant/app_image.dart';
+import 'package:d_luscious/core/constant/const.dart';
 import 'package:flutter/material.dart';
 
 class FavoriteItemWidget extends StatelessWidget {
   const FavoriteItemWidget({super.key});
   @override
   Widget build(BuildContext context) {
-    return FavoriteScreenData.favorite.value.length == 0
+    return FavoriteScreenData.favorite.value.isEmpty
         ? Center(
-            child: Text("Empty"),
+            child: Image.asset(ImageAsset.imEmptyFavorites),
           )
         : GridView.builder(
             physics: const NeverScrollableScrollPhysics(),

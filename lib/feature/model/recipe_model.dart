@@ -20,10 +20,14 @@ class Recipe {
   String name;
   bool? isLiked;
   String image;
-  Recipe({
-    required this.id,
-    required this.name,
-    this.isLiked,
-    required this.image,
-  });
+  List<String> ingrediants;
+  List<String> instructions;
+
+  Recipe(
+      {required this.id,
+      required this.name,
+      this.isLiked,
+      required this.image,
+      required this.ingrediants,
+      required this.instructions});
 }

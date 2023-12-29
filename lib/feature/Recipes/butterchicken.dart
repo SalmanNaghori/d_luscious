@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:clippy_flutter/arc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

@@ -1,22 +1,24 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'feature/d_luscious.dart';
-import 'feature/dash_board/dash_board.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  orientations();
   await Firebase.initializeApp();
 
-  runApp(
-
-     const MaterialApp(
-
+  runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    home:MyApp(),
+    theme: ThemeData(useMaterial3: false),
+    home: MyApp(),
   ));
 }
 
+void orientations() {
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+}
 // class SplashScreen extends StatefulWidget {
 //   @override
 //   _SplashScreenState createState() => _SplashScreenState();

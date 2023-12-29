@@ -1,18 +1,11 @@
 import 'package:d_luscious/core/constant/colors_const.dart';
+import 'package:d_luscious/core/constant/const.dart';
+import 'package:d_luscious/core/widgets/network_image.dart';
+import 'package:d_luscious/feature/Recipes/recipe_detail_screen.dart';
 import 'package:d_luscious/feature/model/favorite_model.dart';
 import 'package:d_luscious/feature/model/recipe_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-class FavoriteManager {
-  static final ValueNotifier<List<int>> favoriteRecipeIds =
-      ValueNotifier<List<int>>([]);
-}
-
-class FavoriteScreenData {
-  static final ValueNotifier<List<Favorite>> favorite =
-      ValueNotifier<List<Favorite>>([]);
-}
 
 class RecipeItemWidget extends StatelessWidget {
   final RecipeType recipeModel;
@@ -24,7 +17,6 @@ class RecipeItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(FavoriteScreenData.favorite.value.toString());
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,7 +42,8 @@ class RecipeItemWidget extends StatelessWidget {
             final recipeName = recipeModel.recipes[index].name;
             final recipeImage = recipeModel.recipes[index].image;
             var recipeId = recipeModel.recipes[index].id;
-
+            var recipeIngredient = recipeModel.recipes[index].ingrediants;
+            var recipeInstruction = recipeModel.recipes[index].instructions;
             return Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(
@@ -62,21 +55,25 @@ class RecipeItemWidget extends StatelessWidget {
                 children: [
                   InkWell(
                     onTap: () {
-                      // Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //         builder: (context) => click_c[index].page));
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => RecipeDetailScreen(
+                            id: recipeId,
+                            imageUrl: recipeImage,
+                            ingredients: recipeIngredient,
+                            instruction: recipeInstruction,
+                          ),
+                        ),
+                      );
                     },
-                    child: ClipRRect(
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(10.0),
-                        topRight: Radius.circular(10.0),
-                      ),
-                      child: Image.network(
-                        recipeImage,
-                        width: double.infinity,
-                        fit: BoxFit.cover,
+                    child: Hero(
+                      tag: recipeId,
+                      child: CachedImage(
+                        image: recipeImage,
                         height: 150,
+                        width: double.infinity,
+                        redius: 10,
                       ),
                     ),
                   ),
@@ -89,14 +86,20 @@ class RecipeItemWidget extends StatelessWidget {
                         Flexible(
                           child: InkWell(
                             onTap: () {
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //         builder: (context) =>
-                              //             click_c[index].page));
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => RecipeDetailScreen(
+                                    id: recipeId,
+                                    imageUrl: recipeImage,
+                                    ingredients: recipeIngredient,
+                                    instruction: recipeInstruction,
+                                  ),
+                                ),
+                              );
                             },
                             child: Text(
-                              "${recipeName} ",
+                              recipeName,
                               style: Theme.of(context)
                                   .textTheme
                                   .titleMedium!
