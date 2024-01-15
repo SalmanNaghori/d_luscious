@@ -2,7 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'feature/d_luscious.dart';
+import 'features/d_luscious.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

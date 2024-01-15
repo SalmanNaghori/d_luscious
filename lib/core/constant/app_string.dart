@@ -10,4 +10,16 @@ class AppString {
   //Todo: Recipe Details Screen
   static const ingredients = "Ingredients";
   static const instruction = "Instructions";
+
+  //Todo: Login Screen
+  static const email = "Email";
+  static const login = "Login";
+  static const password = "Password";
+
+  //TODo: Forgot Password Screen
+  static const forgotPassword = "Forgot password";
+  static const passwordLinkSendOnYourEmail =
+      "Password reset like sent! Check your email";
+  static const forgotPasswordDes =
+      "Enter Your Email and we will send you a password reset link";
 }

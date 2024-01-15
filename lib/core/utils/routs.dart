@@ -1,9 +1,9 @@
-import 'package:d_luscious/feature/Screen/CategoryScreen.dart';
-import 'package:d_luscious/feature/favorite/Favorite.dart';
+import 'package:d_luscious/features/Screen/CategoryScreen.dart';
+import 'package:d_luscious/features/favorite/Favorite.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../feature/dash_board/dash_board.dart';
+import '../../features/dash_board/dash_board.dart';
 
 class Routers {
   static Route<dynamic> generateRoute(RouteSettings settings) {
