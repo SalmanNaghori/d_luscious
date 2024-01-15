@@ -1,4 +1,4 @@
-# d_luscious
+# D'luscious
 
 A new Flutter project.
 
