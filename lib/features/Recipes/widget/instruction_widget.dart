@@ -33,7 +33,7 @@ class InstructionWidget extends StatelessWidget {
                     backgroundColor: Colors.orange[200],
                     child: Text(
                       "${index + 1}",
-                      style: TextStyle(color: ConstColor.blakColor),
+                      style: const TextStyle(color: ConstColor.blakColor),
                     ),
                   ),
                   const SizedBox(

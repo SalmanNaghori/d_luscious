@@ -97,11 +97,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               passwordReset(context);
               FocusScope.of(context).requestFocus(FocusNode());
             },
+            color: ConstColor.primaryColor,
             child: Text(
               AppString.forgotPassword,
               style: const TextStyle().copyWith(color: ConstColor.whiteColor),
             ),
-            color: ConstColor.primaryColor,
           )
         ],
       ),

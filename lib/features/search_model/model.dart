@@ -18,22 +18,22 @@ class SubCategory {
 }
 
 class ItemDetails {
-  String title, images, time, Ingradiants, Direction, url;
+  String title, images, time, ingradients, direction, url;
 
   ItemDetails(
     this.title,
     this.images,
     this.time,
-    this.Ingradiants,
-    this.Direction,
+    this.ingradients,
+    this.direction,
     this.url,
   );
 }
 
-class Gridmap_c {
+class GridmapC {
   final String title, images;
   final Widget page;
-  Gridmap_c({
+  GridmapC({
     required this.title,
     required this.images,
     required this.page,

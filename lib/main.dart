@@ -12,7 +12,7 @@ Future<void> main() async {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     theme: ThemeData(useMaterial3: false),
-    home: MyApp(),
+    home: const MyApp(),
   ));
 }
 

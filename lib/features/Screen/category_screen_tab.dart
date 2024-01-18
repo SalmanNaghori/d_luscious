@@ -2,9 +2,6 @@ import 'package:d_luscious/core/widgets/appbard.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/constant/app_string.dart';
-import '../CategoriesList/AppetizerScreen.dart';
-import '../CategoriesList/DessertScreen.dart';
-import '../CategoriesList/ExoticScreen.dart';
 import '../search_model/model.dart';
 
 class CategoryScreenTab extends StatefulWidget {
@@ -14,22 +11,22 @@ class CategoryScreenTab extends StatefulWidget {
   State<CategoryScreenTab> createState() => _CategoryScreenTabState();
 }
 
-final List<Gridmap_c> subdetails = [
-  Gridmap_c(
-      title: 'Appetizer',
-      images:
-          'https://as1.ftcdn.net/v2/jpg/02/37/92/98/1000_F_237929818_TzRITyvDWSVU37X4gJDmstQKwInEICmb.jpg',
-      page: Appetizer()),
-  Gridmap_c(
-      title: 'Dessert',
-      images:
-          'https://as1.ftcdn.net/v2/jpg/02/82/91/94/1000_F_282919459_B2R9gO2EYCMvSLzpq16CXy2Z5UwKp8Gr.jpg',
-      page: DessertScreen()),
-  Gridmap_c(
-      title: 'Exotic',
-      images:
-          'https://as2.ftcdn.net/v2/jpg/04/80/75/71/1000_F_480757195_E4rVfHPzHorNrZKOzVDJstOewAMc44bW.jpg',
-      page: ExoticScreen()),
+final List<GridmapC> subdetails = [
+  // Gridmap_c(
+  //     title: 'Appetizer',
+  //     images:
+  //         'https://as1.ftcdn.net/v2/jpg/02/37/92/98/1000_F_237929818_TzRITyvDWSVU37X4gJDmstQKwInEICmb.jpg',
+  //     page: const Appetizer()),
+  // Gridmap_c(
+  //     title: 'Dessert',
+  //     images:
+  //         'https://as1.ftcdn.net/v2/jpg/02/82/91/94/1000_F_282919459_B2R9gO2EYCMvSLzpq16CXy2Z5UwKp8Gr.jpg',
+  //     page: const DessertScreen()),
+  // Gridmap_c(
+  //     title: 'Exotic',
+  //     images:
+  //         'https://as2.ftcdn.net/v2/jpg/04/80/75/71/1000_F_480757195_E4rVfHPzHorNrZKOzVDJstOewAMc44bW.jpg',
+  //     page: const ExoticScreen()),
 ];
 
 class _CategoryScreenTabState extends State<CategoryScreenTab> {
@@ -52,7 +49,7 @@ class _CategoryScreenTabState extends State<CategoryScreenTab> {
   ];
 
   final List<Categorymodel> categorydata = List.generate(nameofcategory.length,
-      (index) => Categorymodel('${nameofcategory[index]}', '${url[index]}'));
+      (index) => Categorymodel(nameofcategory[index], '${url[index]}'));
 
   // @override
   // void initState() {

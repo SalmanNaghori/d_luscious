@@ -80,54 +80,53 @@ class _HomeScreenTabState extends State<HomeScreenTab> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   //logout alertbox fuunction
-  void showAlert(BuildContext context) {
-    showAlertDialog(BuildContext context) {
-      // set up the buttons
-      Widget cancelButton = TextButton(
-        child: Text("Cancel"),
-        onPressed: () async {
-          Navigator.pop(context);
-        },
-      );
-      Widget continueButton = TextButton(
-        child: Text("Yes"),
-        onPressed: () async {
-          Navigator.pop(context);
-          await _auth.signOut();
-        },
-      );
-      // set up the AlertDialog
-      AlertDialog alert = AlertDialog(
-        title: Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(right: 6.0),
-              child: Image.network(
-                "https://cdn-icons-png.flaticon.com/512/1008/1008928.png",
-                height: 20,
-                width: 20,
-              ),
+
+  void showAlertDialog(BuildContext context) {
+    // set up the buttons
+    Widget cancelButton = TextButton(
+      child: const Text("Cancel"),
+      onPressed: () async {
+        Navigator.pop(context);
+      },
+    );
+    Widget continueButton = TextButton(
+      child: const Text("Yes"),
+      onPressed: () async {
+        Navigator.pop(context);
+        await _auth.signOut();
+      },
+    );
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Row(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(right: 6.0),
+            child: Image.network(
+              "https://cdn-icons-png.flaticon.com/512/1008/1008928.png",
+              height: 20,
+              width: 20,
             ),
-            const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text('Sign Out'),
-            ),
-          ],
-        ),
-        content: Text("Would you like to Logout?"),
-        actions: [
-          cancelButton,
-          continueButton,
+          ),
+          const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Text('Sign Out'),
+          ),
         ],
-      );
-      // show the dialog
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return alert;
-        },
-      );
-    }
+      ),
+      content: const Text("Would you like to Logout?"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 
   @override
@@ -151,10 +150,10 @@ class _HomeScreenTabState extends State<HomeScreenTab> {
                     Radius.circular(16.0),
                   ),
                 ),
-                selectedTileColor: Color(0xffF5A342),
+                selectedTileColor: const Color(0xffF5A342),
                 title: Text(
                   "Welcome",
-                  style: Theme.of(context).textTheme.subtitle1!.merge(
+                  style: Theme.of(context).textTheme.titleMedium!.merge(
                         const TextStyle(
                           fontWeight: FontWeight.w700,
                           fontSize: 18.0,
@@ -163,13 +162,13 @@ class _HomeScreenTabState extends State<HomeScreenTab> {
                 ),
                 subtitle: Text(
                   "A Greet welcome to D'luscious.",
-                  style: Theme.of(context).textTheme.subtitle2,
+                  style: Theme.of(context).textTheme.titleSmall,
                 ),
                 trailing: PopupMenuButton<MenuItemabc>(
                   onSelected: (item) => onSelected(context, item),
                   itemBuilder: (context) => [
                     ...MenuItems.itemsFirst.map(buildItem).toList(),
-                    PopupMenuDivider(),
+                    const PopupMenuDivider(),
                     ...MenuItems.itemsSecond.map(buildItem).toList(),
                   ],
                 ),
@@ -307,20 +306,20 @@ class _HomeScreenTabState extends State<HomeScreenTab> {
                   ),
                 ],
               ),
-              content: Text('Are you sure you want to log out?'),
+              content: const Text('Are you sure you want to log out?'),
               actions: [
                 TextButton(
                     onPressed: () => Navigator.of(context).pop(false),
-                    child: Text('No')),
+                    child: const Text('No')),
                 TextButton(
                     onPressed: () async {
                       Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(
-                              builder: (context) => LoginScreen()),
+                              builder: (context) => const LoginScreen()),
                           (route) => false);
                       await _auth.signOut();
                     },
-                    child: Text('Yes'))
+                    child: const Text('Yes'))
               ],
             );
           },

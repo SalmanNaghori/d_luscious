@@ -7,10 +7,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../core/constant/app_string.dart';
 import '../../core/widgets/appbard.dart';
-import '../Screen/CategoryScreen.dart';
-import '../favorite/Favorite.dart';
-import '../home/HomeScreen.dart';
-import '../Screen/SearchScreen.dart';
+import '../Screen/category_screen_tab.dart';
+import '../favorite/favorite.dart';
+import '../home/home_screen_tab.dart';
+import '../Screen/search_screen_tab.dart';
 import '../Screen/user_profile_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -28,7 +28,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     const FavoriteScreenTab(),
     const SearchScreenTab(),
     const CategoryScreenTab(),
-    UserProfileScreenTab(),
+    const UserProfileScreenTab(),
 
     // const ProfileTabScreen(),
   ];

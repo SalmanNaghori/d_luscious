@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 import '../../core/constant/app_string.dart';
 
 class UserProfileScreenTab extends StatelessWidget {
+  const UserProfileScreenTab({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar.blankAppBar(title: AppString.profile),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
+      body: const Padding(
+        padding: EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -53,9 +55,11 @@ class UserProfileScreenTab extends StatelessWidget {
 }
 
 class UserDetailsList extends StatelessWidget {
+  const UserDetailsList({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         DetailItem('Location', 'New York, USA'),
@@ -70,7 +74,7 @@ class DetailItem extends StatelessWidget {
   final String label;
   final String value;
 
-  DetailItem(this.label, this.value);
+  const DetailItem(this.label, this.value, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -81,14 +85,14 @@ class DetailItem extends StatelessWidget {
         children: [
           Text(
             label,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
           ),
           Text(
             value,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 16,
               color: Colors.grey,
             ),
