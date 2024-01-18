@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:d_luscious/core/navigator/navigator.dart';
 import 'package:d_luscious/features/Authenticate/login_screen.dart';
@@ -170,8 +172,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
           minWidth: MediaQuery.of(context).size.width,
           onPressed: () {
-            signUp(emailEditingController.text, passwordEditingController.text,
-                context);
+            signUp(emailEditingController.text, passwordEditingController.text);
           },
           child: const Text(
             "SignUp",
@@ -235,13 +236,19 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     );
   }
 
-  Future<void> signUp(
-      String email, String password, BuildContext context) async {
+  void signUp(String email, String password) async {
     if (_formKey.currentState!.validate()) {
       try {
         await _auth.createUserWithEmailAndPassword(
             email: email, password: password);
+
         await postDetailsToFirestore();
+        //     .catchError((e) {
+        //   Fluttertoast.showToast(msg: e!.message);
+        //   if (kDebugMode) {
+        //     print(e!.message);
+        //   }
+        // });
       } on FirebaseAuthException catch (error) {
         switch (error.code) {
           case "invalid-email":
@@ -266,46 +273,82 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             errorMessage = "An undefined Error happened.";
         }
         Fluttertoast.showToast(msg: errorMessage!);
-        if (kDebugMode) {
-          print(error.code);
-        }
-      } catch (e) {
-        Fluttertoast.showToast(msg: e.toString());
-        if (kDebugMode) {
-          print(e);
-        }
+        print(error.code);
       }
     }
   }
 
   Future<void> postDetailsToFirestore() async {
-    // calling our firestore
-    // calling our user model
-    // sedning these values
+    if (kDebugMode) {
+      print("Posting to Firestore");
+    }
+    try {
+      if (kDebugMode) {
+        print("Posting to Firestore");
+      }
+      FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+      User? user = _auth.currentUser;
 
-    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-    User? user = _auth.currentUser;
+      if (user == null) {
+        Fluttertoast.showToast(msg: "User not found");
+        return;
+      }
+      UserModel userModel = UserModel();
 
-    UserModel userModel = UserModel();
+      // writing all the values
+      userModel.email = user.email;
+      userModel.uid = user.uid;
+      userModel.firstName = firstNameEditingController.text;
+      userModel.secondName = secondNameEditingController.text;
 
-    // writing all the values
-    userModel.email = user!.email;
-    userModel.uid = user.uid;
-    userModel.firstName = firstNameEditingController.text;
-    userModel.secondName = secondNameEditingController.text;
+      await firebaseFirestore
+          .collection("users")
+          .doc(user.uid)
+          .set(userModel.toMap());
 
-    await firebaseFirestore
-        .collection("users")
-        .doc(user.uid)
-        .set(userModel.toMap());
-    Fluttertoast.showToast(msg: "Account created successfully :) ");
-
-    // Check if the widget is still in the widget tree
-    if (!mounted) return;
-
-    Navigator.pushAndRemoveUntil(
+      Fluttertoast.showToast(msg: "Account created successfully :)");
+      if (!mounted) return;
+      Navigator.pushAndRemoveUntil(
         GlobalVariable.appContext,
         MaterialPageRoute(builder: (context) => const LoginScreen()),
-        (route) => false);
+        (route) => false,
+      );
+    } catch (e) {
+      print("Error: ============================$e");
+      // debugPrint("hello============================$e");
+      log("hello============================$e");
+      Fluttertoast.showToast(msg: "Error: $e");
+      Fluttertoast.showToast(msg: "Error: ${e.toString()}");
+      log("hello============================$e");
+      // You can log the error or handle it in any way suitable for your application.
+    }
   }
+
+  // postDetailsToFirestore() async {
+  //   // calling our firestore
+  //   // calling our user model
+  //   // sedning these values
+
+  //   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+  //   User? user = _auth.currentUser;
+
+  //   UserModel userModel = UserModel();
+
+  //   // writing all the values
+  //   userModel.email = user!.email;
+  //   userModel.uid = user.uid;
+  //   userModel.firstName = firstNameEditingController.text;
+  //   userModel.secondName = secondNameEditingController.text;
+
+  //   await firebaseFirestore
+  //       .collection("users")
+  //       .doc(user.uid)
+  //       .set(userModel.toMap());
+  //   Fluttertoast.showToast(msg: "Account created successfully :) ");
+
+  //   Navigator.pushAndRemoveUntil(
+  //       (context),
+  //       MaterialPageRoute(builder: (context) => const LoginScreen()),
+  //       (route) => false);
+  // }
 }
