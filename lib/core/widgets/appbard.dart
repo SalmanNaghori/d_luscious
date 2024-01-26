@@ -3,26 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class CustomAppBar extends AppBar {
-  CustomAppBar.blankAppbar(
-      {double? height,
-      SystemUiOverlayStyle? systemUiOverlayStyle,
-      Color? backgroundColor,
-      bool whiteStatusBarText = false,
-      super.key})
-      : super(
-          systemOverlayStyle: systemUiOverlayStyle ??
-              ((whiteStatusBarText)
-                  ? SystemUiOverlayStyle.light
-                      .copyWith(statusBarColor: Colors.transparent)
-                  : SystemUiOverlayStyle.dark
-                      .copyWith(statusBarColor: Colors.transparent)),
-          toolbarHeight: height ?? 0,
-          automaticallyImplyLeading: false,
-          elevation: 0,
-          centerTitle: true,
-          backgroundColor: backgroundColor ?? Colors.transparent,
-        );
-
   CustomAppBar.blankAppBar({
     super.key,
     required String title,
@@ -33,7 +13,10 @@ class CustomAppBar extends AppBar {
     Color? backgroundColor,
     // super.automaticallyImplyLeading = false,
     TextStyle? textStyle,
+    double elevation = 0,
   }) : super(
+            elevation: elevation,
+            toolbarHeight: height,
             backgroundColor: backgroundColor ?? Colors.white,
             systemOverlayStyle: systemUiOverlayStyle ??
                 ((whiteStatusBarText)
