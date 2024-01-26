@@ -315,8 +315,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
       Fluttertoast.showToast(msg: "Account created successfully :)");
       if (!mounted) return;
-      EasyLoading.dismiss();
-      navigation();
+      // EasyLoading.dismiss();
+      navigation(); 
     } catch (e) {
       EasyLoading.dismiss();
       if (kDebugMode) {
