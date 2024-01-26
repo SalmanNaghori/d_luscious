@@ -3,10 +3,11 @@ import 'package:d_luscious/core/constant/app_string.dart';
 import 'package:d_luscious/core/constant/colors_const.dart';
 import 'package:d_luscious/core/widgets/appbard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-import '../home/HomeScreen.dart';
+import '../home/home_screen_tab.dart';
 import 'forgot_password_screen.dart';
 import 'sign_up_screen.dart';
 
@@ -14,7 +15,7 @@ class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
@@ -78,12 +79,16 @@ class _LoginScreenState extends State<LoginScreen> {
           if (!regex.hasMatch(value)) {
             return ("Enter Valid Password(Min. 6 Character)");
           }
+          return null;
         },
         onSaved: (value) {
           passwordController.text = value!;
         },
         textInputAction: TextInputAction.done,
         decoration: InputDecoration(
+          focusedBorder: const OutlineInputBorder(
+            borderSide: BorderSide(color: ConstColor.primaryColor, width: 2.0),
+          ),
           prefixIcon: const Icon(Icons.vpn_key),
           contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: AppString.password,
@@ -158,7 +163,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       builder: (context) =>
                                           const ForgotPasswordScreen()));
                             },
-                            child: Text(
+                            child: const Text(
                               "Forgot Password",
                               style: TextStyle(
                                   color: Color(0xffF5A342),
@@ -168,14 +173,14 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ]),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 25,
                   ),
                   //SignUp button
                   Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Text("Don't have an account? "),
+                        const Text("Don't have an account? "),
                         GestureDetector(
                           onTap: () {
                             Navigator.push(
@@ -184,7 +189,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     builder: (context) =>
                                         const RegistrationScreen()));
                           },
-                          child: Text(
+                          child: const Text(
                             "SignUp",
                             style: TextStyle(
                                 color: Color(0xffF5A342),
@@ -210,8 +215,8 @@ class _LoginScreenState extends State<LoginScreen> {
             .signInWithEmailAndPassword(email: email, password: password)
             .then((uid) => {
                   Fluttertoast.showToast(msg: "Login Successful"),
-                  Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => HomeScreenTab())),
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => const HomeScreenTab())),
                 });
       } on FirebaseAuthException catch (error) {
         switch (error.code) {
@@ -238,7 +243,9 @@ class _LoginScreenState extends State<LoginScreen> {
             errorMessage = "An undefined Error happened.";
         }
         Fluttertoast.showToast(msg: errorMessage!);
-        print(error.code);
+        if (kDebugMode) {
+          print(error.code);
+        }
       }
     }
   }

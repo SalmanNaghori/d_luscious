@@ -1,19 +1,38 @@
+import 'package:d_luscious/core/constant/colors_const.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import 'features/d_luscious.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   orientations();
+  configLoading();
   await Firebase.initializeApp();
 
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     theme: ThemeData(useMaterial3: false),
-    home: MyApp(),
+    home: const MyApp(),
   ));
+}
+
+void configLoading() {
+  EasyLoading.instance
+    ..displayDuration = const Duration(milliseconds: 2000)
+    ..loadingStyle = EasyLoadingStyle.custom
+    ..backgroundColor = Colors.transparent
+    ..indicatorColor = ConstColor.primaryColor
+    ..indicatorType = EasyLoadingIndicatorType.circle
+    ..indicatorSize = 60
+    ..maskType = EasyLoadingMaskType.black
+    ..dismissOnTap = false
+    ..maskColor = Colors.black54
+    ..textColor = Colors.transparent
+    ..boxShadow = <BoxShadow>[]
+    ..userInteractions = false;
 }
 
 void orientations() {

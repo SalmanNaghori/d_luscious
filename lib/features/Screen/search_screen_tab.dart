@@ -20,7 +20,7 @@ class SearchScreenTab extends StatefulWidget {
 }
 
 class _SearchScreenTabState extends State<SearchScreenTab> {
-  static List<RecipeModel> main_recipe_list = [
+  static List<RecipeModel> mainRecipeList = [
     RecipeModel("Cucumber Raita", 4.3,
         "https://thumbs.dreamstime.com/b/indian-spicy-sauce-raita-herbs-cucumber-close-up-b-bowl-table-horizontal-top-view-above-111769331.jpg"),
     RecipeModel("Butter Chicken", 3.5,
@@ -55,12 +55,12 @@ class _SearchScreenTabState extends State<SearchScreenTab> {
         "https://media.istockphoto.com/id/157995701/photo/tuna-and-chickpea-salad.jpg?s=612x612&w=is&k=20&c=5I_V1wgHP9KtNn3PrhJcTlaBCQOg9AgMsEon_LuQk_Y="),
   ];
 
-  List<RecipeModel> display_list = List.from(main_recipe_list);
+  List<RecipeModel> displayList = List.from(mainRecipeList);
 
   void updateList(String value) {
     //this is function that will filter our list
     setState(() {
-      display_list = main_recipe_list
+      displayList = mainRecipeList
           .where((element) =>
               element.name.toLowerCase().contains(value.toLowerCase()))
           .toList();
@@ -72,7 +72,7 @@ class _SearchScreenTabState extends State<SearchScreenTab> {
     return Scaffold(
       appBar: CustomAppBar.blankAppBar(title: AppString.search),
       body: Padding(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -84,12 +84,12 @@ class _SearchScreenTabState extends State<SearchScreenTab> {
                 onChanged: (value) {
                   updateList(value);
                 },
-                style: TextStyle(color: Colors.black),
+                style: const TextStyle(color: Colors.black),
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: Colors.white60,
-                  focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.amber)),
+                  focusedBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.amber)),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),
                     borderSide: const BorderSide(
@@ -98,7 +98,7 @@ class _SearchScreenTabState extends State<SearchScreenTab> {
                     ),
                   ),
                   hintText: "eg: Cucumber Raita",
-                  prefixIcon: Icon(
+                  prefixIcon: const Icon(
                     Icons.search,
                     color: Color(0xffF5A342),
                   ),
@@ -106,12 +106,12 @@ class _SearchScreenTabState extends State<SearchScreenTab> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20.0,
             ),
             Expanded(
-              child: display_list.length == 0
-                  ? Center(
+              child: displayList.isEmpty
+                  ? const Center(
                       child: Text(
                         "No Result Found",
                         style: TextStyle(
@@ -121,24 +121,24 @@ class _SearchScreenTabState extends State<SearchScreenTab> {
                       ),
                     )
                   : ListView.builder(
-                      itemCount: display_list.length,
+                      itemCount: displayList.length,
                       itemBuilder: ((context, index) => Card(
                             elevation: 6,
                             margin: const EdgeInsets.all(5),
                             child: ListTile(
                               title: Text(
-                                display_list[index].name,
-                                style: TextStyle(
+                                displayList[index].name,
+                                style: const TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              subtitle: Text('${display_list[index].rating}',
-                                  style: TextStyle(
+                              subtitle: Text('${displayList[index].rating}',
+                                  style: const TextStyle(
                                     color: Colors.black26,
                                   )),
                               leading:
-                                  Image.network(display_list[index].imageUrl),
+                                  Image.network(displayList[index].imageUrl),
                             ),
                           )),
                     ),

@@ -35,7 +35,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
         centerTitle: true,
         title: Text(
           widget.title,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.black,
             fontSize: 20,
             decorationStyle: TextDecorationStyle.double,

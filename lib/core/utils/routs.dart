@@ -1,7 +1,6 @@
-import 'package:d_luscious/features/Screen/CategoryScreen.dart';
-import 'package:d_luscious/features/favorite/Favorite.dart';
+import 'package:d_luscious/features/Screen/category_screen_tab.dart';
+import 'package:d_luscious/features/favorite/favorite.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
 import '../../features/dash_board/dash_board.dart';
 
@@ -12,19 +11,19 @@ class Routers {
       //   return CupertinoPageRoute(builder: (_) => LoginScreen());
 
       case DASHBOARD_1:
-        return CupertinoPageRoute(builder: (_) => DashboardScreen());
+        return CupertinoPageRoute(builder: (_) => const DashboardScreen());
 
       case FAVORITESCREEN:
-        return CupertinoPageRoute(builder: (_) => FavoriteScreenTab());
+        return CupertinoPageRoute(builder: (_) => const FavoriteScreenTab());
 
       case CATEGORYSCREEN:
-        return CupertinoPageRoute(builder: (_) => CategoryScreenTab());
+        return CupertinoPageRoute(builder: (_) => const CategoryScreenTab());
 
       // case No_INTERNET_ROUTE:
       //   return CupertinoPageRoute(builder: (_) => NoInterNetScreen());
 
       default:
-        return CupertinoPageRoute(builder: (_) => DashboardScreen());
+        return CupertinoPageRoute(builder: (_) => const DashboardScreen());
     }
   }
 }

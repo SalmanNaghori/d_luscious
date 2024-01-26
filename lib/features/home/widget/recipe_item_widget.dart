@@ -5,6 +5,7 @@ import 'package:d_luscious/features/Recipes/recipe_detail_screen.dart';
 import 'package:d_luscious/features/model/favorite_model.dart';
 import 'package:d_luscious/features/model/recipe_model.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class RecipeItemWidget extends StatelessWidget {
@@ -22,7 +23,7 @@ class RecipeItemWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(recipeModel.typeName,
-            style: TextStyle(
+            style: const TextStyle(
                 fontSize: 30,
                 fontFamily: "chewy",
                 color: ConstColor.primaryColor)),
@@ -129,18 +130,26 @@ class RecipeItemWidget extends StatelessWidget {
                               if (indexToRemove != -1) {
                                 FavoriteScreenData.favorite.value
                                     .removeAt(indexToRemove);
-                                print("Removed $recipeId from favorites");
+                                if (kDebugMode) {
+                                  print("Removed $recipeId from favorites");
+                                }
                               } else {
-                                print("Favorite not found in the list");
+                                if (kDebugMode) {
+                                  print("Favorite not found in the list");
+                                }
                               }
-                              print("Removed $recipeId from favorites");
+                              if (kDebugMode) {
+                                print("Removed $recipeId from favorites");
+                              }
                             } else {
                               updatedFavorites.add(recipeId);
                               FavoriteScreenData.favorite.value.add(Favorite(
                                   id: recipeModel.recipes[index].id,
                                   name: recipeName,
                                   image: recipeImage));
-                              print("Added $recipeId to favorites");
+                              if (kDebugMode) {
+                                print("Added $recipeId to favorites");
+                              }
                             }
 
                             // Update the global list

@@ -6,7 +6,7 @@ class Myquare extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+      body: SizedBox(
         height: 200,
         child: ListView(
           scrollDirection: Axis.horizontal,
@@ -20,7 +20,7 @@ class Myquare extends StatelessWidget {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                         color: Colors.grey),
-                    child: Center(
+                    child: const Center(
                       child: Text(
                         "ListView 1",
                         style: TextStyle(fontSize: 32, color: Colors.white),
