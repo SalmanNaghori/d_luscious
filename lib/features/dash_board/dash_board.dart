@@ -43,7 +43,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget build(BuildContext context) {
     return BlocBuilder<DashboardCubit, int>(builder: (ctx, state) {
       return Scaffold(
-        appBar: CustomAppBar.blankAppbar(),
+        appBar: CustomAppBar.blankAppBar(
+          title: "",
+        ),
         body: tabScreenView(state),
         bottomNavigationBar: _bottomNavigationBar(state),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

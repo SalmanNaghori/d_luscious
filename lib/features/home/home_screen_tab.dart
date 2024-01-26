@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:d_luscious/core/constant/const.dart';
+import 'package:d_luscious/core/widgets/appbard.dart';
 import 'package:d_luscious/core/widgets/network_image.dart';
 import 'package:d_luscious/features/Recipes/recipe_detail_screen.dart';
 import 'package:d_luscious/features/home/widget/recipe_item_widget.dart';
@@ -132,13 +133,17 @@ class _HomeScreenTabState extends State<HomeScreenTab> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: CustomAppBar.blankAppBar(
+        title: "",
+        height: 0,
+      ),
       body: SingleChildScrollView(
         controller: _scrollController,
         child: Column(
           children: [
-            const SizedBox(
-              height: 10.0,
-            ),
+            // const SizedBox(
+            //   height: 10.0,
+            // ),
             Padding(
               padding: const EdgeInsets.only(
                   left: 21, right: 21, top: 18.8, bottom: 20),

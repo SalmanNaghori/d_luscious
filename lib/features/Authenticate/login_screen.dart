@@ -5,6 +5,7 @@ import 'package:d_luscious/core/widgets/appbard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import '../home/home_screen_tab.dart';
@@ -31,7 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   // string for displaying the error Message
   String? errorMessage;
-
+  FocusNode _focusNode = FocusNode();
   @override
   Widget build(BuildContext context) {
     //email field
@@ -55,10 +56,10 @@ class _LoginScreenState extends State<LoginScreen> {
         },
         textInputAction: TextInputAction.next,
         decoration: InputDecoration(
+          prefixIcon: const Icon(Icons.mail),
           focusedBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: ConstColor.primaryColor, width: 2.0),
           ),
-          prefixIcon: const Icon(Icons.mail),
           contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: AppString.email,
           border: OutlineInputBorder(
@@ -86,10 +87,13 @@ class _LoginScreenState extends State<LoginScreen> {
         },
         textInputAction: TextInputAction.done,
         decoration: InputDecoration(
+          prefixIcon: const Icon(
+            Icons.vpn_key,
+          ),
           focusedBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: ConstColor.primaryColor, width: 2.0),
           ),
-          prefixIcon: const Icon(Icons.vpn_key),
+          //prefixIcon: const Icon(Icons.vpn_key),
           contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: AppString.password,
           border: OutlineInputBorder(
@@ -106,6 +110,7 @@ class _LoginScreenState extends State<LoginScreen> {
           minWidth: MediaQuery.of(context).size.width,
           onPressed: () {
             signIn(emailController.text, passwordController.text);
+            EasyLoading.show();
           },
           child: const Text(
             AppString.login,
@@ -119,6 +124,7 @@ class _LoginScreenState extends State<LoginScreen> {
       appBar: CustomAppBar.blankAppBar(
         title: "",
         whiteStatusBarText: false,
+        elevation: 0,
       ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -211,13 +217,10 @@ class _LoginScreenState extends State<LoginScreen> {
   void signIn(String email, String password) async {
     if (_formKey.currentState!.validate()) {
       try {
-        await _auth
-            .signInWithEmailAndPassword(email: email, password: password)
-            .then((uid) => {
-                  Fluttertoast.showToast(msg: "Login Successful"),
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (context) => const HomeScreenTab())),
-                });
+        await _auth.signInWithEmailAndPassword(
+            email: email, password: password);
+
+        navigation();
       } on FirebaseAuthException catch (error) {
         switch (error.code) {
           case "invalid-email":
@@ -240,7 +243,7 @@ class _LoginScreenState extends State<LoginScreen> {
             errorMessage = "Signing in with Email and Password is not enabled.";
             break;
           default:
-            errorMessage = "An undefined Error happened.";
+            errorMessage = "${error.message}";
         }
         Fluttertoast.showToast(msg: errorMessage!);
         if (kDebugMode) {
@@ -248,5 +251,16 @@ class _LoginScreenState extends State<LoginScreen> {
         }
       }
     }
+  }
+
+  Future<void> navigation() async {
+    EasyLoading.dismiss();
+    Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => const HomeScreenTab()));
+    Future.delayed(const Duration(milliseconds: 1000), () {
+      Fluttertoast.showToast(msg: "Login Successful");
+    });
+    //
+    //    });
   }
 }

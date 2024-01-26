@@ -1,4 +1,5 @@
 import 'package:d_luscious/core/constant/app_string.dart';
+import 'package:d_luscious/core/constant/colors_const.dart';
 import 'package:d_luscious/core/navigator/navigator.dart';
 import 'package:d_luscious/features/Authenticate/login_screen.dart';
 import 'package:d_luscious/features/dash_board/dash_board_cubit.dart';
@@ -56,6 +57,7 @@ class _MyAppState extends State<MyApp> {
               ),
 
               theme: ThemeData(
+                  primaryColor: ConstColor.primaryColor,
                   appBarTheme: const AppBarTheme(
                     elevation: 0.0,
                     color: Colors.transparent,

@@ -22,4 +22,11 @@ class AppString {
       "Password reset like sent! Check your email";
   static const forgotPasswordDes =
       "Enter Your Email and we will send you a password reset link";
+
+  //Todo:Sign Up Screen
+  static const firstName = "First Name";
+  static const lastName = "Last Name";
+  static const emailAddress = "Enter your email address";
+  static const confirmPasswors = "Confirm Password";
+  static const signUp = "SignUp";
 }

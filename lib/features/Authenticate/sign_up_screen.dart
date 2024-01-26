@@ -1,9 +1,12 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:d_luscious/core/constant/app_string.dart';
 import 'package:d_luscious/core/navigator/navigator.dart';
+import 'package:d_luscious/core/widgets/appbard.dart';
+import 'package:d_luscious/core/widgets/custom_textfield.dart';
+import 'package:d_luscious/core/widgets/my_button.dart';
 import 'package:d_luscious/features/Authenticate/login_screen.dart';
-
 import 'package:d_luscious/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -32,171 +35,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final firstNameField = TextFormField(
-        autofocus: false,
-        controller: firstNameEditingController,
-        keyboardType: TextInputType.name,
-        validator: (value) {
-          RegExp regex = RegExp(r'^.{3,}$');
-          if (value!.isEmpty) {
-            return ("First Name cannot be Empty");
-          }
-          if (!regex.hasMatch(value)) {
-            return ("Enter Valid name(Min. 3 Character)");
-          }
-          return null;
-        },
-        onSaved: (value) {
-          firstNameEditingController.text = value!;
-        },
-        textInputAction: TextInputAction.next,
-        decoration: InputDecoration(
-          prefixIcon: const Icon(Icons.account_circle),
-          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: "First Name",
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ));
-
-    final secondNameField = TextFormField(
-        autofocus: false,
-        controller: secondNameEditingController,
-        keyboardType: TextInputType.name,
-        validator: (value) {
-          if (value!.isEmpty) {
-            return ("Second Name cannot be Empty");
-          }
-          return null;
-        },
-        onSaved: (value) {
-          secondNameEditingController.text = value!;
-        },
-        textInputAction: TextInputAction.next,
-        decoration: InputDecoration(
-          prefixIcon: const Icon(Icons.account_circle),
-          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: "Last Name",
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ));
-
-    //email field
-    final emailField = TextFormField(
-        autofocus: false,
-        controller: emailEditingController,
-        keyboardType: TextInputType.emailAddress,
-        validator: (value) {
-          if (value!.isEmpty) {
-            return ("Please Enter Your Email");
-          }
-          // reg expression for email validation
-          if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
-              .hasMatch(value)) {
-            return ("Please Enter a valid email");
-          }
-          return null;
-        },
-        onSaved: (value) {
-          firstNameEditingController.text = value!;
-        },
-        textInputAction: TextInputAction.next,
-        decoration: InputDecoration(
-          prefixIcon: const Icon(Icons.mail),
-          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: "Email",
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ));
-
-    //password field
-    final passwordField = TextFormField(
-        autofocus: false,
-        controller: passwordEditingController,
-        obscureText: true,
-        validator: (value) {
-          RegExp regex = RegExp(r'^.{6,}$');
-          if (value!.isEmpty) {
-            return ("Password is required for login");
-          }
-          if (!regex.hasMatch(value)) {
-            return ("Enter Valid Password(Min. 6 Character)");
-          }
-          return null;
-        },
-        onSaved: (value) {
-          firstNameEditingController.text = value!;
-        },
-        textInputAction: TextInputAction.next,
-        decoration: InputDecoration(
-          prefixIcon: const Icon(Icons.vpn_key),
-          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: "Password",
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ));
-
-    //confirm password field
-    final confirmPasswordField = TextFormField(
-        autofocus: false,
-        controller: confirmPasswordEditingController,
-        obscureText: true,
-        validator: (value) {
-          if (confirmPasswordEditingController.text !=
-              passwordEditingController.text) {
-            return "Password don't match";
-          }
-          return null;
-        },
-        onSaved: (value) {
-          confirmPasswordEditingController.text = value!;
-        },
-        textInputAction: TextInputAction.done,
-        decoration: InputDecoration(
-          prefixIcon: const Icon(Icons.vpn_key),
-          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: "Confirm Password",
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ));
-
-    //signup button
-    final signUpButton = Material(
-      elevation: 5,
-      borderRadius: BorderRadius.circular(30),
-      color: const Color(0xffF5A342),
-      child: MaterialButton(
-          padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-          minWidth: MediaQuery.of(context).size.width,
-          onPressed: () {
-            signUp(emailEditingController.text, passwordEditingController.text);
-            EasyLoading.show();
-          },
-          child: const Text(
-            "SignUp",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
-          )),
-    );
-
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.blue),
-          onPressed: () {
-            // passing this to our root
-            Navigator.of(context).pop();
-          },
-        ),
-      ),
+      appBar: CustomAppBar.backButton(title: "", context: context),
       body: Center(
         child: SingleChildScrollView(
           child: Container(
@@ -216,17 +57,126 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           fit: BoxFit.contain,
                         )),
                     const SizedBox(height: 45),
-                    firstNameField,
+                    MyTextField(
+                      textInputAction: TextInputAction.next,
+                      hintText: AppString.firstName,
+                      textController: firstNameEditingController,
+                      prefixIcon: const Icon(Icons.account_circle_rounded),
+                      keyBoardType: TextInputType.name,
+                      // maxLine: 1,
+                      validator: (value) {
+                        RegExp regex = RegExp(r'^.{3,}$');
+                        if (value!.isEmpty) {
+                          EasyLoading.dismiss();
+                          return ("First Name cannot be Empty");
+                        }
+                        if (!regex.hasMatch(value)) {
+                          EasyLoading.dismiss();
+                          return ("Enter Valid name(Min. 3 Character)");
+                        }
+                        return null;
+                      },
+                      onSaved: (value) {
+                        firstNameEditingController.text = value!;
+                      },
+                    ),
                     const SizedBox(height: 20),
-                    secondNameField,
+                    MyTextField(
+                      onChanged: (value) {},
+                      textInputAction: TextInputAction.next,
+                      hintText: AppString.lastName,
+                      textController: secondNameEditingController,
+                      maxLength: 1,
+                      prefixIcon: const Icon(Icons.account_circle_rounded),
+                      keyBoardType: TextInputType.name,
+                      maxLine: 1,
+                      validator: (value) {
+                        RegExp regex = RegExp(r'^.{3,}$');
+                        if (value!.isEmpty) {
+                          EasyLoading.dismiss();
+                          return ("First Name cannot be Empty");
+                        }
+                        if (!regex.hasMatch(value)) {
+                          EasyLoading.dismiss();
+                          return ("Enter Valid name(Min. 3 Character)");
+                        }
+                        return null;
+                      },
+                    ),
                     const SizedBox(height: 20),
-                    emailField,
+                    MyTextField(
+                      onChanged: (value) {},
+                      textInputAction: TextInputAction.next,
+                      hintText: AppString.emailAddress,
+                      textController: emailEditingController,
+                      maxLength: 1,
+                      prefixIcon: const Icon(Icons.email_rounded),
+                      keyBoardType: TextInputType.name,
+                      maxLine: 1,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          EasyLoading.dismiss();
+                          return ("Please Enter Your Email");
+                        }
+                        // reg expression for email validation
+                        if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
+                            .hasMatch(value)) {
+                          EasyLoading.dismiss();
+                          return ("Please Enter a valid email");
+                        }
+                        return null;
+                      },
+                    ),
                     const SizedBox(height: 20),
-                    passwordField,
+                    MyTextField(
+                      onChanged: (value) {},
+                      textInputAction: TextInputAction.next,
+                      hintText: AppString.password,
+                      textController: passwordEditingController,
+                      maxLength: 1,
+                      prefixIcon: const Icon(Icons.vpn_key),
+                      keyBoardType: TextInputType.name,
+                      maxLine: 1,
+                      validator: (value) {
+                        RegExp regex = RegExp(r'^.{6,}$');
+                        if (value!.isEmpty) {
+                          EasyLoading.dismiss();
+                          return ("Password is required for login");
+                        }
+                        if (!regex.hasMatch(value)) {
+                          EasyLoading.dismiss();
+                          return ("Enter Valid Password(Min. 6 Character)");
+                        }
+                        return null;
+                      },
+                    ),
                     const SizedBox(height: 20),
-                    confirmPasswordField,
+                    MyTextField(
+                      onChanged: (value) {},
+                      textInputAction: TextInputAction.next,
+                      hintText: AppString.confirmPasswors,
+                      textController: confirmPasswordEditingController,
+                      maxLength: 1,
+                      prefixIcon: const Icon(Icons.vpn_key),
+                      keyBoardType: TextInputType.name,
+                      maxLine: 1,
+                      validator: (value) {
+                        if (confirmPasswordEditingController.text !=
+                            passwordEditingController.text) {
+                          EasyLoading.dismiss();
+                          return "Password don't match";
+                        }
+                        return null;
+                      },
+                    ),
                     const SizedBox(height: 20),
-                    signUpButton,
+                    MyButton(
+                      onPressed: () {
+                        validationCheck();
+                      },
+                      title: AppString.signUp,
+                      radius: 32,
+                    ),
                     const SizedBox(height: 15),
                   ],
                 ),
@@ -238,19 +188,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     );
   }
 
+  //Todo:SignUp  Function
   void signUp(String email, String password) async {
     if (_formKey.currentState!.validate()) {
       log(_formKey.currentState!.validate().toString());
       try {
         await _auth.createUserWithEmailAndPassword(
             email: email, password: password);
-        //     .catchError((e) {
-        //   EasyLoading.dismiss();
-        //   Fluttertoast.showToast(msg: e!.message);
-        //   if (kDebugMode) {
-        //     print(e?.message);
-        //   }
-        // });
+
         await postDetailsToFirestore();
       } on FirebaseAuthException catch (error) {
         EasyLoading.dismiss();
@@ -275,6 +220,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             break;
           default:
             log("=========${error.message}=========");
+            log("=========${error.code}=========");
             errorMessage = "${error.message}";
         }
         Fluttertoast.showToast(msg: errorMessage!);
@@ -285,6 +231,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     }
   }
 
+  //Todo:SignUp Complete Function
   Future<void> postDetailsToFirestore() async {
     if (kDebugMode) {
       print("Posting to Firestore");
@@ -322,15 +269,33 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       if (kDebugMode) {
         print("Error: ============================$e");
       }
-      // debugPrint("hello============================$e");
+
       log("hello============================$e");
       Fluttertoast.showToast(msg: "Error: $e");
       Fluttertoast.showToast(msg: "Error: ${e.toString()}");
       log("hello============================$e");
-      // You can log the error or handle it in any way suitable for your application.
     }
   }
 
+  //Todo: Validiation
+  validationCheck() {
+    if (firstNameEditingController.text.trim().isEmpty ||
+        secondNameEditingController.text.trim().isEmpty ||
+        emailEditingController.text.trim().isEmpty ||
+        passwordEditingController.text.trim().isEmpty ||
+        passwordEditingController.text !=
+            confirmPasswordEditingController.text) {
+      log("Validation failed");
+      EasyLoading.dismiss();
+      // Handle validation failure here, such as showing a message to the user
+    } else {
+      // Only call signUp here if validation is successful
+      signUp(emailEditingController.text, passwordEditingController.text);
+      EasyLoading.show();
+    }
+  }
+
+//Todo:Navigation
   Future<void> navigation() async {
     Navigator.pushAndRemoveUntil(
       GlobalVariable.appContext,
@@ -338,32 +303,4 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       (route) => false,
     );
   }
-
-  // postDetailsToFirestore() async {
-  //   // calling our firestore
-  //   // calling our user model
-  //   // sedning these values
-
-  //   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-  //   User? user = _auth.currentUser;
-
-  //   UserModel userModel = UserModel();
-
-  //   // writing all the values
-  //   userModel.email = user!.email;
-  //   userModel.uid = user.uid;
-  //   userModel.firstName = firstNameEditingController.text;
-  //   userModel.secondName = secondNameEditingController.text;
-
-  //   await firebaseFirestore
-  //       .collection("users")
-  //       .doc(user.uid)
-  //       .set(userModel.toMap());
-  //   Fluttertoast.showToast(msg: "Account created successfully :) ");
-
-  //   Navigator.pushAndRemoveUntil(
-  //       (context),
-  //       MaterialPageRoute(builder: (context) => const LoginScreen()),
-  //       (route) => false);
-  // }
 }
