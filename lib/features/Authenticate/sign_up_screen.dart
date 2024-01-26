@@ -8,6 +8,7 @@ import 'package:d_luscious/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class RegistrationScreen extends StatefulWidget {
@@ -173,6 +174,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           minWidth: MediaQuery.of(context).size.width,
           onPressed: () {
             signUp(emailEditingController.text, passwordEditingController.text);
+            EasyLoading.show();
           },
           child: const Text(
             "SignUp",
@@ -238,18 +240,20 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   void signUp(String email, String password) async {
     if (_formKey.currentState!.validate()) {
+      log(_formKey.currentState!.validate().toString());
       try {
         await _auth.createUserWithEmailAndPassword(
             email: email, password: password);
-
-        await postDetailsToFirestore();
         //     .catchError((e) {
+        //   EasyLoading.dismiss();
         //   Fluttertoast.showToast(msg: e!.message);
         //   if (kDebugMode) {
-        //     print(e!.message);
+        //     print(e?.message);
         //   }
         // });
+        await postDetailsToFirestore();
       } on FirebaseAuthException catch (error) {
+        EasyLoading.dismiss();
         switch (error.code) {
           case "invalid-email":
             errorMessage = "Your email address appears to be malformed.";
@@ -270,10 +274,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             errorMessage = "Signing in with Email and Password is not enabled.";
             break;
           default:
-            errorMessage = "An undefined Error happened.";
+            log("=========${error.message}=========");
+            errorMessage = "${error.message}";
         }
         Fluttertoast.showToast(msg: errorMessage!);
-        print(error.code);
+        if (kDebugMode) {
+          print(error.code);
+        }
       }
     }
   }
@@ -308,13 +315,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
       Fluttertoast.showToast(msg: "Account created successfully :)");
       if (!mounted) return;
-      Navigator.pushAndRemoveUntil(
-        GlobalVariable.appContext,
-        MaterialPageRoute(builder: (context) => const LoginScreen()),
-        (route) => false,
-      );
+      EasyLoading.dismiss();
+      navigation();
     } catch (e) {
-      print("Error: ============================$e");
+      EasyLoading.dismiss();
+      if (kDebugMode) {
+        print("Error: ============================$e");
+      }
       // debugPrint("hello============================$e");
       log("hello============================$e");
       Fluttertoast.showToast(msg: "Error: $e");
@@ -322,6 +329,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       log("hello============================$e");
       // You can log the error or handle it in any way suitable for your application.
     }
+  }
+
+  Future<void> navigation() async {
+    Navigator.pushAndRemoveUntil(
+      GlobalVariable.appContext,
+      MaterialPageRoute(builder: (context) => const LoginScreen()),
+      (route) => false,
+    );
   }
 
   // postDetailsToFirestore() async {
