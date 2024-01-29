@@ -4,18 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
+import 'core/storage/shared_pref_utils.dart';
 import 'features/d_luscious.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await SharedPrefUtils.init();
   orientations();
   configLoading();
+
   await Firebase.initializeApp();
 
-  runApp(MaterialApp(
+  runApp(const MaterialApp(
     debugShowCheckedModeBanner: false,
-    theme: ThemeData(useMaterial3: false),
-    home: const MyApp(),
+    home: MyApp(),
   ));
 }
 

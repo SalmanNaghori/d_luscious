@@ -1,3 +1,4 @@
+import 'package:d_luscious/core/constant/colors_const.dart';
 import 'package:d_luscious/core/widgets/appbard.dart';
 import 'package:flutter/material.dart';
 
@@ -81,6 +82,7 @@ class _CategoryScreenTabState extends State<CategoryScreenTab> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: ConstColor.whiteColor,
         appBar: CustomAppBar.blankAppBar(title: AppString.category),
         body: GridView.builder(
           padding: const EdgeInsets.all(10),

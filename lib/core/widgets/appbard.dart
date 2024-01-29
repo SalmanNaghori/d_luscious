@@ -29,6 +29,7 @@ class CustomAppBar extends AppBar {
                     const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 30,
+                      color: ConstColor.blakColor,
                       //make underline
                       decorationStyle:
                           TextDecorationStyle.double, //double underline

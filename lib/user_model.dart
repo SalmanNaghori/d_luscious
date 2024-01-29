@@ -7,12 +7,12 @@ class UserModel {
   UserModel({this.uid, this.email, this.firstName, this.secondName});
 
   // receiving data from server
-  factory UserModel.fromMap(map) {
+  factory UserModel.fromMap(Map<String, dynamic>? map) {
     return UserModel(
-      uid: map['uid'],
-      email: map['email'],
-      firstName: map['firstName'],
-      secondName: map['secondName'],
+      uid: map?['uid'],
+      email: map?['email'],
+      firstName: map?['firstName'],
+      secondName: map?['secondName'],
     );
   }
 
@@ -24,5 +24,10 @@ class UserModel {
       'firstName': firstName,
       'secondName': secondName,
     };
+  }
+
+  @override
+  String toString() {
+    return 'UserModel{uid: $uid, email: $email, firstName: $firstName, secondName: $secondName}';
   }
 }

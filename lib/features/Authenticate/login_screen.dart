@@ -1,14 +1,17 @@
+import 'dart:developer';
+
 import 'package:d_luscious/core/constant/app_image.dart';
 import 'package:d_luscious/core/constant/app_string.dart';
 import 'package:d_luscious/core/constant/colors_const.dart';
+import 'package:d_luscious/core/storage/shared_pref_utils.dart';
 import 'package:d_luscious/core/widgets/appbard.dart';
+import 'package:d_luscious/features/dash_board/dash_board.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-import '../home/home_screen_tab.dart';
 import 'forgot_password_screen.dart';
 import 'sign_up_screen.dart';
 
@@ -32,7 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   // string for displaying the error Message
   String? errorMessage;
-  FocusNode _focusNode = FocusNode();
+
   @override
   Widget build(BuildContext context) {
     //email field
@@ -74,6 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
         obscureText: true,
         validator: (value) {
           RegExp regex = RegExp(r'^.{6,}$');
+
           if (value!.isEmpty) {
             return ("Password is required for login");
           }
@@ -110,7 +114,6 @@ class _LoginScreenState extends State<LoginScreen> {
           minWidth: MediaQuery.of(context).size.width,
           onPressed: () {
             signIn(emailController.text, passwordController.text);
-            EasyLoading.show();
           },
           child: const Text(
             AppString.login,
@@ -216,16 +219,17 @@ class _LoginScreenState extends State<LoginScreen> {
   // login function
   void signIn(String email, String password) async {
     if (_formKey.currentState!.validate()) {
+      EasyLoading.show();
       try {
         await _auth.signInWithEmailAndPassword(
             email: email, password: password);
-
+        SharedPrefUtils.setIsUserLoggedIn(true);
         navigation();
+        log("User:$email=========LoggedIn Successfully====");
       } on FirebaseAuthException catch (error) {
         switch (error.code) {
           case "invalid-email":
             errorMessage = "Your email address appears to be malformed.";
-
             break;
           case "wrong-password":
             errorMessage = "Your password is wrong.";
@@ -245,19 +249,25 @@ class _LoginScreenState extends State<LoginScreen> {
           default:
             errorMessage = "${error.message}";
         }
+        EasyLoading.dismiss();
         Fluttertoast.showToast(msg: errorMessage!);
         if (kDebugMode) {
           print(error.code);
         }
       }
+    } else {
+      log("Form is not valid");
+      Future.delayed(const Duration(seconds: 1), () {
+        EasyLoading.dismiss();
+      });
     }
   }
 
   Future<void> navigation() async {
     EasyLoading.dismiss();
     Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const HomeScreenTab()));
-    Future.delayed(const Duration(milliseconds: 1000), () {
+        MaterialPageRoute(builder: (context) => const DashboardScreen()));
+    Future.delayed(const Duration(milliseconds: 200), () {
       Fluttertoast.showToast(msg: "Login Successful");
     });
     //

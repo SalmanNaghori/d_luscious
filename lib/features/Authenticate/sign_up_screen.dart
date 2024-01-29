@@ -191,7 +191,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   //Todo:SignUp  Function
   void signUp(String email, String password) async {
     if (_formKey.currentState!.validate()) {
-      log(_formKey.currentState!.validate().toString());
       try {
         await _auth.createUserWithEmailAndPassword(
             email: email, password: password);
@@ -228,6 +227,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           print(error.code);
         }
       }
+    } else {
+      EasyLoading.dismiss();
     }
   }
 

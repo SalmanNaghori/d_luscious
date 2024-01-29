@@ -2,6 +2,8 @@ import 'package:d_luscious/core/constant/app_string.dart';
 import 'package:d_luscious/core/widgets/appbard.dart';
 import 'package:flutter/material.dart';
 
+import '../../core/constant/colors_const.dart';
+
 class RecipeModel {
   String name;
   double rating;
@@ -70,7 +72,10 @@ class _SearchScreenTabState extends State<SearchScreenTab> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar.blankAppBar(title: AppString.search),
+      backgroundColor: ConstColor.whiteColor,
+      appBar: CustomAppBar.blankAppBar(
+        title: AppString.search,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
