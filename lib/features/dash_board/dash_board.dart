@@ -43,8 +43,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget build(BuildContext context) {
     return BlocBuilder<DashboardCubit, int>(builder: (ctx, state) {
       return Scaffold(
+        backgroundColor: ConstColor.whiteColor,
         appBar: CustomAppBar.blankAppBar(
+          height: 0,
           title: "",
+          whiteStatusBarText: false,
         ),
         body: tabScreenView(state),
         bottomNavigationBar: _bottomNavigationBar(state),

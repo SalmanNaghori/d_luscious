@@ -1,16 +1,24 @@
 import 'dart:async';
 
+import 'dart:developer';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:d_luscious/core/constant/colors_const.dart';
 import 'package:d_luscious/core/constant/const.dart';
-import 'package:d_luscious/core/widgets/appbard.dart';
+import 'package:d_luscious/core/storage/shared_pref_utils.dart';
 import 'package:d_luscious/core/widgets/network_image.dart';
+import 'package:d_luscious/features/Authenticate/login_screen.dart';
 import 'package:d_luscious/features/Recipes/recipe_detail_screen.dart';
+import 'package:d_luscious/features/Screen/search_screen_tab.dart';
 import 'package:d_luscious/features/home/widget/recipe_item_widget.dart';
+import 'package:d_luscious/features/model/recipe_model.dart';
+
 import 'package:d_luscious/features/model/selected_food.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
-import '../Authenticate/login_screen.dart';
 import '../data/menu_items.dart';
 import '../model/menu_item.dart';
 
@@ -56,6 +64,8 @@ class _HomeScreenTabState extends State<HomeScreenTab> {
 
   @override
   void initState() {
+    getAllUser();
+
     pageController = PageController(initialPage: 0, viewportFraction: 0.85);
     carasouelTimer = getTimer();
     _scrollController.addListener(() {
@@ -71,6 +81,34 @@ class _HomeScreenTabState extends State<HomeScreenTab> {
     super.initState();
   }
 
+  void getAllDataFromCollection() async {
+    try {
+      QuerySnapshot mainQuerySnapshot =
+          await FirebaseFirestore.instance.collection("recipeTypes").get();
+      for (var mainDocSnapshot in mainQuerySnapshot.docs) {
+        log('=> ${mainDocSnapshot.data()}');
+        // Recipes.fromJson(mainDocSnapshot.data());
+      }
+    } catch (error) {
+      log("Error getting collection data: $error");
+    }
+  }
+
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  Future<List<RecipeModel>> getAllUser() async {
+    try {
+      final snapshot = await firestore.collection("recipeTypes").get();
+      final userData =
+          snapshot.docs.map((e) => RecipeModel.fromSnapshot(e)).toList();
+      log(userData.toString());
+      return userData;
+    } catch (e) {
+      // Handle the exception
+      log("Error fetching data: $e");
+      return []; // Or handle the error appropriately
+    }
+  }
+
   @override
   void dispose() {
     pageController.dispose();
@@ -79,64 +117,17 @@ class _HomeScreenTabState extends State<HomeScreenTab> {
 
   bool showBtmAppBr = true;
   final FirebaseAuth _auth = FirebaseAuth.instance;
-
-  //logout alertbox fuunction
-
-  void showAlertDialog(BuildContext context) {
-    // set up the buttons
-    Widget cancelButton = TextButton(
-      child: const Text("Cancel"),
-      onPressed: () async {
-        Navigator.pop(context);
-      },
-    );
-    Widget continueButton = TextButton(
-      child: const Text("Yes"),
-      onPressed: () async {
-        Navigator.pop(context);
-        await _auth.signOut();
-      },
-    );
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      title: Row(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(right: 6.0),
-            child: Image.network(
-              "https://cdn-icons-png.flaticon.com/512/1008/1008928.png",
-              height: 20,
-              width: 20,
-            ),
-          ),
-          const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Text('Sign Out'),
-          ),
-        ],
-      ),
-      content: const Text("Would you like to Logout?"),
-      actions: [
-        cancelButton,
-        continueButton,
-      ],
-    );
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-  }
+  final List<RecipeModel> modelResponse = [];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar.blankAppBar(
-        title: "",
-        height: 0,
-      ),
+      backgroundColor: ConstColor.whiteColor,
+      // appBar: CustomAppBar.blankAppBar(
+      //   title: "",
+      //   height: 0,
+      //   whiteStatusBarText: false,
+      // ),
       body: SingleChildScrollView(
         controller: _scrollController,
         child: Column(
@@ -155,7 +146,7 @@ class _HomeScreenTabState extends State<HomeScreenTab> {
                     Radius.circular(16.0),
                   ),
                 ),
-                selectedTileColor: const Color(0xffF5A342),
+                selectedTileColor: ConstColor.primaryColor,
                 title: Text(
                   "Welcome",
                   style: Theme.of(context).textTheme.titleMedium!.merge(
@@ -170,6 +161,7 @@ class _HomeScreenTabState extends State<HomeScreenTab> {
                   style: Theme.of(context).textTheme.titleSmall,
                 ),
                 trailing: PopupMenuButton<MenuItemabc>(
+                  iconColor: ConstColor.whiteColor,
                   onSelected: (item) => onSelected(context, item),
                   itemBuilder: (context) => [
                     ...MenuItems.itemsFirst.map(buildItem).toList(),
@@ -287,7 +279,7 @@ class _HomeScreenTabState extends State<HomeScreenTab> {
         ),
       );
 
-  //onselected method for select in popup menu
+  //Todo:onselected method for select in popup menu
   onSelected(BuildContext context, MenuItemabc item) {
     switch (item) {
       case MenuItems.itemSignOut:
@@ -317,19 +309,41 @@ class _HomeScreenTabState extends State<HomeScreenTab> {
                     onPressed: () => Navigator.of(context).pop(false),
                     child: const Text('No')),
                 TextButton(
-                    onPressed: () async {
-                      Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(
-                              builder: (context) => const LoginScreen()),
-                          (route) => false);
-                      await _auth.signOut();
-                    },
-                    child: const Text('Yes'))
+                  onPressed: () {
+                    EasyLoading.show();
+                    Navigator.of(context).pop();
+                    Future.delayed(const Duration(milliseconds: 1000), () {
+                      logout();
+                    });
+                  },
+                  child: const Text('Yes'),
+                )
               ],
             );
           },
         );
         break;
+    }
+  }
+
+  Future<void> logout() async {
+    try {
+      // Navigate to MyApp (or your login screen) and remove all previous routes
+
+      EasyLoading.dismiss();
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => const LoginScreen()),
+        (Route<dynamic> route) => false,
+      );
+      // Set the user as logged out in shared preferences
+      await SharedPrefUtils.setIsUserLoggedIn(false);
+
+      // Sign out from Firebase Auth
+      await _auth.signOut();
+    } catch (e) {
+      // Handle any errors here
+      EasyLoading.dismiss();
+      log('Error during logout: $e');
     }
   }
 

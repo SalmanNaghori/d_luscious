@@ -1,7 +1,11 @@
+import 'dart:developer';
+
 import 'package:d_luscious/core/constant/app_string.dart';
 import 'package:d_luscious/core/constant/colors_const.dart';
 import 'package:d_luscious/core/navigator/navigator.dart';
+import 'package:d_luscious/core/storage/shared_pref_utils.dart';
 import 'package:d_luscious/features/Authenticate/login_screen.dart';
+import 'package:d_luscious/features/dash_board/dash_board.dart';
 import 'package:d_luscious/features/dash_board/dash_board_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -57,14 +61,19 @@ class _MyAppState extends State<MyApp> {
               ),
 
               theme: ThemeData(
-                  primaryColor: ConstColor.primaryColor,
-                  appBarTheme: const AppBarTheme(
-                    elevation: 0.0,
-                    color: Colors.transparent,
-                    systemOverlayStyle: SystemUiOverlayStyle.dark,
-                    centerTitle: true,
-                  ),
-                  scaffoldBackgroundColor: Colors.white),
+                colorScheme: ThemeData().colorScheme.copyWith(
+                      primary: ConstColor.primaryColor,
+                    ),
+                useMaterial3: false,
+                primaryColor: ConstColor.primaryColor,
+                appBarTheme: const AppBarTheme(
+                  elevation: 0.0,
+                  color: Colors.transparent,
+                  systemOverlayStyle: SystemUiOverlayStyle.dark,
+                  centerTitle: true,
+                ),
+                // scaffoldBackgroundColor: Colors.white,
+              ),
 
               navigatorKey: GlobalVariable.navigatorKey,
               debugShowCheckedModeBanner: false,
@@ -72,12 +81,19 @@ class _MyAppState extends State<MyApp> {
               onGenerateRoute: Routers.generateRoute,
               routes: const <String, WidgetBuilder>{},
               // home: AppLifecycleReactor(),
-              home: const LoginScreen(),
+              home: getRootWidget(),
               //  home: LoginScreen (),
             ),
           ),
         );
       },
     );
+  }
+
+  Widget getRootWidget() {
+    log(SharedPrefUtils.getIsUserLoggedIn().toString());
+    return SharedPrefUtils.getIsUserLoggedIn()
+        ? const DashboardScreen()
+        : const LoginScreen();
   }
 }
