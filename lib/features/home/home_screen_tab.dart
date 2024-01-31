@@ -1,13 +1,18 @@
 import 'dart:async';
+
 import 'dart:developer';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:d_luscious/core/constant/colors_const.dart';
 import 'package:d_luscious/core/constant/const.dart';
 import 'package:d_luscious/core/storage/shared_pref_utils.dart';
 import 'package:d_luscious/core/widgets/network_image.dart';
 import 'package:d_luscious/features/Authenticate/login_screen.dart';
 import 'package:d_luscious/features/Recipes/recipe_detail_screen.dart';
+import 'package:d_luscious/features/Screen/search_screen_tab.dart';
 import 'package:d_luscious/features/home/widget/recipe_item_widget.dart';
+import 'package:d_luscious/features/model/recipe_model.dart';
+
 import 'package:d_luscious/features/model/selected_food.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -59,6 +64,8 @@ class _HomeScreenTabState extends State<HomeScreenTab> {
 
   @override
   void initState() {
+    getAllUser();
+
     pageController = PageController(initialPage: 0, viewportFraction: 0.85);
     carasouelTimer = getTimer();
     _scrollController.addListener(() {
@@ -74,6 +81,34 @@ class _HomeScreenTabState extends State<HomeScreenTab> {
     super.initState();
   }
 
+  void getAllDataFromCollection() async {
+    try {
+      QuerySnapshot mainQuerySnapshot =
+          await FirebaseFirestore.instance.collection("recipeTypes").get();
+      for (var mainDocSnapshot in mainQuerySnapshot.docs) {
+        log('=> ${mainDocSnapshot.data()}');
+        // Recipes.fromJson(mainDocSnapshot.data());
+      }
+    } catch (error) {
+      log("Error getting collection data: $error");
+    }
+  }
+
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  Future<List<RecipeModel>> getAllUser() async {
+    try {
+      final snapshot = await firestore.collection("recipeTypes").get();
+      final userData =
+          snapshot.docs.map((e) => RecipeModel.fromSnapshot(e)).toList();
+      log(userData.toString());
+      return userData;
+    } catch (e) {
+      // Handle the exception
+      log("Error fetching data: $e");
+      return []; // Or handle the error appropriately
+    }
+  }
+
   @override
   void dispose() {
     pageController.dispose();
@@ -82,6 +117,7 @@ class _HomeScreenTabState extends State<HomeScreenTab> {
 
   bool showBtmAppBr = true;
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final List<RecipeModel> modelResponse = [];
 
   @override
   Widget build(BuildContext context) {

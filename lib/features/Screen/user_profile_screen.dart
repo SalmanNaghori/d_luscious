@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:d_luscious/core/constant/colors_const.dart';
+import 'package:d_luscious/core/data/add_data.dart';
 import 'package:d_luscious/core/widgets/appbard.dart';
 import 'package:d_luscious/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -19,10 +20,13 @@ class UserProfileScreenTab extends StatefulWidget {
 class _UserProfileScreenTabState extends State<UserProfileScreenTab> {
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
+  // Instantiate FirestoreService
+  final firestoreService = FirestoreService();
 
   @override
   void initState() {
     super.initState();
+
     FirebaseFirestore.instance
         .collection("users")
         .doc(user!.uid)

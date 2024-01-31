@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 
 import '../../core/constant/colors_const.dart';
 
-class RecipeModel {
+class SearchModel {
   String name;
   double rating;
   String imageUrl;
 
-  RecipeModel(this.name, this.rating, this.imageUrl);
+  SearchModel(this.name, this.rating, this.imageUrl);
 }
 
 class SearchScreenTab extends StatefulWidget {
@@ -22,42 +22,42 @@ class SearchScreenTab extends StatefulWidget {
 }
 
 class _SearchScreenTabState extends State<SearchScreenTab> {
-  static List<RecipeModel> mainRecipeList = [
-    RecipeModel("Cucumber Raita", 4.3,
+  static List<SearchModel> mainRecipeList = [
+    SearchModel("Cucumber Raita", 4.3,
         "https://thumbs.dreamstime.com/b/indian-spicy-sauce-raita-herbs-cucumber-close-up-b-bowl-table-horizontal-top-view-above-111769331.jpg"),
-    RecipeModel("Butter Chicken", 3.5,
+    SearchModel("Butter Chicken", 3.5,
         "https://media.istockphoto.com/id/892029064/photo/chicken-butter-masala.jpg?s=612x612&w=is&k=20&c=tL9nfedV-UuQBRzq_QEbuYMgBLbZvLb_3IqqJZNLLEs="),
-    RecipeModel("Chole Bhature", 4.5,
+    SearchModel("Chole Bhature", 4.5,
         "https://media.istockphoto.com/id/979922482/photo/chole-bhature-or-chick-pea-curry-and-fried-puri-served-in-terracotta-crockery-over-white.jpg?s=612x612&w=is&k=20&c=1XY3VN_RS2gSS5xXYLgUYwqEz4O0SuNOa6pq-B78aLo="),
-    RecipeModel("Gulab Jamun", 3.5,
+    SearchModel("Gulab Jamun", 3.5,
         "https://media.istockphoto.com/id/668147754/photo/gulab-jamun.jpg?s=612x612&w=is&k=20&c=kZsNz58uMx0fZVfhqbYct9u4JymMJNg3eskRSlLxdFQ="),
-    RecipeModel("Kheer", 3.3,
+    SearchModel("Kheer", 3.3,
         "https://media.istockphoto.com/id/1340276605/photo/sweet-indian-dish-kheer-is-made-of-milk-sugar-and-vermicelli.jpg?s=612x612&w=is&k=20&c=H5qNjgqUKW188ZvECVcSZEOK8hhC9WRHuiQ7poZnHHI="),
-    RecipeModel("Pakora", 4.5,
+    SearchModel("Pakora", 4.5,
         "https://media.istockphoto.com/id/177314242/photo/vegetable-pakora.jpg?s=612x612&w=is&k=20&c=zEyqDHzekDiFzPGRunZ4cttgsdjZu55d43cFnIju4L4="),
-    RecipeModel("Palak Paneer", 4.9,
+    SearchModel("Palak Paneer", 4.9,
         "https://media.istockphoto.com/id/922785036/photo/palak-panner-indian-recipe-food-on-wood.jpg?s=612x612&w=is&k=20&c=p1o-jw0x8-ce0vCOBMosRaRkSNdZiUY0bSlAOPPliwM="),
-    RecipeModel("PanCakes", 3.5,
+    SearchModel("PanCakes", 3.5,
         "https://media.istockphoto.com/id/172249723/photo/pancakes.jpg?s=612x612&w=is&k=20&c=djyXHGvaWNIK5GFz7ZsLdGSbFuseK3lfAsa20M6Q-6A="),
-    RecipeModel("Paneer Tikka", 2.5,
+    SearchModel("Paneer Tikka", 2.5,
         "https://media.istockphoto.com/id/1303442507/photo/spicy-indian-paneer-tikka-masala-on-a-skewer-on-wooden-platter.jpg?s=612x612&w=0&k=20&c=eijXsF8w-86CwaxsNszS58TsmDUX2c-LysPEEuUablo="),
-    RecipeModel("SpringRolls", 3.5,
+    SearchModel("SpringRolls", 3.5,
         "https://as2.ftcdn.net/v2/jpg/02/14/90/07/1000_F_214900725_8X4DfrIsIdScBl4hDZ3Uqv5WywlOPhCN.jpg"),
-    RecipeModel("White Sauce Pasta", 3.5,
+    SearchModel("White Sauce Pasta", 3.5,
         "https://t4.ftcdn.net/jpg/00/65/59/93/240_F_65599346_xxwNpdbxHN2WKXSpWpUYMiBAghUdPoGD.jpg"),
-    RecipeModel("Tacos", 3.5,
+    SearchModel("Tacos", 3.5,
         "https://as2.ftcdn.net/v2/jpg/01/13/63/63/1000_F_113636348_FPQO3sUu2ZA3HR9zOzM4lnSiWEdsoqwu.jpg"),
-    RecipeModel("Veg Cheese Sandwich", 3.5,
+    SearchModel("Veg Cheese Sandwich", 3.5,
         "https://media.istockphoto.com/id/155388694/photo/panini-sandwiches.jpg?s=612x612&w=is&k=20&c=c4C9u4yFVIhZyoqJ-DsrdRWUOVd0iIs2CCJVlo79tpY="),
-    RecipeModel("Veg Hakka Noodles", 3.5,
+    SearchModel("Veg Hakka Noodles", 3.5,
         "https://previews.123rf.com/images/espies/espies2111/espies211102772/178163328-schezwan-noodles-or-szechwan-vegetable-hakka-noodles-or-chow-mein-is-a-popular-indo-chinese-recipes-.jpg"),
-    RecipeModel("Broccoli-Cheddar Soup", 3.5,
+    SearchModel("Broccoli-Cheddar Soup", 3.5,
         "https://media.istockphoto.com/id/1265831709/photo/broccoli-and-cheddar-cheese-soup.jpg?s=612x612&w=is&k=20&c=94_0Urj09HWTSPupihYwjhARJbNTzETFGbtha0Kvysc="),
-    RecipeModel("MediterraneanChickpeasalad", 3.5,
+    SearchModel("MediterraneanChickpeasalad", 3.5,
         "https://media.istockphoto.com/id/157995701/photo/tuna-and-chickpea-salad.jpg?s=612x612&w=is&k=20&c=5I_V1wgHP9KtNn3PrhJcTlaBCQOg9AgMsEon_LuQk_Y="),
   ];
 
-  List<RecipeModel> displayList = List.from(mainRecipeList);
+  List<SearchModel> displayList = List.from(mainRecipeList);
 
   void updateList(String value) {
     //this is function that will filter our list
