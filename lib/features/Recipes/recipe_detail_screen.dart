@@ -53,7 +53,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Hero(
-              tag: widget.id,
+              tag: widget.title,
               child: DetailScreenImageWidget(
                 image: widget.imageUrl,
                 width: double.infinity,

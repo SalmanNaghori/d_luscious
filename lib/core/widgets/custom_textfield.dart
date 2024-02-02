@@ -40,7 +40,7 @@ class MyTextField extends StatelessWidget {
       this.obscureText,
       this.onChanged,
       this.onFieldSubmit,
-      required this.validator,
+      this.validator,
       this.hintText,
       required this.prefixIcon,
       this.enable = true,

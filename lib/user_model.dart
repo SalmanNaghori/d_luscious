@@ -1,10 +1,18 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 class UserModel {
   String? uid;
   String? email;
   String? firstName;
   String? secondName;
+  String? image;
 
-  UserModel({this.uid, this.email, this.firstName, this.secondName});
+  UserModel({
+    this.uid,
+    this.email,
+    this.firstName,
+    this.secondName,
+    this.image,
+  });
 
   // receiving data from server
   factory UserModel.fromMap(Map<String, dynamic>? map) {
@@ -13,6 +21,7 @@ class UserModel {
       email: map?['email'],
       firstName: map?['firstName'],
       secondName: map?['secondName'],
+      image: map?['image'],
     );
   }
 
@@ -23,11 +32,12 @@ class UserModel {
       'email': email,
       'firstName': firstName,
       'secondName': secondName,
+      'image': image,
     };
   }
 
   @override
   String toString() {
-    return 'UserModel{uid: $uid, email: $email, firstName: $firstName, secondName: $secondName}';
+    return 'UserModel{uid: $uid, email: $email, firstName: $firstName, secondName: $secondName, image:$image }';
   }
 }

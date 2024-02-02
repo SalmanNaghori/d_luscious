@@ -1,14 +1,18 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:d_luscious/core/constant/app_string.dart';
 import 'package:d_luscious/core/navigator/navigator.dart';
+import 'package:d_luscious/core/storage/shared_pref_utils.dart';
 import 'package:d_luscious/core/widgets/appbard.dart';
 import 'package:d_luscious/core/widgets/custom_textfield.dart';
 import 'package:d_luscious/core/widgets/my_button.dart';
+import 'package:d_luscious/core/widgets/profile_network_image.dart';
 import 'package:d_luscious/features/Authenticate/login_screen.dart';
 import 'package:d_luscious/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -24,6 +28,12 @@ class RegistrationScreen extends StatefulWidget {
 class _RegistrationScreenState extends State<RegistrationScreen> {
   final _auth = FirebaseAuth.instance;
 
+  //Todo:come from local storage
+  String imagePath = "";
+
+  //Todo:Taken from firebase storage
+  String imageUrl = "";
+
   String? errorMessage;
 
   final _formKey = GlobalKey<FormState>();
@@ -32,6 +42,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final emailEditingController = TextEditingController();
   final passwordEditingController = TextEditingController();
   final confirmPasswordEditingController = TextEditingController();
+  File? filePath;
 
   @override
   Widget build(BuildContext context) {
@@ -50,13 +61,21 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    SizedBox(
-                        height: 180,
-                        child: Image.asset(
-                          "assets/images/signup.png",
-                          fit: BoxFit.contain,
-                        )),
-                    const SizedBox(height: 45),
+                    // SizedBox(
+                    //   height: 180,
+                    //   child: Image.asset(
+                    //     "assets/images/signup.png",
+                    //     fit: BoxFit.contain,
+                    //   ),
+                    // ),
+                    ProfileNetworkImage(selectedFile: (File? file) {
+                      imagePath = file?.path ?? "";
+                      filePath = file;
+
+                      log(imagePath.toString());
+                      log("=======file path======${filePath ?? ""}");
+                    }),
+                    const SizedBox(height: 20),
                     MyTextField(
                       textInputAction: TextInputAction.next,
                       hintText: AppString.firstName,
@@ -64,18 +83,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       prefixIcon: const Icon(Icons.account_circle_rounded),
                       keyBoardType: TextInputType.name,
                       // maxLine: 1,
-                      validator: (value) {
-                        RegExp regex = RegExp(r'^.{3,}$');
-                        if (value!.isEmpty) {
-                          EasyLoading.dismiss();
-                          return ("First Name cannot be Empty");
-                        }
-                        if (!regex.hasMatch(value)) {
-                          EasyLoading.dismiss();
-                          return ("Enter Valid name(Min. 3 Character)");
-                        }
-                        return null;
-                      },
+                      // validator: (value) {
+                      //   RegExp regex = RegExp(r'^.{3,}$');
+                      //   if (value!.isEmpty) {
+                      //     return ("First Name cannot be Empty");
+                      //   }
+                      //   if (!regex.hasMatch(value)) {
+                      //     return ("Enter Valid name(Min. 3 Character)");
+                      //   }
+                      //   return null;
+                      // },
                       onSaved: (value) {
                         firstNameEditingController.text = value!;
                       },
@@ -90,18 +107,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       prefixIcon: const Icon(Icons.account_circle_rounded),
                       keyBoardType: TextInputType.name,
                       maxLine: 1,
-                      validator: (value) {
-                        RegExp regex = RegExp(r'^.{3,}$');
-                        if (value!.isEmpty) {
-                          EasyLoading.dismiss();
-                          return ("First Name cannot be Empty");
-                        }
-                        if (!regex.hasMatch(value)) {
-                          EasyLoading.dismiss();
-                          return ("Enter Valid name(Min. 3 Character)");
-                        }
-                        return null;
-                      },
+                      // validator: (value) {
+                      //   RegExp regex = RegExp(r'^.{3,}$');
+                      //   if (value!.isEmpty) {
+                      //     return ("First Name cannot be Empty");
+                      //   }
+                      //   if (!regex.hasMatch(value)) {
+                      //     return ("Enter Valid name(Min. 3 Character)");
+                      //   }
+                      //   return null;
+                      // },
                     ),
                     const SizedBox(height: 20),
                     MyTextField(
@@ -113,19 +128,17 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       prefixIcon: const Icon(Icons.email_rounded),
                       keyBoardType: TextInputType.name,
                       maxLine: 1,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          EasyLoading.dismiss();
-                          return ("Please Enter Your Email");
-                        }
-                        // reg expression for email validation
-                        if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
-                            .hasMatch(value)) {
-                          EasyLoading.dismiss();
-                          return ("Please Enter a valid email");
-                        }
-                        return null;
-                      },
+                      // validator: (value) {
+                      //   if (value!.isEmpty) {
+                      //     return ("Please Enter Your Email");
+                      //   }
+                      //   // reg expression for email validation
+                      //   if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
+                      //       .hasMatch(value)) {
+                      //     return ("Please Enter a valid email");
+                      //   }
+                      //   return null;
+                      // },
                     ),
                     const SizedBox(height: 20),
                     MyTextField(
@@ -137,18 +150,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       prefixIcon: const Icon(Icons.vpn_key),
                       keyBoardType: TextInputType.name,
                       maxLine: 1,
-                      validator: (value) {
-                        RegExp regex = RegExp(r'^.{6,}$');
-                        if (value!.isEmpty) {
-                          EasyLoading.dismiss();
-                          return ("Password is required for login");
-                        }
-                        if (!regex.hasMatch(value)) {
-                          EasyLoading.dismiss();
-                          return ("Enter Valid Password(Min. 6 Character)");
-                        }
-                        return null;
-                      },
+                      // validator: (value) {
+                      //   RegExp regex = RegExp(r'^.{6,}$');
+                      //   if (value!.isEmpty) {
+                      //     return ("Password is required for login");
+                      //   }
+                      //   if (!regex.hasMatch(value)) {
+                      //     return ("Enter Valid Password(Min. 6 Character)");
+                      //   }
+                      //   return null;
+                      // },
                     ),
                     const SizedBox(height: 20),
                     MyTextField(
@@ -160,14 +171,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       prefixIcon: const Icon(Icons.vpn_key),
                       keyBoardType: TextInputType.name,
                       maxLine: 1,
-                      validator: (value) {
-                        if (confirmPasswordEditingController.text !=
-                            passwordEditingController.text) {
-                          EasyLoading.dismiss();
-                          return "Password don't match";
-                        }
-                        return null;
-                      },
+                      // validator: (value) {
+                      //   if (confirmPasswordEditingController.text !=
+                      //       passwordEditingController.text) {
+                      //     return "Password don't match";
+                      //   }
+                      //   return null;
+                      // },
                     ),
                     const SizedBox(height: 20),
                     MyButton(
@@ -191,13 +201,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   //Todo:SignUp  Function
   void signUp(String email, String password) async {
     if (_formKey.currentState!.validate()) {
+      EasyLoading.show();
       try {
         await _auth.createUserWithEmailAndPassword(
             email: email, password: password);
-
+        await uploadTask();
         await postDetailsToFirestore();
       } on FirebaseAuthException catch (error) {
-        EasyLoading.dismiss();
         switch (error.code) {
           case "invalid-email":
             errorMessage = "Your email address appears to be malformed.";
@@ -223,6 +233,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             errorMessage = "${error.message}";
         }
         Fluttertoast.showToast(msg: errorMessage!);
+        EasyLoading.dismiss();
         if (kDebugMode) {
           print(error.code);
         }
@@ -230,6 +241,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     } else {
       EasyLoading.dismiss();
     }
+  }
+
+  //Todo:Upload image in firestore
+  uploadTask() async {
+    UploadTask uploadTask = FirebaseStorage.instance
+        .ref("profile pic")
+        .child("users/profile/${firstNameEditingController.text.toString()}")
+        .putFile(filePath!);
+    TaskSnapshot taskSnapshot = await uploadTask;
+    imageUrl = await taskSnapshot.ref.getDownloadURL();
   }
 
   //Todo:SignUp Complete Function
@@ -255,7 +276,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       userModel.uid = user.uid;
       userModel.firstName = firstNameEditingController.text;
       userModel.secondName = secondNameEditingController.text;
-
+      userModel.image = imageUrl;
+      SharedPrefUtils.setUesrEmail(user.email.toString());
+      SharedPrefUtils.setUserName(firstNameEditingController.text.toString());
       await firebaseFirestore
           .collection("users")
           .doc(user.uid)
@@ -285,14 +308,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         emailEditingController.text.trim().isEmpty ||
         passwordEditingController.text.trim().isEmpty ||
         passwordEditingController.text !=
-            confirmPasswordEditingController.text) {
+            confirmPasswordEditingController.text ||
+        imagePath.isEmpty) {
       log("Validation failed");
       EasyLoading.dismiss();
       // Handle validation failure here, such as showing a message to the user
     } else {
       // Only call signUp here if validation is successful
       signUp(emailEditingController.text, passwordEditingController.text);
-      EasyLoading.show();
     }
   }
 

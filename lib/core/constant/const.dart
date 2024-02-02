@@ -164,7 +164,6 @@ class Const {
         Recipe(
           id: 1,
           name: "Pancakes",
-          isLiked: false,
           image:
               "https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg?auto=compress&cs=tinysrgb&w=800",
           ingredients: [
@@ -192,7 +191,6 @@ class Const {
         Recipe(
           id: 2,
           name: "Omelette",
-          isLiked: false,
           image:
               "https://images.pexels.com/photos/6294361/pexels-photo-6294361.jpeg?auto=compress&cs=tinysrgb&w=800",
           ingredients: [
@@ -220,7 +218,6 @@ class Const {
         Recipe(
           id: 3,
           name: "Smoothie",
-          isLiked: false,
           image:
               "https://images.pexels.com/photos/775030/pexels-photo-775030.jpeg?auto=compress&cs=tinysrgb&w=800",
           ingredients: [
@@ -248,7 +245,6 @@ class Const {
         Recipe(
           id: 4,
           name: "Spaghetti",
-          isLiked: true,
           image:
               "https://images.pexels.com/photos/2347311/pexels-photo-2347311.jpeg?auto=compress&cs=tinysrgb&w=800",
           ingredients: [
@@ -275,7 +271,6 @@ class Const {
         Recipe(
           id: 5,
           name: "Salad",
-          isLiked: false,
           image:
               "https://images.pexels.com/photos/2097090/pexels-photo-2097090.jpeg?auto=compress&cs=tinysrgb&w=800",
           ingredients: [
@@ -303,7 +298,6 @@ class Const {
         Recipe(
           id: 6,
           name: "Sandwich",
-          isLiked: true,
           image:
               "https://images.pexels.com/photos/1647163/pexels-photo-1647163.jpeg?auto=compress&cs=tinysrgb&w=800",
           ingredients: [
@@ -333,7 +327,6 @@ class Const {
         Recipe(
           id: 7,
           name: "Grilled Chicken",
-          isLiked: false,
           image:
               "https://images.pexels.com/photos/2338407/pexels-photo-2338407.jpeg?auto=compress&cs=tinysrgb&w=800",
           ingredients: [
@@ -359,7 +352,6 @@ class Const {
         Recipe(
           id: 8,
           name: "Stir-Fry",
-          isLiked: true,
           image:
               "https://images.pexels.com/photos/262897/pexels-photo-262897.jpeg?auto=compress&cs=tinysrgb&w=800",
           ingredients: [
@@ -387,7 +379,6 @@ class Const {
         Recipe(
           id: 9,
           name: "Pizza",
-          isLiked: true,
           image:
               "https://images.pexels.com/photos/1166120/pexels-photo-1166120.jpeg?auto=compress&cs=tinysrgb&w=800",
           ingredients: [
@@ -422,7 +413,6 @@ class Const {
         Recipe(
           id: 10,
           name: "Chocolate Cake",
-          isLiked: true,
           image:
               "https://images.pexels.com/photos/4109998/pexels-photo-4109998.jpeg?auto=compress&cs=tinysrgb&w=800",
           ingredients: [
@@ -459,7 +449,6 @@ class Const {
         Recipe(
           id: 11,
           name: "Ice Cream",
-          isLiked: true,
           image:
               "https://images.pexels.com/photos/1362534/pexels-photo-1362534.jpeg?auto=compress&cs=tinysrgb&w=800",
           ingredients: [
@@ -479,7 +468,6 @@ class Const {
         Recipe(
           id: 12,
           name: "Fruit Tart",
-          isLiked: false,
           image:
               "https://images.pexels.com/photos/2693447/pexels-photo-2693447.jpeg?auto=compress&cs=tinysrgb&w=800",
           ingredients: [

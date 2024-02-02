@@ -11,7 +11,6 @@ class FavoriteItemWidget extends StatelessWidget {
             child: Image.asset(ImageAsset.imEmptyFavorites),
           )
         : GridView.builder(
-            physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,

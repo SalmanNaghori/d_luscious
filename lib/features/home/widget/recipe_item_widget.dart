@@ -1,19 +1,25 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:developer';
+
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+
 import 'package:d_luscious/core/constant/colors_const.dart';
 import 'package:d_luscious/core/constant/const.dart';
 import 'package:d_luscious/core/widgets/network_image.dart';
 import 'package:d_luscious/features/Recipes/recipe_detail_screen.dart';
 import 'package:d_luscious/features/model/favorite_model.dart';
 import 'package:d_luscious/features/model/recipe_model.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 
 class RecipeItemWidget extends StatelessWidget {
   final RecipeType recipeModel;
+  final List<dynamic> recipes;
 
   const RecipeItemWidget({
     Key? key,
     required this.recipeModel,
+    required this.recipes,
   }) : super(key: key);
 
   @override
@@ -38,13 +44,15 @@ class RecipeItemWidget extends StatelessWidget {
               crossAxisSpacing: 12.0,
               mainAxisSpacing: 12.0,
               mainAxisExtent: 195),
-          itemCount: recipeModel.recipes.length,
+          itemCount: recipes.length,
           itemBuilder: (_, index) {
-            final recipeName = recipeModel.recipes[index].name;
-            final recipeImage = recipeModel.recipes[index].image;
-            var recipeId = recipeModel.recipes[index].id;
-            var recipeIngredient = recipeModel.recipes[index].ingredients;
-            var recipeInstruction = recipeModel.recipes[index].instructions;
+            log(recipes.length.toString());
+            // final recipeName = recipeModel.recipes[index].name;
+            // final recipeImage = recipeModel.recipes[index].image;
+            // var recipeId = recipeModel.recipes[index].id;
+            // var recipeIngredient = recipeModel.recipes[index].ingredients;
+            // var recipeInstruction = recipeModel.recipes[index].instructions;
+            Recipe recipeData = Recipe.fromJson(recipes[index]);
             return Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(
@@ -60,19 +68,19 @@ class RecipeItemWidget extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (context) => RecipeDetailScreen(
-                            title: recipeName,
-                            id: recipeId,
-                            imageUrl: recipeImage,
-                            ingredients: recipeIngredient,
-                            instruction: recipeInstruction,
+                            title: recipeData.name,
+                            id: recipeData.id,
+                            imageUrl: recipeData.image,
+                            ingredients: recipeData.ingredients,
+                            instruction: recipeData.instructions,
                           ),
                         ),
                       );
                     },
                     child: Hero(
-                      tag: recipeId,
+                      tag: recipeData.name,
                       child: CachedImage(
-                        image: recipeImage,
+                        image: recipeData.image,
                         height: 150,
                         width: double.infinity,
                         redius: 10,
@@ -92,17 +100,17 @@ class RecipeItemWidget extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => RecipeDetailScreen(
-                                    title: recipeName,
-                                    id: recipeId,
-                                    imageUrl: recipeImage,
-                                    ingredients: recipeIngredient,
-                                    instruction: recipeInstruction,
+                                    title: recipeData.name,
+                                    id: recipeData.id,
+                                    imageUrl: recipeData.image,
+                                    ingredients: recipeData.ingredients,
+                                    instruction: recipeData.instructions,
                                   ),
                                 ),
                               );
                             },
                             child: Text(
-                              recipeName,
+                              recipeData.name,
                               style: Theme.of(context)
                                   .textTheme
                                   .titleMedium!
@@ -120,18 +128,21 @@ class RecipeItemWidget extends StatelessWidget {
                             List<int> updatedFavorites = List<int>.from(
                                 FavoriteManager.favoriteRecipeIds.value);
 
-                            if (updatedFavorites.contains(recipeId)) {
-                              updatedFavorites.remove(recipeId);
+                            // Log the id before manipulating the favorites
+                            print("Clicked onTap for id: ${recipeData.id}");
+
+                            if (updatedFavorites.contains(recipeData.id)) {
+                              updatedFavorites.remove(recipeData.id);
                               int indexToRemove = FavoriteScreenData
                                   .favorite.value
-                                  .indexWhere((fav) =>
-                                      fav.id == recipeModel.recipes[index].id);
+                                  .indexWhere((fav) => fav.id == recipeData.id);
 
                               if (indexToRemove != -1) {
                                 FavoriteScreenData.favorite.value
                                     .removeAt(indexToRemove);
                                 if (kDebugMode) {
-                                  print("Removed $recipeId from favorites");
+                                  print(
+                                      "Removed ${recipeData.id} from favorites");
                                 }
                               } else {
                                 if (kDebugMode) {
@@ -139,16 +150,18 @@ class RecipeItemWidget extends StatelessWidget {
                                 }
                               }
                               if (kDebugMode) {
-                                print("Removed $recipeId from favorites");
+                                print(
+                                    "Removed ${recipeData.id} from favorites");
                               }
                             } else {
-                              updatedFavorites.add(recipeId);
+                              updatedFavorites.add(recipeData.id);
                               FavoriteScreenData.favorite.value.add(Favorite(
-                                  id: recipeModel.recipes[index].id,
-                                  name: recipeName,
-                                  image: recipeImage));
+                                id: recipeData.id,
+                                name: recipeData.name,
+                                image: recipeData.image,
+                              ));
                               if (kDebugMode) {
-                                print("Added $recipeId to favorites");
+                                print("Added ${recipeData.id} to favorites");
                               }
                             }
 
@@ -159,7 +172,7 @@ class RecipeItemWidget extends StatelessWidget {
                           child: ValueListenableBuilder<List<int>>(
                             valueListenable: FavoriteManager.favoriteRecipeIds,
                             builder: (context, favoriteRecipeIds, _) {
-                              return favoriteRecipeIds.contains(recipeId)
+                              return favoriteRecipeIds.contains(recipeData.id)
                                   ? const Icon(
                                       CupertinoIcons.heart_fill,
                                       color: ConstColor.redColor,

@@ -1,18 +1,17 @@
 import 'dart:async';
-
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:d_luscious/core/constant/app_image.dart';
 import 'package:d_luscious/core/constant/colors_const.dart';
 import 'package:d_luscious/core/constant/const.dart';
 import 'package:d_luscious/core/storage/shared_pref_utils.dart';
 import 'package:d_luscious/core/widgets/network_image.dart';
 import 'package:d_luscious/features/Authenticate/login_screen.dart';
 import 'package:d_luscious/features/Recipes/recipe_detail_screen.dart';
-import 'package:d_luscious/features/Screen/search_screen_tab.dart';
+import 'package:d_luscious/features/d_luscious.dart';
 import 'package:d_luscious/features/home/widget/recipe_item_widget.dart';
 import 'package:d_luscious/features/model/recipe_model.dart';
-
 import 'package:d_luscious/features/model/selected_food.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +32,12 @@ class HomeScreenTab extends StatefulWidget {
 
 class _HomeScreenTabState extends State<HomeScreenTab> {
   late final PageController pageController;
+  // Global variable
+
+  List<Map<String, dynamic>> dataMapList = [];
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  final db = FirebaseFirestore.instance;
 
   final ScrollController _scrollController = ScrollController();
   int pageNo = 0;
@@ -64,7 +69,8 @@ class _HomeScreenTabState extends State<HomeScreenTab> {
 
   @override
   void initState() {
-    getAllUser();
+    // getAllUser();
+    // getAllRecipes();
 
     pageController = PageController(initialPage: 0, viewportFraction: 0.85);
     carasouelTimer = getTimer();
@@ -72,41 +78,92 @@ class _HomeScreenTabState extends State<HomeScreenTab> {
       if (_scrollController.position.userScrollDirection ==
           ScrollDirection.reverse) {
         showBtmAppBr = false;
-        setState(() {});
+        // setState(() {});
       } else {
         showBtmAppBr = true;
-        setState(() {});
+        // setState(() {});
       }
     });
     super.initState();
   }
 
-  void getAllDataFromCollection() async {
-    try {
-      QuerySnapshot mainQuerySnapshot =
-          await FirebaseFirestore.instance.collection("recipeTypes").get();
-      for (var mainDocSnapshot in mainQuerySnapshot.docs) {
-        log('=> ${mainDocSnapshot.data()}');
-        // Recipes.fromJson(mainDocSnapshot.data());
+  Future<void> getAllDocumentIds() async {
+    DateTime startTime = DateTime.now();
+    log("Fetching document IDs started at: $startTime");
+
+    QuerySnapshot<Map<String, dynamic>> querySnapshot =
+        await db.collection("recipeTypes").get();
+
+    DateTime fetchDataStartTime = DateTime.now();
+    log("Fetching data started at: $fetchDataStartTime");
+
+    List<Future<void>> fetchTasks = [];
+
+    for (var doc in querySnapshot.docs) {
+      String documentId = doc.id;
+      if (!documentIdAlreadyFetched(documentId)) {
+        fetchTasks.add(getAllDataFromCollection(documentId));
       }
-    } catch (error) {
-      log("Error getting collection data: $error");
     }
+
+    await Future.wait(fetchTasks);
+
+    DateTime fetchDataEndTime = DateTime.now();
+    log("Fetching data ended at: $fetchDataEndTime");
+    log("Time taken to fetch data: ${fetchDataEndTime.difference(fetchDataStartTime)}");
+
+    DateTime endTime = DateTime.now();
+    log("Fetching document IDs ended at: $endTime");
+    log("Total time taken: ${endTime.difference(startTime)}");
   }
 
-  final FirebaseFirestore firestore = FirebaseFirestore.instance;
-  Future<List<RecipeModel>> getAllUser() async {
-    try {
-      final snapshot = await firestore.collection("recipeTypes").get();
-      final userData =
-          snapshot.docs.map((e) => RecipeModel.fromSnapshot(e)).toList();
-      log(userData.toString());
-      return userData;
-    } catch (e) {
-      // Handle the exception
-      log("Error fetching data: $e");
-      return []; // Or handle the error appropriately
-    }
+  bool documentIdAlreadyFetched(String documentId) {
+    return dataMapList.any((dataMap) => dataMap['documentId'] == documentId);
+  }
+
+  Future<void> getAllDataFromCollection(String documentId) async {
+    log("Fetching data for documentId: $documentId");
+
+    await db.collection("recipeTypes").doc(documentId).get().then(
+      (docSnapshot) async {
+        if (docSnapshot.exists) {
+          // log("Found document: ${docSnapshot.data()}");
+          var recipeTypeData = docSnapshot.data();
+
+          RecipeType recipeType = RecipeType.fromJson(recipeTypeData);
+          // log("${docSnapshot.id} => ${docSnapshot.data()}");
+
+          // Now fetching the recipes subcollection
+          await db
+              .collection("recipeTypes")
+              .doc(documentId)
+              .collection("recipes")
+              .get()
+              .then(
+            (value) {
+              // List to store recipes data
+              List<Map<String, dynamic>> recipesList = [];
+              for (var recipeSnapShot in value.docs) {
+                // log("${recipeSnapShot.id} => ${recipeSnapShot.data()}");
+                recipesList.add(recipeSnapShot.data());
+              }
+
+              // Adding recipeType and its recipes to the map list
+              dataMapList.add({
+                "documentId": documentId,
+                "recipeType": recipeType,
+                "recipes": recipesList,
+              });
+            },
+            onError: (error) => log("Error fetching recipes: $error"),
+          );
+        } else {
+          log("Document does not exist");
+        }
+      },
+      onError: (error) => log("Error fetching recipeType document: $error"),
+    );
+    MyApp.logger.e("Data Map: $dataMapList");
   }
 
   @override
@@ -116,7 +173,7 @@ class _HomeScreenTabState extends State<HomeScreenTab> {
   }
 
   bool showBtmAppBr = true;
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+
   final List<RecipeModel> modelResponse = [];
 
   @override
@@ -177,7 +234,7 @@ class _HomeScreenTabState extends State<HomeScreenTab> {
                 controller: pageController,
                 onPageChanged: (index) {
                   pageNo = index;
-                  setState(() {});
+                  // setState(() {});
                 },
                 itemBuilder: (_, index) {
                   return AnimatedBuilder(
@@ -241,20 +298,35 @@ class _HomeScreenTabState extends State<HomeScreenTab> {
             const SizedBox(
               height: 20,
             ),
-            ListView.builder(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: Const.recipeTypes.length,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.only(top: 20),
-                  child: RecipeItemWidget(
-                    recipeModel: Const.recipeTypes[index],
-                  ),
-                );
-              },
-            ),
+            FutureBuilder(
+                future: getAllDocumentIds(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text('Error: ${snapshot.error}'));
+                  } else {
+                    return ListView.builder(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: Const.recipeTypes.length,
+                      itemBuilder: (context, index) {
+                        Map<String, dynamic> recipeTypeInfo =
+                            dataMapList[index];
+                        RecipeType recipeType = recipeTypeInfo['recipeType'];
+                        List<dynamic> recipes = recipeTypeInfo['recipes'] ?? [];
+                        return Padding(
+                          padding: const EdgeInsets.only(top: 20),
+                          child: RecipeItemWidget(
+                            recipeModel: recipeType,
+                            recipes: recipes,
+                          ),
+                        );
+                      },
+                    );
+                  }
+                }),
             const SizedBox(
               height: 20,
             ),
@@ -291,8 +363,8 @@ class _HomeScreenTabState extends State<HomeScreenTab> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(right: 6.0),
-                    child: Image.network(
-                      "https://cdn-icons-png.flaticon.com/512/1008/1008928.png",
+                    child: Image.asset(
+                      ImageAsset.icAlertMessage,
                       height: 20,
                       width: 20,
                     ),

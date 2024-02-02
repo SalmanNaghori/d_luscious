@@ -12,11 +12,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
 import '../core/utils/routs.dart';
 
 class MyApp extends StatefulWidget {
+  static Logger logger = Logger();
   const MyApp({super.key});
 
   @override
