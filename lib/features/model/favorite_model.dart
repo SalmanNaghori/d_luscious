@@ -1,5 +1,5 @@
 class Favorite {
-  int id;
+  String id;
   String name;
   bool? isLiked;
   String image;

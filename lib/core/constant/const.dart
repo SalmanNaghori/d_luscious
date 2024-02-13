@@ -7,7 +7,7 @@ import '../../features/model/selected_food.dart';
 class Const {
   static List<SelectedFood> selectedFood = [
     SelectedFood(
-      id: 1,
+      id: "1",
       title: "Pancakes",
       imageUrl:
           "https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg?auto=compress&cs=tinysrgb&w=800",
@@ -34,7 +34,7 @@ class Const {
       ],
     ),
     SelectedFood(
-      id: 2,
+      id: "2",
       title: "Fruit Tart",
       imageUrl:
           "https://images.pexels.com/photos/2693447/pexels-photo-2693447.jpeg?auto=compress&cs=tinysrgb&w=800",
@@ -67,7 +67,7 @@ class Const {
       ],
     ),
     SelectedFood(
-      id: 3,
+      id: "3",
       title: "Sandwich",
       imageUrl:
           "https://images.pexels.com/photos/1647163/pexels-photo-1647163.jpeg?auto=compress&cs=tinysrgb&w=800",
@@ -91,7 +91,7 @@ class Const {
       ],
     ),
     SelectedFood(
-      id: 4,
+      id: "4",
       title: "Pizza",
       imageUrl:
           "https://images.pexels.com/photos/1166120/pexels-photo-1166120.jpeg?auto=compress&cs=tinysrgb&w=800",
@@ -120,7 +120,7 @@ class Const {
       ],
     ),
     SelectedFood(
-      id: 5,
+      id: "5",
       title: "Chocolate Cake",
       imageUrl:
           "https://images.pexels.com/photos/4109998/pexels-photo-4109998.jpeg?auto=compress&cs=tinysrgb&w=800",
@@ -162,7 +162,7 @@ class Const {
       typeName: "Breakfast",
       recipes: [
         Recipe(
-          id: 1,
+          id: "1",
           name: "Pancakes",
           image:
               "https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg?auto=compress&cs=tinysrgb&w=800",
@@ -189,7 +189,7 @@ class Const {
           ],
         ),
         Recipe(
-          id: 2,
+          id: "2",
           name: "Omelette",
           image:
               "https://images.pexels.com/photos/6294361/pexels-photo-6294361.jpeg?auto=compress&cs=tinysrgb&w=800",
@@ -216,7 +216,7 @@ class Const {
           ],
         ),
         Recipe(
-          id: 3,
+          id: "3",
           name: "Smoothie",
           image:
               "https://images.pexels.com/photos/775030/pexels-photo-775030.jpeg?auto=compress&cs=tinysrgb&w=800",
@@ -243,7 +243,7 @@ class Const {
       typeName: "Lunch",
       recipes: [
         Recipe(
-          id: 4,
+          id: "4",
           name: "Spaghetti",
           image:
               "https://images.pexels.com/photos/2347311/pexels-photo-2347311.jpeg?auto=compress&cs=tinysrgb&w=800",
@@ -269,7 +269,7 @@ class Const {
           ],
         ),
         Recipe(
-          id: 5,
+          id: "5",
           name: "Salad",
           image:
               "https://images.pexels.com/photos/2097090/pexels-photo-2097090.jpeg?auto=compress&cs=tinysrgb&w=800",
@@ -296,7 +296,7 @@ class Const {
           ],
         ),
         Recipe(
-          id: 6,
+          id: "6",
           name: "Sandwich",
           image:
               "https://images.pexels.com/photos/1647163/pexels-photo-1647163.jpeg?auto=compress&cs=tinysrgb&w=800",
@@ -325,7 +325,7 @@ class Const {
       typeName: "Dinner",
       recipes: [
         Recipe(
-          id: 7,
+          id: "7",
           name: "Grilled Chicken",
           image:
               "https://images.pexels.com/photos/2338407/pexels-photo-2338407.jpeg?auto=compress&cs=tinysrgb&w=800",
@@ -350,7 +350,7 @@ class Const {
           ],
         ),
         Recipe(
-          id: 8,
+          id: "8",
           name: "Stir-Fry",
           image:
               "https://images.pexels.com/photos/262897/pexels-photo-262897.jpeg?auto=compress&cs=tinysrgb&w=800",
@@ -377,7 +377,7 @@ class Const {
           ],
         ),
         Recipe(
-          id: 9,
+          id: "9",
           name: "Pizza",
           image:
               "https://images.pexels.com/photos/1166120/pexels-photo-1166120.jpeg?auto=compress&cs=tinysrgb&w=800",
@@ -411,7 +411,7 @@ class Const {
       typeName: "Dessert",
       recipes: [
         Recipe(
-          id: 10,
+          id: "10",
           name: "Chocolate Cake",
           image:
               "https://images.pexels.com/photos/4109998/pexels-photo-4109998.jpeg?auto=compress&cs=tinysrgb&w=800",
@@ -447,7 +447,7 @@ class Const {
           ],
         ),
         Recipe(
-          id: 11,
+          id: "11",
           name: "Ice Cream",
           image:
               "https://images.pexels.com/photos/1362534/pexels-photo-1362534.jpeg?auto=compress&cs=tinysrgb&w=800",
@@ -466,7 +466,7 @@ class Const {
           ],
         ),
         Recipe(
-          id: 12,
+          id: "12",
           name: "Fruit Tart",
           image:
               "https://images.pexels.com/photos/2693447/pexels-photo-2693447.jpeg?auto=compress&cs=tinysrgb&w=800",
@@ -505,8 +505,8 @@ class Const {
 }
 
 class FavoriteManager {
-  static final ValueNotifier<List<int>> favoriteRecipeIds =
-      ValueNotifier<List<int>>([]);
+  static final ValueNotifier<List<String>> favoriteRecipeIds =
+      ValueNotifier<List<String>>([]);
 }
 
 class FavoriteScreenData {

@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
@@ -13,26 +12,20 @@ import 'package:d_luscious/features/model/favorite_model.dart';
 import 'package:d_luscious/features/model/recipe_model.dart';
 
 class RecipeItemWidget extends StatelessWidget {
-  final RecipeType recipeModel;
-  final List<dynamic> recipes;
+  final List<Recipe> recipeModel;
 
   const RecipeItemWidget({
     Key? key,
     required this.recipeModel,
-    required this.recipes,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    log("===recipe widget===${recipeModel.length}");
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(recipeModel.typeName,
-            style: const TextStyle(
-                fontSize: 30,
-                fontFamily: "chewy",
-                color: ConstColor.primaryColor)),
         const SizedBox(
           height: 10,
         ),
@@ -44,15 +37,10 @@ class RecipeItemWidget extends StatelessWidget {
               crossAxisSpacing: 12.0,
               mainAxisSpacing: 12.0,
               mainAxisExtent: 195),
-          itemCount: recipes.length,
+          itemCount: recipeModel.length,
           itemBuilder: (_, index) {
-            log(recipes.length.toString());
-            // final recipeName = recipeModel.recipes[index].name;
-            // final recipeImage = recipeModel.recipes[index].image;
-            // var recipeId = recipeModel.recipes[index].id;
-            // var recipeIngredient = recipeModel.recipes[index].ingredients;
-            // var recipeInstruction = recipeModel.recipes[index].instructions;
-            Recipe recipeData = Recipe.fromJson(recipes[index]);
+            log(recipeModel.length.toString());
+            Recipe recipeData = recipeModel[index];
             return Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(
@@ -68,19 +56,19 @@ class RecipeItemWidget extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (context) => RecipeDetailScreen(
-                            title: recipeData.name,
-                            id: recipeData.id,
-                            imageUrl: recipeData.image,
-                            ingredients: recipeData.ingredients,
-                            instruction: recipeData.instructions,
+                            title: recipeData.name ?? "",
+                            id: recipeData.id ?? "",
+                            imageUrl: recipeData.image ?? "",
+                            ingredients: recipeData.ingredients ?? [],
+                            instruction: recipeData.instructions ?? [],
                           ),
                         ),
                       );
                     },
                     child: Hero(
-                      tag: recipeData.name,
+                      tag: recipeData.name ?? "",
                       child: CachedImage(
-                        image: recipeData.image,
+                        image: recipeData.image ?? "",
                         height: 150,
                         width: double.infinity,
                         redius: 10,
@@ -100,17 +88,17 @@ class RecipeItemWidget extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => RecipeDetailScreen(
-                                    title: recipeData.name,
-                                    id: recipeData.id,
-                                    imageUrl: recipeData.image,
-                                    ingredients: recipeData.ingredients,
-                                    instruction: recipeData.instructions,
+                                    title: recipeData.name ?? "",
+                                    id: recipeData.id ?? "",
+                                    imageUrl: recipeData.image ?? "",
+                                    ingredients: recipeData.ingredients ?? [],
+                                    instruction: recipeData.instructions ?? [],
                                   ),
                                 ),
                               );
                             },
                             child: Text(
-                              recipeData.name,
+                              recipeData.name ?? "",
                               style: Theme.of(context)
                                   .textTheme
                                   .titleMedium!
@@ -125,7 +113,7 @@ class RecipeItemWidget extends StatelessWidget {
                         GestureDetector(
                           onTap: () {
                             // Access the global list of favorite recipe IDs
-                            List<int> updatedFavorites = List<int>.from(
+                            List<String> updatedFavorites = List<String>.from(
                                 FavoriteManager.favoriteRecipeIds.value);
 
                             // Log the id before manipulating the favorites
@@ -154,11 +142,11 @@ class RecipeItemWidget extends StatelessWidget {
                                     "Removed ${recipeData.id} from favorites");
                               }
                             } else {
-                              updatedFavorites.add(recipeData.id);
+                              updatedFavorites.add(recipeData.id ?? "");
                               FavoriteScreenData.favorite.value.add(Favorite(
-                                id: recipeData.id,
-                                name: recipeData.name,
-                                image: recipeData.image,
+                                id: recipeData.id ?? "",
+                                name: recipeData.name ?? "",
+                                image: recipeData.image ?? "",
                               ));
                               if (kDebugMode) {
                                 print("Added ${recipeData.id} to favorites");
@@ -169,7 +157,7 @@ class RecipeItemWidget extends StatelessWidget {
                             FavoriteManager.favoriteRecipeIds.value =
                                 updatedFavorites;
                           },
-                          child: ValueListenableBuilder<List<int>>(
+                          child: ValueListenableBuilder<List<String>>(
                             valueListenable: FavoriteManager.favoriteRecipeIds,
                             builder: (context, favoriteRecipeIds, _) {
                               return favoriteRecipeIds.contains(recipeData.id)

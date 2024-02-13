@@ -11,7 +11,7 @@ import 'widget/ingredient_widget.dart';
 class RecipeDetailScreen extends StatefulWidget {
   final String title;
   final String imageUrl;
-  final int id;
+  final String id;
   final List<String> ingredients;
   final List<String> instruction;
   const RecipeDetailScreen({

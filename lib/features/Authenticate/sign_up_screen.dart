@@ -247,7 +247,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   uploadTask() async {
     UploadTask uploadTask = FirebaseStorage.instance
         .ref("profile pic")
-        .child("users/profile/${firstNameEditingController.text.toString()}")
+        .child(
+            "users/profile/${firstNameEditingController.text.toString()}.jpg")
         .putFile(filePath!);
     TaskSnapshot taskSnapshot = await uploadTask;
     imageUrl = await taskSnapshot.ref.getDownloadURL();

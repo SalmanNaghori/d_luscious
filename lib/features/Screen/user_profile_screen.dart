@@ -23,6 +23,7 @@ class UserProfileScreenTab extends StatefulWidget {
 class _UserProfileScreenTabState extends State<UserProfileScreenTab> {
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
+  ValueNotifier<bool> isValuechanged = ValueNotifier<bool>(false);
   Uint8List? image;
 
   @override
@@ -40,6 +41,7 @@ class _UserProfileScreenTabState extends State<UserProfileScreenTab> {
           .get();
       log("Fetched Data: ${snapshot.data()}");
       loggedInUser = UserModel.fromMap(snapshot.data());
+      isValuechanged.value = !isValuechanged.value;
       log("User Model: ${loggedInUser.toString()}");
     } on FirebaseException catch (error) {
       MyApp.logger.e("Error fetching user data: $error");
@@ -56,11 +58,15 @@ class _UserProfileScreenTabState extends State<UserProfileScreenTab> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Center(
-                child: ProfileImage(
-              selectedFile: () {},
-              profilePictureUrl: loggedInUser.image,
-            )),
+            ValueListenableBuilder(
+                valueListenable: isValuechanged,
+                builder: (context, isImageAvailable, _) {
+                  return Center(
+                      child: ProfileImage(
+                    selectedFile: () {},
+                    profilePictureUrl: loggedInUser.image,
+                  ));
+                }),
             const SizedBox(height: 16),
             Text(
               SharedPrefUtils.getUserName(), // Replace with user's name

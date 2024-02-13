@@ -1,38 +1,42 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:d_luscious/features/d_luscious.dart';
 
 class RecipeModel {
-  List<RecipeType> recipeTypes;
+  final List<RecipeType>? recipeTypes;
 
-  RecipeModel({required this.recipeTypes});
+  RecipeModel({this.recipeTypes});
 
-  factory RecipeModel.fromSnapshot(
-      DocumentSnapshot<Map<String, dynamic>> document) {
-    final data = document.data();
+  factory RecipeModel.fromFirestore(
+    DocumentSnapshot<Map<String, dynamic>> snapshot,
+    SnapshotOptions? options,
+  ) {
+    final data = snapshot.data();
     if (data == null) {
-      throw Exception('Document data is null for document: ${document.id}');
+      throw Exception('Document data is null for document: ${snapshot.id}');
     }
 
-    final recipeTypesData = data["recipeTypes"];
+    final recipeTypesData = data['recipeTypes'];
 
-    // Check if 'recipeTypes' is null or not present in the document
-    if (recipeTypesData == null) {
-      MyApp.logger.w(
-          'RecipeTypes field is null or not present for document: ${document.id}');
-      return RecipeModel(recipeTypes: []); // or handle it as you see fit
-    }
-
-    // Ensure that 'recipeTypes' is a List<Map<String, dynamic>>
     if (recipeTypesData is List && recipeTypesData.isNotEmpty) {
-      final List<RecipeType> recipeTypes =
-          recipeTypesData.map((type) => RecipeType.fromJson(type)).toList();
+      final List<RecipeType> recipeTypes = recipeTypesData
+          .map((type) => RecipeType.fromFirestore(type))
+          .toList();
 
       return RecipeModel(recipeTypes: recipeTypes);
     } else {
       MyApp.logger.w(
-          'RecipeTypes field is not a valid list for document: ${document.id}');
+          'RecipeTypes field is not a valid list for document: ${snapshot.id}');
       return RecipeModel(recipeTypes: []); // or handle it as you see fit
     }
+  }
+
+  Map<String, dynamic> toFirestore() {
+    return {
+      if (recipeTypes != null)
+        'recipeTypes': recipeTypes?.map((type) => type.toFirestore()).toList(),
+    };
   }
 
   @override
@@ -42,25 +46,47 @@ class RecipeModel {
 }
 
 class RecipeType {
-  String typeName;
-  List<Recipe> recipes;
+  final String? id;
+  final String? typeName;
+  final String? recipeImage;
+  final List<Recipe>? recipes;
 
   RecipeType({
-    required this.typeName,
-    required this.recipes,
+    this.id,
+    this.typeName,
+    this.recipeImage,
+    this.recipes,
   });
 
-  factory RecipeType.fromJson(Map<String, dynamic>? json) {
-    if (json == null) {
-      MyApp.logger.w('RecipeType.fromJson called with null json');
-      return RecipeType(typeName: '', recipes: []);
+  factory RecipeType.fromFirestore(dynamic json) {
+    if (json == null || !(json is Map<String, dynamic>)) {
+      MyApp.logger.w('RecipeType.fromFirestore called with invalid json');
+      return RecipeType(
+        typeName: '',
+        recipes: [],
+        recipeImage: '',
+        id: '',
+      );
     }
 
     return RecipeType(
-      typeName: json['typeName'] ?? '',
+      typeName: json['typeName'],
+      recipeImage: json['recipeImage'],
+      id: json['id'],
       recipes: List<Recipe>.from(
-          json['recipes']?.map((x) => Recipe.fromJson(x)) ?? []),
+        json['recipes']?.map((x) => Recipe.fromFirestore(x)) ?? [],
+      ),
     );
+  }
+
+  Map<String, dynamic> toFirestore() {
+    return {
+      if (id != null) 'id': id,
+      if (typeName != null) 'typeName': typeName,
+      if (recipeImage != null) 'typeName': recipeImage,
+      if (recipes != null)
+        'recipes': recipes?.map((recipe) => recipe.toFirestore()).toList(),
+    };
   }
 
   @override
@@ -70,29 +96,48 @@ class RecipeType {
 }
 
 class Recipe {
-  int id; // Change int to int?
-  String name;
-
-  String image;
-  List<String> ingredients;
-  List<String> instructions;
-  // Other properties remain unchanged
+  final String? id;
+  final String? name;
+  final String? image;
+  final List<String>? ingredients;
+  final List<String>? instructions;
 
   Recipe({
-    required this.id,
-    required this.name,
-    required this.image,
-    required this.ingredients,
-    required this.instructions,
+    this.id,
+    this.name,
+    this.image,
+    this.ingredients,
+    this.instructions,
   });
 
-  factory Recipe.fromJson(Map<String, dynamic> json) {
+  factory Recipe.fromFirestore(Map<String, dynamic>? json) {
+    if (json == null) {
+      MyApp.logger.w('Recipe.fromFirestore called with null json');
+      return Recipe(
+          id: '', name: '', image: '', ingredients: [], instructions: []);
+    }
+
     return Recipe(
-      id: json['id'], // Cast to int?
-      name: json['name'] ?? '',
-      image: json['image'] ?? '',
+      id: json['id'],
+      name: json['name'],
+      image: json['image'],
       ingredients: List<String>.from(json['ingredients'] ?? []),
       instructions: List<String>.from(json['instructions'] ?? []),
     );
+  }
+
+  Map<String, dynamic> toFirestore() {
+    return {
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (image != null) 'image': image,
+      if (ingredients != null) 'ingredients': ingredients,
+      if (instructions != null) 'instructions': instructions,
+    };
+  }
+
+  @override
+  String toString() {
+    return 'Recipe(id: $id, name: $name, image: $image, ingredients: $ingredients, instructions: $instructions)';
   }
 }

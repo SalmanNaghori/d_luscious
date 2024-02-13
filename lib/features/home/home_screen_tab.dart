@@ -5,12 +5,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:d_luscious/core/constant/app_image.dart';
 import 'package:d_luscious/core/constant/colors_const.dart';
 import 'package:d_luscious/core/constant/const.dart';
+import 'package:d_luscious/core/navigator/navigator.dart';
 import 'package:d_luscious/core/storage/shared_pref_utils.dart';
 import 'package:d_luscious/core/widgets/network_image.dart';
 import 'package:d_luscious/features/Authenticate/login_screen.dart';
 import 'package:d_luscious/features/Recipes/recipe_detail_screen.dart';
 import 'package:d_luscious/features/d_luscious.dart';
-import 'package:d_luscious/features/home/widget/recipe_item_widget.dart';
+import 'package:d_luscious/features/home/widget/commun_list_shimmer_widget.dart';
+import 'package:d_luscious/features/home/widget/grid_view.dart';
+import 'package:d_luscious/features/home/widget/listview_widget.dart';
 import 'package:d_luscious/features/model/recipe_model.dart';
 import 'package:d_luscious/features/model/selected_food.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -32,26 +35,40 @@ class HomeScreenTab extends StatefulWidget {
 
 class _HomeScreenTabState extends State<HomeScreenTab> {
   late final PageController pageController;
-  // Global variable
-
-  List<Map<String, dynamic>> dataMapList = [];
   final FirebaseAuth _auth = FirebaseAuth.instance;
-
   final db = FirebaseFirestore.instance;
-
   final ScrollController _scrollController = ScrollController();
   int pageNo = 0;
+  Timer? carouselTimer;
+  bool showBottomAppBar = true;
+  List<RecipeType> recipeTypesList = [];
+  List<Recipe> allRecipesList = [];
+  final List<String> recipesList = [];
+  List<Recipe> breakfastRecipes = [];
+  List<Recipe> lunchRecipes = [];
+  List<Recipe> dinnerRecipes = [];
+  List<Recipe> dessertRecipes = [];
+  ValueNotifier<int> selectedFoodIndex = ValueNotifier<int>(0);
 
-  final List<String> listImages = [
-    "https://media.istockphoto.com/id/1408284950/photo/gulab-jamun-with-nuts-served-in-a-dish-isolated-on-napkin-side-view-on-dark-background-indian.jpg?b=1&s=170667a&w=0&k=20&c=JZ5cOreQ3eVfg3nsujNiWTfflLw-M3BvHSygip-lalE=",
-    "https://as1.ftcdn.net/v2/jpg/01/95/70/12/1000_F_195701243_4uXJILIWRX6B6GUy4t9HQZt6HomkZbzT.jpg",
-    "https://t3.ftcdn.net/jpg/02/54/45/12/240_F_254451278_7AAYmhYkBEVQ9MYnZYIomTI5WdFCif1g.jpg",
-    "https://images.unsplash.com/photo-1602833280958-1657662ccc58?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80",
-    "https://t4.ftcdn.net/jpg/03/08/40/45/240_F_308404590_cKgzFkCSG93RG6ycBbQknhpr0y7pwmzP.jpg"
-  ];
-  Timer? carasouelTimer;
+  //TODO: DOCID
+  List<String> docId = [];
 
-  Timer getTimer() {
+  @override
+  void initState() {
+    pageController = PageController(initialPage: 0, viewportFraction: 0.85);
+    carouselTimer = _getTimer();
+    _scrollController.addListener(() {
+      if (_scrollController.position.userScrollDirection ==
+          ScrollDirection.reverse) {
+        _toggleBottomAppBarVisibility(false);
+      } else {
+        _toggleBottomAppBarVisibility(true);
+      }
+    });
+    super.initState();
+  }
+
+  Timer _getTimer() {
     return Timer.periodic(const Duration(seconds: 3), (timer) {
       if (pageNo == 4) {
         pageNo = 0;
@@ -68,130 +85,19 @@ class _HomeScreenTabState extends State<HomeScreenTab> {
   }
 
   @override
-  void initState() {
-    // getAllUser();
-    // getAllRecipes();
-
-    pageController = PageController(initialPage: 0, viewportFraction: 0.85);
-    carasouelTimer = getTimer();
-    _scrollController.addListener(() {
-      if (_scrollController.position.userScrollDirection ==
-          ScrollDirection.reverse) {
-        showBtmAppBr = false;
-        // setState(() {});
-      } else {
-        showBtmAppBr = true;
-        // setState(() {});
-      }
-    });
-    super.initState();
-  }
-
-  Future<void> getAllDocumentIds() async {
-    DateTime startTime = DateTime.now();
-    log("Fetching document IDs started at: $startTime");
-
-    QuerySnapshot<Map<String, dynamic>> querySnapshot =
-        await db.collection("recipeTypes").get();
-
-    DateTime fetchDataStartTime = DateTime.now();
-    log("Fetching data started at: $fetchDataStartTime");
-
-    List<Future<void>> fetchTasks = [];
-
-    for (var doc in querySnapshot.docs) {
-      String documentId = doc.id;
-      if (!documentIdAlreadyFetched(documentId)) {
-        fetchTasks.add(getAllDataFromCollection(documentId));
-      }
-    }
-
-    await Future.wait(fetchTasks);
-
-    DateTime fetchDataEndTime = DateTime.now();
-    log("Fetching data ended at: $fetchDataEndTime");
-    log("Time taken to fetch data: ${fetchDataEndTime.difference(fetchDataStartTime)}");
-
-    DateTime endTime = DateTime.now();
-    log("Fetching document IDs ended at: $endTime");
-    log("Total time taken: ${endTime.difference(startTime)}");
-  }
-
-  bool documentIdAlreadyFetched(String documentId) {
-    return dataMapList.any((dataMap) => dataMap['documentId'] == documentId);
-  }
-
-  Future<void> getAllDataFromCollection(String documentId) async {
-    log("Fetching data for documentId: $documentId");
-
-    await db.collection("recipeTypes").doc(documentId).get().then(
-      (docSnapshot) async {
-        if (docSnapshot.exists) {
-          // log("Found document: ${docSnapshot.data()}");
-          var recipeTypeData = docSnapshot.data();
-
-          RecipeType recipeType = RecipeType.fromJson(recipeTypeData);
-          // log("${docSnapshot.id} => ${docSnapshot.data()}");
-
-          // Now fetching the recipes subcollection
-          await db
-              .collection("recipeTypes")
-              .doc(documentId)
-              .collection("recipes")
-              .get()
-              .then(
-            (value) {
-              // List to store recipes data
-              List<Map<String, dynamic>> recipesList = [];
-              for (var recipeSnapShot in value.docs) {
-                // log("${recipeSnapShot.id} => ${recipeSnapShot.data()}");
-                recipesList.add(recipeSnapShot.data());
-              }
-
-              // Adding recipeType and its recipes to the map list
-              dataMapList.add({
-                "documentId": documentId,
-                "recipeType": recipeType,
-                "recipes": recipesList,
-              });
-            },
-            onError: (error) => log("Error fetching recipes: $error"),
-          );
-        } else {
-          log("Document does not exist");
-        }
-      },
-      onError: (error) => log("Error fetching recipeType document: $error"),
-    );
-    MyApp.logger.e("Data Map: $dataMapList");
-  }
-
-  @override
   void dispose() {
     pageController.dispose();
     super.dispose();
   }
 
-  bool showBtmAppBr = true;
-
-  final List<RecipeModel> modelResponse = [];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ConstColor.whiteColor,
-      // appBar: CustomAppBar.blankAppBar(
-      //   title: "",
-      //   height: 0,
-      //   whiteStatusBarText: false,
-      // ),
       body: SingleChildScrollView(
-        controller: _scrollController,
+        // controller: _scrollController,
         child: Column(
           children: [
-            // const SizedBox(
-            //   height: 10.0,
-            // ),
             Padding(
               padding: const EdgeInsets.only(
                   left: 21, right: 21, top: 18.8, bottom: 20),
@@ -199,9 +105,7 @@ class _HomeScreenTabState extends State<HomeScreenTab> {
                 onTap: () {},
                 selected: true,
                 shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(16.0),
-                  ),
+                  borderRadius: BorderRadius.all(Radius.circular(16.0)),
                 ),
                 selectedTileColor: ConstColor.primaryColor,
                 title: Text(
@@ -219,11 +123,11 @@ class _HomeScreenTabState extends State<HomeScreenTab> {
                 ),
                 trailing: PopupMenuButton<MenuItemabc>(
                   iconColor: ConstColor.whiteColor,
-                  onSelected: (item) => onSelected(context, item),
+                  onSelected: (item) => _onSelected(context, item),
                   itemBuilder: (context) => [
-                    ...MenuItems.itemsFirst.map(buildItem).toList(),
+                    ...MenuItems.itemsFirst.map(_buildItem).toList(),
                     const PopupMenuDivider(),
-                    ...MenuItems.itemsSecond.map(buildItem).toList(),
+                    ...MenuItems.itemsSecond.map(_buildItem).toList(),
                   ],
                 ),
               ),
@@ -234,7 +138,6 @@ class _HomeScreenTabState extends State<HomeScreenTab> {
                 controller: pageController,
                 onPageChanged: (index) {
                   pageNo = index;
-                  // setState(() {});
                 },
                 itemBuilder: (_, index) {
                   return AnimatedBuilder(
@@ -243,40 +146,33 @@ class _HomeScreenTabState extends State<HomeScreenTab> {
                       return child!;
                     },
                     child: GestureDetector(
-                        onTap: () {
-                          gotoSelectedFoodDetailsScreen(
-                              context, Const.selectedFood[index]);
-                          // ScaffoldMessenger.of(context).showSnackBar(
-                          //   SnackBar(
-                          //     content:
-                          //         Text("Hello you tapped at ${index + 1} "),
-                          //   ),
-                          // );
-                        },
-                        onPanDown: (d) {
-                          carasouelTimer?.cancel();
-                          carasouelTimer = null;
-                        },
-                        onPanCancel: () {
-                          carasouelTimer = getTimer();
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 20),
-                          child: CachedImage(
-                            image: Const.selectedFood[index].imageUrl,
-                            height: 200,
-                            redius: 12,
-                            width: 200,
-                          ),
-                        )),
+                      onTap: () {
+                        _gotoSelectedFoodDetailsScreen(
+                            context, Const.selectedFood[index]);
+                      },
+                      onPanDown: (_) {
+                        carouselTimer?.cancel();
+                        carouselTimer = null;
+                      },
+                      onPanCancel: () {
+                        carouselTimer = _getTimer();
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 20),
+                        child: CachedImage(
+                          image: Const.selectedFood[index].imageUrl,
+                          height: 200,
+                          width: 200,
+                          redius: 10,
+                        ),
+                      ),
+                    ),
                   );
                 },
                 itemCount: 5,
               ),
             ),
-            const SizedBox(
-              height: 12.0,
-            ),
+            const SizedBox(height: 12.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: List.generate(
@@ -295,132 +191,145 @@ class _HomeScreenTabState extends State<HomeScreenTab> {
                 ),
               ),
             ),
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20),
             FutureBuilder(
-                future: getAllDocumentIds(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: CircularProgressIndicator());
-                  } else if (snapshot.hasError) {
-                    return Center(child: Text('Error: ${snapshot.error}'));
-                  } else {
-                    return ListView.builder(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: Const.recipeTypes.length,
-                      itemBuilder: (context, index) {
-                        Map<String, dynamic> recipeTypeInfo =
-                            dataMapList[index];
-                        RecipeType recipeType = recipeTypeInfo['recipeType'];
-                        List<dynamic> recipes = recipeTypeInfo['recipes'] ?? [];
-                        return Padding(
-                          padding: const EdgeInsets.only(top: 20),
-                          child: RecipeItemWidget(
-                            recipeModel: recipeType,
-                            recipes: recipes,
-                          ),
-                        );
-                      },
-                    );
-                  }
-                }),
-            const SizedBox(
-              height: 20,
+              future: getAllDocumentIds(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const CommunListShimmerWidget(
+                    fontSize: 18,
+                    height: 120,
+                    radius: 35,
+                    title: "",
+                  );
+                } else if (snapshot.hasError) {
+                  return Center(child: Text('Error: ${snapshot.error}'));
+                } else {
+                  return Column(
+                    children: [
+                      ListViewWidget(
+                        selectedFood: (value) {
+                          MyApp.logger.d("out side ${value}");
+                          selectedFoodIndex.value = value;
+
+                          // selectedFoodIndex.notifyListeners();
+                        },
+                        selectedId: docId[0],
+                        id: docId,
+                      ),
+                      Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: ValueListenableBuilder(
+                            valueListenable: selectedFoodIndex,
+                            builder: (context, selectedIndex, _) {
+                              gridViewKey.currentState
+                                  ?.refresh(docId[selectedIndex]);
+                              print(
+                                  "Selected index inside builder: $selectedIndex");
+                              return GridViewWidget(
+                                key: gridViewKey,
+                                selectedId: docId[selectedIndex],
+                              );
+                            },
+                          )),
+                    ],
+                  );
+                }
+              },
             ),
+            const SizedBox(height: 20),
           ],
         ),
       ),
     );
   }
 
-//popmenu function
-  PopupMenuItem<MenuItemabc> buildItem(MenuItemabc item) =>
+  PopupMenuItem<MenuItemabc> _buildItem(MenuItemabc item) =>
       PopupMenuItem<MenuItemabc>(
         value: item,
         child: Row(
           children: [
             Icon(item.icon, color: Colors.black, size: 20),
-            const SizedBox(
-              width: 12,
-            ),
+            const SizedBox(width: 12),
             Text(item.text),
           ],
         ),
       );
 
-  //Todo:onselected method for select in popup menu
-  onSelected(BuildContext context, MenuItemabc item) {
+  void _onSelected(BuildContext context, MenuItemabc item) {
     switch (item) {
       case MenuItems.itemSignOut:
-        showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              title: Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 6.0),
-                    child: Image.asset(
-                      ImageAsset.icAlertMessage,
-                      height: 20,
-                      width: 20,
-                    ),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text('Log Out'),
-                  ),
-                ],
-              ),
-              content: const Text('Are you sure you want to log out?'),
-              actions: [
-                TextButton(
-                    onPressed: () => Navigator.of(context).pop(false),
-                    child: const Text('No')),
-                TextButton(
-                  onPressed: () {
-                    EasyLoading.show();
-                    Navigator.of(context).pop();
-                    Future.delayed(const Duration(milliseconds: 1000), () {
-                      logout();
-                    });
-                  },
-                  child: const Text('Yes'),
-                )
-              ],
-            );
-          },
-        );
+        _showLogoutDialog(context);
         break;
     }
   }
 
-  Future<void> logout() async {
-    try {
-      // Navigate to MyApp (or your login screen) and remove all previous routes
+  void _showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(right: 6.0),
+                child: Image.asset(
+                  ImageAsset.icAlertMessage,
+                  height: 20,
+                  width: 20,
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text('Log Out'),
+              ),
+            ],
+          ),
+          content: const Text('Are you sure you want to log out?'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: const Text('No'),
+            ),
+            TextButton(
+              onPressed: () {
+                EasyLoading.show();
+                Navigator.of(context).pop();
+                Future.delayed(const Duration(milliseconds: 1000), () {
+                  _logout();
+                });
+              },
+              child: const Text('Yes'),
+            )
+          ],
+        );
+      },
+    );
+  }
 
+  Future<void> _logout() async {
+    try {
       EasyLoading.dismiss();
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(builder: (context) => const LoginScreen()),
         (Route<dynamic> route) => false,
       );
-      // Set the user as logged out in shared preferences
       await SharedPrefUtils.setIsUserLoggedIn(false);
-
-      // Sign out from Firebase Auth
       await _auth.signOut();
     } catch (e) {
-      // Handle any errors here
       EasyLoading.dismiss();
       log('Error during logout: $e');
     }
   }
 
-  void gotoSelectedFoodDetailsScreen(
-      BuildContext context, SelectedFood model) async {
+  void _toggleBottomAppBarVisibility(bool isVisible) {
+    setState(() {
+      showBottomAppBar = isVisible;
+    });
+  }
+
+  void _gotoSelectedFoodDetailsScreen(
+      BuildContext context, SelectedFood model) {
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -434,4 +343,75 @@ class _HomeScreenTabState extends State<HomeScreenTab> {
       ),
     );
   }
+
+  Future getAllDocumentIds() async {
+    DateTime startTime = DateTime.now();
+    log("Fetching document IDs started at: $startTime");
+
+    DateTime fetchDataStartTime = DateTime.now();
+    log("Fetching data started at: $fetchDataStartTime");
+
+    QuerySnapshot<Map<String, dynamic>> querySnapshot =
+        await db.collection("recipeTypes").get();
+
+    querySnapshot.docs.forEach((document) {
+      // MyApp.logger.f("document.id========${document.id}");
+      docId.add(document.id);
+    });
+
+    DateTime fetchDataEndTime = DateTime.now();
+    log("Fetching data ended at: $fetchDataEndTime");
+    log("Time taken to fetch data: ${fetchDataEndTime.difference(fetchDataStartTime)}");
+
+    DateTime endTime = DateTime.now();
+    log("Fetching document IDs ended at: $endTime");
+    log("Total time taken: ${endTime.difference(startTime)}");
+  }
+
+//   bool _documentIdAlreadyFetched(String id) {
+//     return recipesList.contains(id);
+//   }
+
+//   Future<void> getAllDataFromCollection(String id) async {
+//     log("Fetching data for id: $id");
+
+//     try {
+//       var docSnapshot = await db.collection("recipeTypes").doc(id).get();
+
+//       if (docSnapshot.exists) {
+//         var recipeTypeData = docSnapshot.data();
+//         RecipeType recipeType = RecipeType.fromFirestore(recipeTypeData);
+
+//         var value = await db
+//             .collection("recipeTypes")
+//             .doc(id)
+//             .collection("recipes")
+//             .get();
+
+//         // List to store recipes data
+//         List<Recipe> recipesList = [];
+
+//         for (var recipeSnapShot in value.docs) {
+//           recipesList.add(Recipe.fromFirestore(recipeSnapShot.data()));
+//         }
+
+//         // Adding recipeType to your existing list
+//         recipeTypesList.add(recipeType);
+
+//         // Adding recipesList to your existing list
+//         allRecipesList.addAll(recipesList);
+//         allRecipesList.sort((a, b) => (a.id ?? "").compareTo(b.id ?? ""));
+
+// // Sort recipeTypesList alphabetically based on typeName
+//       } else {
+//         log("Document does not exist");
+//       }
+//     } catch (error) {
+//       log("Error fetching data: $error");
+//     }
+
+//     // Sort recipeTypesList alphabetically based on typeName
+//     // recipeTypesList.sort((a, b) => a.typeName!.compareTo(b.typeName!));
+// // Sort allRecipesList based on recipe document ID
+//   }
 }
