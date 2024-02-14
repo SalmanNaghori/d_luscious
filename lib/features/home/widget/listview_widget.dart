@@ -1,4 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
@@ -47,7 +49,8 @@ class ListViewWidget extends StatelessWidget {
 
   final List<String> recipeName = [];
   final String selectedRecipeName = "";
-  ValueNotifier<String> selectedFoodIndex = ValueNotifier<String>("");
+  final ValueNotifier<int> selectedFoodIndex = ValueNotifier<int>(-1);
+  final List<String> selected = [];
 
   @override
   Widget build(BuildContext context) {
@@ -89,22 +92,36 @@ class ListViewWidget extends StatelessWidget {
                 RecipeType recipeType = recipeTypes[index];
 
                 return ValueListenableBuilder(
-                    valueListenable: selectedFoodIndex,
-                    builder: (context, index, _) {
-                      return SingleCircleWidget(
-                        index: index,
-                        listOfFood: recipeName,
-                        fontSize: 18,
-                        radius: 35,
-                        recipeType: recipeType,
-                        selectedFood: (value) {
-                          selectedFoodIndex.value = value;
-                          MyApp.logger.e(value);
-                          MyApp.logger.e(recipeName);
-                          check(value);
-                        },
-                      );
-                    });
+                  valueListenable: selectedFoodIndex,
+                  builder: (context, recipeIndex, _) {
+                    return index == recipeIndex
+                        ? SingleCircleWidget(
+                            index: recipeIndex,
+                            listOfFood: recipeName,
+                            fontSize: 18,
+                            radius: 35,
+                            recipeType: recipeType,
+                            selectedFood: (value) {
+                              MyApp.logger.e(value);
+                              // MyApp.logger.e(recipeName);
+
+                              check(value);
+                            },
+                          )
+                        : SingleCircleWidget(
+                            listOfFood: recipeName,
+                            fontSize: 18,
+                            radius: 35,
+                            recipeType: recipeType,
+                            selectedFood: (value) {
+                              MyApp.logger.e(value);
+                              // MyApp.logger.e(recipeName);
+
+                              check(value);
+                            },
+                          );
+                  },
+                );
               },
             );
           }
@@ -114,13 +131,18 @@ class ListViewWidget extends StatelessWidget {
   }
 
   check(String selectedRecipeName) {
-    for (int i = 0; i < recipeName.length; i++) {
-      if (recipeName[i] == selectedRecipeName) {
-        // MyApp.logger.f("is selected$i");
-        // MyApp.logger.f("is selected${recipeName[i]}");
-        selectedFood!(i);
-      } else {
-        MyApp.logger.f(recipeName[i]);
+    {
+      for (int i = 0; i < recipeName.length; i++) {
+        if (recipeName[i] == selectedRecipeName) {
+          // MyApp.logger.f("is selected$i");
+          // MyApp.logger.f("is selected${recipeName[i]}");
+          selectedFoodIndex.value = i;
+          selectedFood!(i);
+          selected.add(selectedRecipeName);
+          MyApp.logger.e("selectedRecipeName${recipeName[i]}");
+        } else {
+          MyApp.logger.f("else condition${recipeName[i]}");
+        }
       }
     }
   }

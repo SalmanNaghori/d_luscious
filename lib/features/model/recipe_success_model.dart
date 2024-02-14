@@ -15,7 +15,7 @@ class RecipeSuccessModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     if (recipes != null) {
       data['recipes'] = recipes!.map((v) => v.toJson()).toList();
     }
@@ -43,12 +43,12 @@ class Recipes {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
-    data['image'] = this.image;
-    data['instructions'] = this.instructions;
-    data['name'] = this.name;
-    data['ingredients'] = this.ingredients;
-    data['id'] = this.id;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['image'] = image;
+    data['instructions'] = instructions;
+    data['name'] = name;
+    data['ingredients'] = ingredients;
+    data['id'] = id;
     return data;
   }
 }

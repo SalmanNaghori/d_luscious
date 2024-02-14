@@ -59,7 +59,7 @@ class RecipeType {
   });
 
   factory RecipeType.fromFirestore(dynamic json) {
-    if (json == null || !(json is Map<String, dynamic>)) {
+    if (json == null || json is! Map<String, dynamic>) {
       MyApp.logger.w('RecipeType.fromFirestore called with invalid json');
       return RecipeType(
         typeName: '',

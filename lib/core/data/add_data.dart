@@ -15,6 +15,7 @@ class RecipeService {
     EasyLoading.show();
     try {
       int recipeTypeIndex = 1;
+      int recipeIndex = 1;
 
       for (RecipeType recipeType in Const.recipeTypes) {
         // Generate a custom document ID for RecipeType
@@ -29,17 +30,16 @@ class RecipeService {
 
         await recipeTypeDocRef.set({
           'typeName': recipeType.typeName,
+          'recipeImage': recipeType.recipeImage,
         });
 
         // Add Recipes subcollection within RecipeType document
         CollectionReference recipesCollection =
             recipeTypeDocRef.collection('recipes');
 
-        int recipeIndex = 1;
-
         for (Recipe recipe in recipeType.recipes ?? []) {
           // Generate a custom document ID for Recipe
-          String recipeId = 'custom_id_$recipeIndex';
+          String recipeId = 'recipe_id_$recipeIndex';
 
           // Increment recipeIndex for the next iteration
           recipeIndex++;

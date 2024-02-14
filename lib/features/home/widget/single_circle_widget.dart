@@ -1,5 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:d_luscious/features/d_luscious.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -15,8 +17,8 @@ class SingleCircleWidget extends StatefulWidget {
   final RecipeType recipeType;
   final Function? selectedFood;
   final List<String> listOfFood;
-  final String index;
-  SingleCircleWidget({
+  final int? index;
+  const SingleCircleWidget({
     Key? key,
     this.radius,
     this.fontSize = 20.0,
@@ -25,7 +27,7 @@ class SingleCircleWidget extends StatefulWidget {
     required this.recipeType,
     this.selectedFood,
     required this.listOfFood,
-    required this.index,
+    this.index,
   }) : super(key: key);
 
   @override
@@ -43,7 +45,10 @@ class _SingleCircleWidgetState extends State<SingleCircleWidget> {
   bool isSelectedFun() {
     if (isSelected.isNotEmpty) {
       for (int i = 0; i < widget.listOfFood.length; i++) {
-        if (isSelected == widget.listOfFood[i]) {
+        if (i == widget.index) {
+          MyApp.logger.d("==selected=$isSelected===");
+          MyApp.logger.d("===widget.listOfFood[i]===${widget.listOfFood[i]}");
+
           return true;
         }
       }
@@ -58,19 +63,22 @@ class _SingleCircleWidgetState extends State<SingleCircleWidget> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          InkWell(
-            onTap: () {
-              widget.selectedFood!(widget.recipeType.typeName);
-              isSelected = widget.recipeType.typeName ?? "";
-              print("is selected $isSelected");
-              print("is widget index == ${widget.index}");
-            },
-            child: ClipOval(
-              child: ColorFiltered(
-                colorFilter: ColorFilter.mode(
-                  isSelectedFun() ? Colors.transparent : ConstColor.greyColor,
-                  BlendMode.color,
-                ),
+          ClipOval(
+            child: ColorFiltered(
+              colorFilter: ColorFilter.mode(
+                isSelectedFun() == true
+                    ? Colors.transparent
+                    : ConstColor.greyColor,
+                BlendMode.color,
+              ),
+              child: GestureDetector(
+                onTap: () {
+                  widget.selectedFood!(widget.recipeType.typeName);
+                  isSelected = widget.recipeType.typeName ?? "";
+                  if (kDebugMode) {
+                    print("is selected $isSelected");
+                  }
+                },
                 child: CachedNetworkImage(
                   fit: BoxFit.fill,
                   filterQuality: FilterQuality.none,
@@ -78,6 +86,7 @@ class _SingleCircleWidgetState extends State<SingleCircleWidget> {
                     return CircleAvatar(
                       radius: widget.radius ?? 50,
                       backgroundImage: provider,
+                      backgroundColor: Colors.red,
                     );
                   },
                   imageUrl: widget.recipeType.recipeImage ?? "",
@@ -104,7 +113,7 @@ class _SingleCircleWidgetState extends State<SingleCircleWidget> {
             style: TextStyle(
               fontSize: widget.fontSize,
               fontFamily: "chewy",
-              color: isSelected == widget.recipeType.typeName
+              color: isSelectedFun() == true
                   ? ConstColor.primaryColor
                   : ConstColor.greyColor,
             ),

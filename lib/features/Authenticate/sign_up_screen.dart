@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:d_luscious/core/constant/app_string.dart';
+import 'package:d_luscious/core/extension/extension.dart';
 import 'package:d_luscious/core/navigator/navigator.dart';
 import 'package:d_luscious/core/storage/shared_pref_utils.dart';
 import 'package:d_luscious/core/widgets/appbard.dart';
@@ -210,7 +211,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       } on FirebaseAuthException catch (error) {
         switch (error.code) {
           case "invalid-email":
-            errorMessage = "Your email address appears to be malformed.";
+            errorMessage =
+                "Invalid email address format, please check and re-enter.";
             break;
           case "wrong-password":
             errorMessage = "Your password is wrong.";
@@ -303,19 +305,26 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   }
 
   //Todo: Validiation
-  validationCheck() {
-    if (firstNameEditingController.text.trim().isEmpty ||
-        secondNameEditingController.text.trim().isEmpty ||
-        emailEditingController.text.trim().isEmpty ||
-        passwordEditingController.text.trim().isEmpty ||
-        passwordEditingController.text !=
-            confirmPasswordEditingController.text ||
-        imagePath.isEmpty) {
-      log("Validation failed");
-      EasyLoading.dismiss();
-      // Handle validation failure here, such as showing a message to the user
+  void validationCheck() {
+    if (imagePath.isEmpty) {
+      Fluttertoast.showToast(msg: "Select an image");
+    } else if (firstNameEditingController.text.trim().isEmpty) {
+      Fluttertoast.showToast(msg: "Enter your first name");
+    } else if (secondNameEditingController.text.trim().isEmpty) {
+      Fluttertoast.showToast(msg: "Enter your last name");
+    } else if (emailEditingController.text.trim().isEmpty) {
+      Fluttertoast.showToast(msg: "Enter your email address");
+    } else if (emailEditingController.text.trim().isValidEmail()) {
+      log(emailEditingController.text);
+      Fluttertoast.showToast(msg: "Enter a valid email address");
+    } else if (passwordEditingController.text.trim().isEmpty) {
+      Fluttertoast.showToast(msg: "Enter your password");
+    } else if (confirmPasswordEditingController.text.trim().isEmpty) {
+      Fluttertoast.showToast(msg: "Confirm your password");
+    } else if (passwordEditingController.text !=
+        confirmPasswordEditingController.text) {
+      Fluttertoast.showToast(msg: "Passwords don't match");
     } else {
-      // Only call signUp here if validation is successful
       signUp(emailEditingController.text, passwordEditingController.text);
     }
   }

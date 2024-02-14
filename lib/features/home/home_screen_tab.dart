@@ -14,6 +14,7 @@ import 'package:d_luscious/features/d_luscious.dart';
 import 'package:d_luscious/features/home/widget/commun_list_shimmer_widget.dart';
 import 'package:d_luscious/features/home/widget/grid_view.dart';
 import 'package:d_luscious/features/home/widget/listview_widget.dart';
+import 'package:d_luscious/features/home/widget/selected_food_widget.dart';
 import 'package:d_luscious/features/model/recipe_model.dart';
 import 'package:d_luscious/features/model/selected_food.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -34,11 +35,11 @@ class HomeScreenTab extends StatefulWidget {
 }
 
 class _HomeScreenTabState extends State<HomeScreenTab> {
-  late final PageController pageController;
+  // late final PageController pageController;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final db = FirebaseFirestore.instance;
   final ScrollController _scrollController = ScrollController();
-  int pageNo = 0;
+  final ValueNotifier<int> pageNo = ValueNotifier<int>(-1);
   Timer? carouselTimer;
   bool showBottomAppBar = true;
   List<RecipeType> recipeTypesList = [];
@@ -52,43 +53,6 @@ class _HomeScreenTabState extends State<HomeScreenTab> {
 
   //TODO: DOCID
   List<String> docId = [];
-
-  @override
-  void initState() {
-    pageController = PageController(initialPage: 0, viewportFraction: 0.85);
-    carouselTimer = _getTimer();
-    _scrollController.addListener(() {
-      if (_scrollController.position.userScrollDirection ==
-          ScrollDirection.reverse) {
-        _toggleBottomAppBarVisibility(false);
-      } else {
-        _toggleBottomAppBarVisibility(true);
-      }
-    });
-    super.initState();
-  }
-
-  Timer _getTimer() {
-    return Timer.periodic(const Duration(seconds: 3), (timer) {
-      if (pageNo == 4) {
-        pageNo = 0;
-      }
-      if (pageController.hasClients) {
-        pageController.animateToPage(
-          pageNo,
-          duration: const Duration(seconds: 2),
-          curve: Curves.easeInOutCirc,
-        );
-      }
-      pageNo++;
-    });
-  }
-
-  @override
-  void dispose() {
-    pageController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -132,64 +96,9 @@ class _HomeScreenTabState extends State<HomeScreenTab> {
                 ),
               ),
             ),
-            SizedBox(
-              height: 200,
-              child: PageView.builder(
-                controller: pageController,
-                onPageChanged: (index) {
-                  pageNo = index;
-                },
-                itemBuilder: (_, index) {
-                  return AnimatedBuilder(
-                    animation: pageController,
-                    builder: (ctx, child) {
-                      return child!;
-                    },
-                    child: GestureDetector(
-                      onTap: () {
-                        _gotoSelectedFoodDetailsScreen(
-                            context, Const.selectedFood[index]);
-                      },
-                      onPanDown: (_) {
-                        carouselTimer?.cancel();
-                        carouselTimer = null;
-                      },
-                      onPanCancel: () {
-                        carouselTimer = _getTimer();
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: 20),
-                        child: CachedImage(
-                          image: Const.selectedFood[index].imageUrl,
-                          height: 200,
-                          width: 200,
-                          redius: 10,
-                        ),
-                      ),
-                    ),
-                  );
-                },
-                itemCount: 5,
-              ),
-            ),
-            const SizedBox(height: 12.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(
-                5,
-                (index) => GestureDetector(
-                  child: Container(
-                    margin: const EdgeInsets.all(2.0),
-                    child: Icon(
-                      Icons.circle,
-                      size: 12.0,
-                      color: pageNo == index
-                          ? Colors.indigoAccent
-                          : Colors.grey.shade300,
-                    ),
-                  ),
-                ),
-              ),
+            SelectedFoodWidget(
+              controller: _scrollController,
+              pageNo: pageNo,
             ),
             const SizedBox(height: 20),
             FutureBuilder(
@@ -224,8 +133,8 @@ class _HomeScreenTabState extends State<HomeScreenTab> {
                             builder: (context, selectedIndex, _) {
                               gridViewKey.currentState
                                   ?.refresh(docId[selectedIndex]);
-                              print(
-                                  "Selected index inside builder: $selectedIndex");
+                              // print(
+                              //     "Selected index inside builder: $selectedIndex");
                               return GridViewWidget(
                                 key: gridViewKey,
                                 selectedId: docId[selectedIndex],
@@ -322,11 +231,11 @@ class _HomeScreenTabState extends State<HomeScreenTab> {
     }
   }
 
-  void _toggleBottomAppBarVisibility(bool isVisible) {
-    setState(() {
-      showBottomAppBar = isVisible;
-    });
-  }
+  // void _toggleBottomAppBarVisibility(bool isVisible) {
+  //   setState(() {
+  //     showBottomAppBar = isVisible;
+  //   });
+  // }
 
   void _gotoSelectedFoodDetailsScreen(
       BuildContext context, SelectedFood model) {
@@ -367,51 +276,4 @@ class _HomeScreenTabState extends State<HomeScreenTab> {
     log("Fetching document IDs ended at: $endTime");
     log("Total time taken: ${endTime.difference(startTime)}");
   }
-
-//   bool _documentIdAlreadyFetched(String id) {
-//     return recipesList.contains(id);
-//   }
-
-//   Future<void> getAllDataFromCollection(String id) async {
-//     log("Fetching data for id: $id");
-
-//     try {
-//       var docSnapshot = await db.collection("recipeTypes").doc(id).get();
-
-//       if (docSnapshot.exists) {
-//         var recipeTypeData = docSnapshot.data();
-//         RecipeType recipeType = RecipeType.fromFirestore(recipeTypeData);
-
-//         var value = await db
-//             .collection("recipeTypes")
-//             .doc(id)
-//             .collection("recipes")
-//             .get();
-
-//         // List to store recipes data
-//         List<Recipe> recipesList = [];
-
-//         for (var recipeSnapShot in value.docs) {
-//           recipesList.add(Recipe.fromFirestore(recipeSnapShot.data()));
-//         }
-
-//         // Adding recipeType to your existing list
-//         recipeTypesList.add(recipeType);
-
-//         // Adding recipesList to your existing list
-//         allRecipesList.addAll(recipesList);
-//         allRecipesList.sort((a, b) => (a.id ?? "").compareTo(b.id ?? ""));
-
-// // Sort recipeTypesList alphabetically based on typeName
-//       } else {
-//         log("Document does not exist");
-//       }
-//     } catch (error) {
-//       log("Error fetching data: $error");
-//     }
-
-//     // Sort recipeTypesList alphabetically based on typeName
-//     // recipeTypesList.sort((a, b) => a.typeName!.compareTo(b.typeName!));
-// // Sort allRecipesList based on recipe document ID
-//   }
 }

@@ -160,6 +160,8 @@ class Const {
   static List<RecipeType> recipeTypes = [
     RecipeType(
       typeName: "Breakfast",
+      recipeImage:
+          "https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg?auto=compress&cs=tinysrgb&w=800",
       recipes: [
         Recipe(
           id: "1",
@@ -241,6 +243,8 @@ class Const {
     ),
     RecipeType(
       typeName: "Lunch",
+      recipeImage:
+          "https://images.pexels.com/photos/2347311/pexels-photo-2347311.jpeg?auto=compress&cs=tinysrgb&w=800",
       recipes: [
         Recipe(
           id: "4",
@@ -323,6 +327,8 @@ class Const {
     ),
     RecipeType(
       typeName: "Dinner",
+      recipeImage:
+          "https://images.pexels.com/photos/2338407/pexels-photo-2338407.jpeg?auto=compress&cs=tinysrgb&w=800",
       recipes: [
         Recipe(
           id: "7",
@@ -409,6 +415,8 @@ class Const {
     ),
     RecipeType(
       typeName: "Dessert",
+      recipeImage:
+          "https://images.pexels.com/photos/4109998/pexels-photo-4109998.jpeg?auto=compress&cs=tinysrgb&w=800",
       recipes: [
         Recipe(
           id: "10",
