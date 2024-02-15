@@ -3,7 +3,6 @@ import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:d_luscious/core/constant/colors_const.dart';
-import 'package:d_luscious/core/data/add_data.dart';
 import 'package:d_luscious/core/storage/shared_pref_utils.dart';
 import 'package:d_luscious/core/widgets/appbard.dart';
 import 'package:d_luscious/core/widgets/profile_image.dart';

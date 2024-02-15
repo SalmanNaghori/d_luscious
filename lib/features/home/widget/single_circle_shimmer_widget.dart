@@ -11,7 +11,7 @@ class SingleCircleWidgetShimmer extends StatelessWidget {
   final double fontSize;
   final String typeName;
 
-  SingleCircleWidgetShimmer({
+  const SingleCircleWidgetShimmer({
     Key? key,
     this.radius,
     this.fontSize = 20,
@@ -41,7 +41,7 @@ class SingleCircleWidgetShimmer extends StatelessWidget {
               ),
               errorWidget: (context, url, error) => CircleAvatar(
                 radius: radius,
-                backgroundImage: AssetImage(ImageAsset.icAppLogo),
+                backgroundImage: const AssetImage(ImageAsset.icAppLogo),
               ),
             ),
           ),

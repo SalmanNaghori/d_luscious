@@ -99,14 +99,13 @@ class RecipeItemWidget extends StatelessWidget {
                             },
                             child: Text(
                               recipeData.name ?? "",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium!
-                                  .merge(
-                                    const TextStyle(
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
+                              overflow: TextOverflow.ellipsis,
+                              style:
+                                  Theme.of(context).textTheme.titleSmall!.merge(
+                                        const TextStyle(
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ),
                             ),
                           ),
                         ),
@@ -117,7 +116,7 @@ class RecipeItemWidget extends StatelessWidget {
                                 FavoriteManager.favoriteRecipeIds.value);
 
                             // Log the id before manipulating the favorites
-                            print("Clicked onTap for id: ${recipeData.id}");
+                            log("Clicked onTap for id: ${recipeData.id}");
 
                             if (updatedFavorites.contains(recipeData.id)) {
                               updatedFavorites.remove(recipeData.id);

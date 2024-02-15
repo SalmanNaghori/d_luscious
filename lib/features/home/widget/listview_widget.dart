@@ -1,14 +1,10 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:shimmer/shimmer.dart';
-
 import 'package:d_luscious/features/d_luscious.dart';
 import 'package:d_luscious/features/home/widget/single_circle_shimmer_widget.dart';
 import 'package:d_luscious/features/home/widget/single_circle_widget.dart';
 import 'package:d_luscious/features/model/recipe_model.dart';
+import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 
 class ListViewWidget extends StatelessWidget {
   final List<String> id;
@@ -33,7 +29,7 @@ class ListViewWidget extends StatelessWidget {
       RecipeType recipeType = RecipeType.fromFirestore(doc.data());
 
       if (recipeName.contains(recipeType.typeName)) {
-        print(recipeType.typeName);
+        MyApp.logger.d(recipeType.typeName);
       } else {
         recipeName.add(recipeType.typeName ?? "");
       }
@@ -69,7 +65,7 @@ class ListViewWidget extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 itemCount: 5, // Adjust the number of shimmer items
                 itemBuilder: (context, index) {
-                  return SingleCircleWidgetShimmer(
+                  return const SingleCircleWidgetShimmer(
                     typeName: "",
                     radius: 35,
                     fontSize: 18,

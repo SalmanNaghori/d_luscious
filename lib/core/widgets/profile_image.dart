@@ -41,9 +41,9 @@ class _ProfileImageState extends State<ProfileImage> {
                   var permissionStatus = await Permission.camera.status;
                   if (permissionStatus.isGranted) {
                     picImage(ImageSource.camera);
-                    Navigator.pop(context);
+                    navigatePop();
                   } else {
-                    Navigator.pop(context); // Close the dialog
+                    navigatePop(); // Close the dialog
                   }
                 },
                 child: const ListTile(
@@ -58,9 +58,9 @@ class _ProfileImageState extends State<ProfileImage> {
                   var permissionStatus = await Permission.storage.status;
                   if (permissionStatus.isGranted) {
                     picImage(ImageSource.gallery);
-                    Navigator.pop(context);
+                    navigatePop();
                   } else {
-                    Navigator.pop(context); // Close the dialog
+                    navigatePop(); // Close the dialog
                   }
                 },
                 child: const ListTile(
@@ -105,7 +105,7 @@ class _ProfileImageState extends State<ProfileImage> {
               child: Shimmer.fromColors(
                 baseColor: ConstColor.whiteColor,
                 highlightColor: ConstColor.greyColor,
-                child: CircleAvatar(
+                child: const CircleAvatar(
                   radius: 80,
                 ),
               ),
@@ -161,5 +161,9 @@ class _ProfileImageState extends State<ProfileImage> {
     } catch (ex) {
       log("Error: $ex");
     }
+  }
+
+  navigatePop() async {
+    Navigator.pop(context);
   }
 }

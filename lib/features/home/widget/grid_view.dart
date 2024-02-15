@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 
 class GridViewWidget extends StatefulWidget {
   final String selectedId;
-  GridViewWidget({super.key, required this.selectedId});
+  const GridViewWidget({super.key, required this.selectedId});
 
   @override
   State<GridViewWidget> createState() => GridViewWidgetState();

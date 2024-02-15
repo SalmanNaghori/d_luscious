@@ -284,7 +284,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       SharedPrefUtils.setUserName(firstNameEditingController.text.toString());
       await firebaseFirestore
           .collection("users")
-          .doc(user.uid)
+          .doc(user.email)
           .set(userModel.toMap());
 
       Fluttertoast.showToast(msg: "Account created successfully :)");

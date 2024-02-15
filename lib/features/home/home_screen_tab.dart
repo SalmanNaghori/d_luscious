@@ -4,22 +4,17 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:d_luscious/core/constant/app_image.dart';
 import 'package:d_luscious/core/constant/colors_const.dart';
-import 'package:d_luscious/core/constant/const.dart';
 import 'package:d_luscious/core/navigator/navigator.dart';
 import 'package:d_luscious/core/storage/shared_pref_utils.dart';
-import 'package:d_luscious/core/widgets/network_image.dart';
 import 'package:d_luscious/features/Authenticate/login_screen.dart';
-import 'package:d_luscious/features/Recipes/recipe_detail_screen.dart';
 import 'package:d_luscious/features/d_luscious.dart';
 import 'package:d_luscious/features/home/widget/commun_list_shimmer_widget.dart';
 import 'package:d_luscious/features/home/widget/grid_view.dart';
 import 'package:d_luscious/features/home/widget/listview_widget.dart';
 import 'package:d_luscious/features/home/widget/selected_food_widget.dart';
 import 'package:d_luscious/features/model/recipe_model.dart';
-import 'package:d_luscious/features/model/selected_food.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import '../data/menu_items.dart';
@@ -118,7 +113,7 @@ class _HomeScreenTabState extends State<HomeScreenTab> {
                     children: [
                       ListViewWidget(
                         selectedFood: (value) {
-                          MyApp.logger.d("out side ${value}");
+                          MyApp.logger.d("out side $value");
                           selectedFoodIndex.value = value;
 
                           // selectedFoodIndex.notifyListeners();
@@ -231,28 +226,6 @@ class _HomeScreenTabState extends State<HomeScreenTab> {
     }
   }
 
-  // void _toggleBottomAppBarVisibility(bool isVisible) {
-  //   setState(() {
-  //     showBottomAppBar = isVisible;
-  //   });
-  // }
-
-  void _gotoSelectedFoodDetailsScreen(
-      BuildContext context, SelectedFood model) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => RecipeDetailScreen(
-          title: model.title,
-          id: model.id,
-          imageUrl: model.imageUrl,
-          ingredients: model.ingredients,
-          instruction: model.instruction,
-        ),
-      ),
-    );
-  }
-
   Future getAllDocumentIds() async {
     DateTime startTime = DateTime.now();
     log("Fetching document IDs started at: $startTime");
@@ -263,10 +236,10 @@ class _HomeScreenTabState extends State<HomeScreenTab> {
     QuerySnapshot<Map<String, dynamic>> querySnapshot =
         await db.collection("recipeTypes").get();
 
-    querySnapshot.docs.forEach((document) {
+    for (var document in querySnapshot.docs) {
       // MyApp.logger.f("document.id========${document.id}");
       docId.add(document.id);
-    });
+    }
 
     DateTime fetchDataEndTime = DateTime.now();
     log("Fetching data ended at: $fetchDataEndTime");

@@ -4,6 +4,7 @@ import 'package:d_luscious/core/constant/const.dart';
 import 'package:d_luscious/core/widgets/network_image.dart';
 import 'package:d_luscious/features/Recipes/recipe_detail_screen.dart';
 import 'package:d_luscious/features/model/selected_food.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -37,7 +38,9 @@ class _SelectedFoodWidgetState extends State<SelectedFoodWidget> {
           ScrollDirection.reverse) {
         // _toggleBottomAppBarVisibility(false);
       } else {
-        print("_toggleBottomAppBarVisibility");
+        if (kDebugMode) {
+          print("_toggleBottomAppBarVisibility");
+        }
         // _toggleBottomAppBarVisibility(true);
       }
     });

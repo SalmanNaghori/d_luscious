@@ -19,7 +19,7 @@ class RecipeService {
 
       for (RecipeType recipeType in Const.recipeTypes) {
         // Generate a custom document ID for RecipeType
-        String recipeTypeId = 'custom_id_$recipeTypeIndex';
+        String recipeTypeId = 'cuisine_id_$recipeTypeIndex';
 
         // Increment recipeTypeIndex for the next iteration
         recipeTypeIndex++;
@@ -54,7 +54,7 @@ class RecipeService {
           });
 
           // Introduce a delay to ensure unique timestamps for custom IDs
-          await Future.delayed(Duration(milliseconds: 500));
+          await Future.delayed(const Duration(milliseconds: 500));
         }
       }
       MyApp.logger.d('Data stored successfully');

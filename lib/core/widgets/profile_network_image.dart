@@ -2,10 +2,10 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:d_luscious/core/storage/permission/take_camara_photos.dart';
 import 'package:d_luscious/core/widgets/network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 class ProfileNetworkImage extends StatefulWidget {
   final String? profilePictureUrl;
@@ -35,13 +35,11 @@ class _ProfileNetworkImageState extends State<ProfileNetworkImage> {
             children: [
               InkWell(
                 onTap: () async {
-                  await Permission.camera.request();
-                  var permissionStatus = await Permission.camera.status;
-                  if (permissionStatus.isGranted) {
+                  if (await requestStoragePermission()) {
                     picImage(ImageSource.camera);
-                    Navigator.pop(context);
+                    navigatePop();
                   } else {
-                    Navigator.pop(context); // Close the dialog
+                    navigatePop(); // Close the dialog
                   }
                 },
                 child: const ListTile(
@@ -51,14 +49,11 @@ class _ProfileNetworkImageState extends State<ProfileNetworkImage> {
               ),
               InkWell(
                 onTap: () async {
-                  await Permission.storage.request();
-
-                  var permissionStatus = await Permission.storage.status;
-                  if (permissionStatus.isGranted) {
+                  if (await requestStoragePermission()) {
                     picImage(ImageSource.gallery);
-                    Navigator.pop(context);
+                    navigatePop();
                   } else {
-                    Navigator.pop(context); // Close the dialog
+                    navigatePop(); // Close the dialog
                   }
                 },
                 child: const ListTile(
@@ -99,7 +94,7 @@ class _ProfileNetworkImageState extends State<ProfileNetworkImage> {
                       onTap: () {
                         showDialogMethod(context);
                       },
-                      child: Icon(
+                      child: const Icon(
                         Icons.person,
                         size: 80,
                       ),
@@ -126,5 +121,9 @@ class _ProfileNetworkImageState extends State<ProfileNetworkImage> {
     } catch (ex) {
       log("Error: $ex");
     }
+  }
+
+  navigatePop() async {
+    Navigator.pop(context);
   }
 }
