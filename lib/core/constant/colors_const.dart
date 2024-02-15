@@ -8,4 +8,5 @@ class ConstColor {
   static const Color darkPinkColor = Color(0xffAB0E5D);
   static const Color blakColor = Color(0xFF000000);
   static const Color whiteColor = Color(0xFFFFFFFF);
+  static const Color greyColor = Color(0xFF808080);
 }

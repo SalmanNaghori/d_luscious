@@ -19,4 +19,22 @@ class SharedPrefUtils {
     var prefs = await _instance;
     return prefs.setBool("IsUserLoggedIn", value);
   }
+
+  static Future<bool> setUserName(String value) async {
+    var prefs = await _instance;
+    return prefs.setString("UserName", value);
+  }
+
+  static String getUserName() {
+    return _prefsInstance?.getString("UserName") ?? "";
+  }
+
+  static Future<bool> setUesrEmail(String value) async {
+    var prefs = await _instance;
+    return prefs.setString("UserEmail", value);
+  }
+
+  static String getUesrEmail() {
+    return _prefsInstance?.getString("UserEmail") ?? "";
+  }
 }

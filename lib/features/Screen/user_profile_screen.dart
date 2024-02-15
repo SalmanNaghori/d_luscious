@@ -1,9 +1,12 @@
 import 'dart:developer';
+import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:d_luscious/core/constant/colors_const.dart';
-import 'package:d_luscious/core/data/add_data.dart';
+import 'package:d_luscious/core/storage/shared_pref_utils.dart';
 import 'package:d_luscious/core/widgets/appbard.dart';
+import 'package:d_luscious/core/widgets/profile_image.dart';
+import 'package:d_luscious/features/d_luscious.dart';
 import 'package:d_luscious/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -20,25 +23,29 @@ class UserProfileScreenTab extends StatefulWidget {
 class _UserProfileScreenTabState extends State<UserProfileScreenTab> {
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
-  // Instantiate FirestoreService
-  final firestoreService = FirestoreService();
+  ValueNotifier<bool> isValuechanged = ValueNotifier<bool>(false);
+  Uint8List? image;
 
   @override
   void initState() {
     super.initState();
+    // RecipeService.storeRecipes();
+    fetchData();
+  }
 
-    FirebaseFirestore.instance
-        .collection("users")
-        .doc(user!.uid)
-        .get()
-        .then((value) {
-      log("Fetched Data: ${value.data()}");
-      loggedInUser = UserModel.fromMap(value.data());
+  Future<void> fetchData() async {
+    try {
+      var snapshot = await FirebaseFirestore.instance
+          .collection("users")
+          .doc(user!.uid)
+          .get();
+      log("Fetched Data: ${snapshot.data()}");
+      loggedInUser = UserModel.fromMap(snapshot.data());
+      isValuechanged.value = !isValuechanged.value;
       log("User Model: ${loggedInUser.toString()}");
-      setState(() {});
-    }).catchError((error) {
-      log("Error fetching user data: $error");
-    });
+    } on FirebaseException catch (error) {
+      MyApp.logger.e("Error fetching user data: $error");
+    }
   }
 
   @override
@@ -51,15 +58,18 @@ class _UserProfileScreenTabState extends State<UserProfileScreenTab> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const CircleAvatar(
-              radius: 50,
-              backgroundImage: NetworkImage(
-                'https://placekitten.com/200/200', // Replace with user's profile image URL
-              ),
-            ),
+            ValueListenableBuilder(
+                valueListenable: isValuechanged,
+                builder: (context, isImageAvailable, _) {
+                  return Center(
+                      child: ProfileImage(
+                    selectedFile: () {},
+                    profilePictureUrl: loggedInUser.image,
+                  ));
+                }),
             const SizedBox(height: 16),
             Text(
-              loggedInUser.firstName ?? "", // Replace with user's name
+              SharedPrefUtils.getUserName(), // Replace with user's name
               style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -67,22 +77,13 @@ class _UserProfileScreenTabState extends State<UserProfileScreenTab> {
             ),
             const SizedBox(height: 8),
             Text(
-              loggedInUser.email ?? "", // Replace with user's email
+              SharedPrefUtils.getUesrEmail(), // Replace with user's email
               style: const TextStyle(
                 fontSize: 16,
-                color: Colors.grey,
+                color: ConstColor.greyColor,
               ),
             ),
             const SizedBox(height: 16),
-            const Text(
-              'Bio: A passionate Flutter developer who loves creating awesome apps!',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 16,
-              ),
-            ),
-            const SizedBox(height: 16),
-            const UserDetailsList(),
           ],
         ),
       ),

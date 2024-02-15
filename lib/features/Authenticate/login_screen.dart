@@ -1,11 +1,13 @@
 import 'dart:developer';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:d_luscious/core/constant/app_image.dart';
 import 'package:d_luscious/core/constant/app_string.dart';
 import 'package:d_luscious/core/constant/colors_const.dart';
 import 'package:d_luscious/core/storage/shared_pref_utils.dart';
 import 'package:d_luscious/core/widgets/appbard.dart';
 import 'package:d_luscious/features/dash_board/dash_board.dart';
+import 'package:d_luscious/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
   // editing controller
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  UserModel loggedInUser = UserModel();
 
   // firebase
   final _auth = FirebaseAuth.instance;
@@ -223,6 +226,18 @@ class _LoginScreenState extends State<LoginScreen> {
       try {
         await _auth.signInWithEmailAndPassword(
             email: email, password: password);
+
+        User? user = _auth.currentUser;
+        var snapshot = await FirebaseFirestore.instance
+            .collection("users")
+            .doc(user!.uid)
+            .get();
+        log("Fetched Data: ${snapshot.data()}");
+        loggedInUser = UserModel.fromMap(snapshot.data());
+
+        SharedPrefUtils.setUesrEmail(loggedInUser.email ?? "");
+        SharedPrefUtils.setUserName(loggedInUser.firstName ?? "");
+
         SharedPrefUtils.setIsUserLoggedIn(true);
         navigation();
         log("User:$email=========LoggedIn Successfully====");

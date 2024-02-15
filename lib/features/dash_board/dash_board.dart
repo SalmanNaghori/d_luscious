@@ -1,17 +1,16 @@
 import 'package:d_luscious/core/constant/colors_const.dart';
 import 'package:d_luscious/features/dash_board/dash_board_cubit.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../core/constant/app_string.dart';
 import '../../core/widgets/appbard.dart';
 import '../Screen/category_screen_tab.dart';
-import '../favorite/favorite.dart';
-import '../home/home_screen_tab.dart';
 import '../Screen/search_screen_tab.dart';
 import '../Screen/user_profile_screen.dart';
+import '../favorite/favorite.dart';
+import '../home/home_screen_tab.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({Key? key}) : super(key: key);
@@ -24,6 +23,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   DashboardCubit cubit = DashboardCubit();
 
   static final List<Widget> _pageNavigation = <Widget>[
+    // const DemoScreen(),
     const HomeScreenTab(),
     const FavoriteScreenTab(),
     const SearchScreenTab(),

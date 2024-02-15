@@ -7,7 +7,7 @@ import '../../features/model/selected_food.dart';
 class Const {
   static List<SelectedFood> selectedFood = [
     SelectedFood(
-      id: 1,
+      id: "1",
       title: "Pancakes",
       imageUrl:
           "https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg?auto=compress&cs=tinysrgb&w=800",
@@ -34,7 +34,7 @@ class Const {
       ],
     ),
     SelectedFood(
-      id: 2,
+      id: "2",
       title: "Fruit Tart",
       imageUrl:
           "https://images.pexels.com/photos/2693447/pexels-photo-2693447.jpeg?auto=compress&cs=tinysrgb&w=800",
@@ -67,7 +67,7 @@ class Const {
       ],
     ),
     SelectedFood(
-      id: 3,
+      id: "3",
       title: "Sandwich",
       imageUrl:
           "https://images.pexels.com/photos/1647163/pexels-photo-1647163.jpeg?auto=compress&cs=tinysrgb&w=800",
@@ -91,7 +91,7 @@ class Const {
       ],
     ),
     SelectedFood(
-      id: 4,
+      id: "4",
       title: "Pizza",
       imageUrl:
           "https://images.pexels.com/photos/1166120/pexels-photo-1166120.jpeg?auto=compress&cs=tinysrgb&w=800",
@@ -120,7 +120,7 @@ class Const {
       ],
     ),
     SelectedFood(
-      id: 5,
+      id: "5",
       title: "Chocolate Cake",
       imageUrl:
           "https://images.pexels.com/photos/4109998/pexels-photo-4109998.jpeg?auto=compress&cs=tinysrgb&w=800",
@@ -160,11 +160,12 @@ class Const {
   static List<RecipeType> recipeTypes = [
     RecipeType(
       typeName: "Breakfast",
+      recipeImage:
+          "https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg?auto=compress&cs=tinysrgb&w=800",
       recipes: [
         Recipe(
-          id: 1,
+          id: "1",
           name: "Pancakes",
-          isLiked: false,
           image:
               "https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg?auto=compress&cs=tinysrgb&w=800",
           ingredients: [
@@ -190,9 +191,8 @@ class Const {
           ],
         ),
         Recipe(
-          id: 2,
+          id: "2",
           name: "Omelette",
-          isLiked: false,
           image:
               "https://images.pexels.com/photos/6294361/pexels-photo-6294361.jpeg?auto=compress&cs=tinysrgb&w=800",
           ingredients: [
@@ -218,9 +218,8 @@ class Const {
           ],
         ),
         Recipe(
-          id: 3,
+          id: "3",
           name: "Smoothie",
-          isLiked: false,
           image:
               "https://images.pexels.com/photos/775030/pexels-photo-775030.jpeg?auto=compress&cs=tinysrgb&w=800",
           ingredients: [
@@ -244,11 +243,12 @@ class Const {
     ),
     RecipeType(
       typeName: "Lunch",
+      recipeImage:
+          "https://images.pexels.com/photos/2347311/pexels-photo-2347311.jpeg?auto=compress&cs=tinysrgb&w=800",
       recipes: [
         Recipe(
-          id: 4,
+          id: "4",
           name: "Spaghetti",
-          isLiked: true,
           image:
               "https://images.pexels.com/photos/2347311/pexels-photo-2347311.jpeg?auto=compress&cs=tinysrgb&w=800",
           ingredients: [
@@ -273,9 +273,8 @@ class Const {
           ],
         ),
         Recipe(
-          id: 5,
+          id: "5",
           name: "Salad",
-          isLiked: false,
           image:
               "https://images.pexels.com/photos/2097090/pexels-photo-2097090.jpeg?auto=compress&cs=tinysrgb&w=800",
           ingredients: [
@@ -301,9 +300,8 @@ class Const {
           ],
         ),
         Recipe(
-          id: 6,
+          id: "6",
           name: "Sandwich",
-          isLiked: true,
           image:
               "https://images.pexels.com/photos/1647163/pexels-photo-1647163.jpeg?auto=compress&cs=tinysrgb&w=800",
           ingredients: [
@@ -329,11 +327,12 @@ class Const {
     ),
     RecipeType(
       typeName: "Dinner",
+      recipeImage:
+          "https://images.pexels.com/photos/2338407/pexels-photo-2338407.jpeg?auto=compress&cs=tinysrgb&w=800",
       recipes: [
         Recipe(
-          id: 7,
+          id: "7",
           name: "Grilled Chicken",
-          isLiked: false,
           image:
               "https://images.pexels.com/photos/2338407/pexels-photo-2338407.jpeg?auto=compress&cs=tinysrgb&w=800",
           ingredients: [
@@ -357,9 +356,8 @@ class Const {
           ],
         ),
         Recipe(
-          id: 8,
+          id: "8",
           name: "Stir-Fry",
-          isLiked: true,
           image:
               "https://images.pexels.com/photos/262897/pexels-photo-262897.jpeg?auto=compress&cs=tinysrgb&w=800",
           ingredients: [
@@ -385,9 +383,8 @@ class Const {
           ],
         ),
         Recipe(
-          id: 9,
+          id: "9",
           name: "Pizza",
-          isLiked: true,
           image:
               "https://images.pexels.com/photos/1166120/pexels-photo-1166120.jpeg?auto=compress&cs=tinysrgb&w=800",
           ingredients: [
@@ -418,11 +415,12 @@ class Const {
     ),
     RecipeType(
       typeName: "Dessert",
+      recipeImage:
+          "https://images.pexels.com/photos/4109998/pexels-photo-4109998.jpeg?auto=compress&cs=tinysrgb&w=800",
       recipes: [
         Recipe(
-          id: 10,
+          id: "10",
           name: "Chocolate Cake",
-          isLiked: true,
           image:
               "https://images.pexels.com/photos/4109998/pexels-photo-4109998.jpeg?auto=compress&cs=tinysrgb&w=800",
           ingredients: [
@@ -457,9 +455,8 @@ class Const {
           ],
         ),
         Recipe(
-          id: 11,
+          id: "11",
           name: "Ice Cream",
-          isLiked: true,
           image:
               "https://images.pexels.com/photos/1362534/pexels-photo-1362534.jpeg?auto=compress&cs=tinysrgb&w=800",
           ingredients: [
@@ -477,9 +474,8 @@ class Const {
           ],
         ),
         Recipe(
-          id: 12,
+          id: "12",
           name: "Fruit Tart",
-          isLiked: false,
           image:
               "https://images.pexels.com/photos/2693447/pexels-photo-2693447.jpeg?auto=compress&cs=tinysrgb&w=800",
           ingredients: [
@@ -512,13 +508,229 @@ class Const {
         ),
       ],
     ),
+    RecipeType(
+      typeName: "Appetizers",
+      recipeImage:
+          "https://images.pexels.com/photos/12958005/pexels-photo-12958005.jpeg?auto=compress&cs=tinysrgb&w=800",
+      recipes: [
+        Recipe(
+          id: "13",
+          name: "Guacamole",
+          image:
+              "https://images.pexels.com/photos/1640772/pexels-photo-1640772.jpeg?auto=compress&cs=tinysrgb&w=800",
+          ingredients: [
+            "3 ripe avocados",
+            "1 small onion, finely diced",
+            "1-2 tomatoes, diced",
+            "1/4 cup fresh cilantro, chopped",
+            "1-2 cloves garlic, minced",
+            "1 lime, juiced",
+            "Salt and pepper to taste",
+          ],
+          instructions: [
+            "Cut avocados in half, remove the seeds, and scoop the flesh into a bowl.",
+            "Mash the avocados with a fork or potato masher, leaving some chunks for texture.",
+            "Add diced onion, tomatoes, cilantro, minced garlic, and lime juice. Mix well.",
+            "Season with salt and pepper to taste. Adjust lime juice or seasoning as needed.",
+            "Serve the guacamole with tortilla chips or as a topping for your favorite dishes.",
+          ],
+        ),
+        Recipe(
+          id: "14",
+          name: "Bruschetta",
+          image:
+              "https://images.pexels.com/photos/4969892/pexels-photo-4969892.jpeg?auto=compress&cs=tinysrgb&w=800",
+          ingredients: [
+            "4-5 ripe tomatoes, diced",
+            "1/4 cup fresh basil, chopped",
+            "2 cloves garlic, minced",
+            "1 tablespoon balsamic vinegar",
+            "3 tablespoons extra virgin olive oil",
+            "Salt and pepper to taste",
+            "Baguette slices, toasted",
+          ],
+          instructions: [
+            "In a bowl, combine diced tomatoes, chopped basil, minced garlic, balsamic vinegar, and olive oil.",
+            "Season with salt and pepper to taste. Mix well.",
+            "Let the bruschetta mixture sit for at least 15 minutes to allow the flavors to meld.",
+            "Spoon the mixture onto toasted baguette slices and serve immediately.",
+          ],
+        ),
+        // Add more appetizer recipes as needed
+      ],
+    ),
+    RecipeType(
+      typeName: "Soups",
+      recipeImage:
+          "https://images.pexels.com/photos/1872903/pexels-photo-1872903.jpeg?auto=compress&cs=tinysrgb&w=800",
+      recipes: [
+        Recipe(
+          id: "15",
+          name: "Tomato Basil Soup",
+          image:
+              "https://images.pexels.com/photos/4062279/pexels-photo-4062279.jpeg?auto=compress&cs=tinysrgb&w=800",
+          ingredients: [
+            "2 tablespoons olive oil",
+            "1 onion, diced",
+            "2 cloves garlic, minced",
+            "28 oz (800g) canned crushed tomatoes",
+            "1 teaspoon dried basil",
+            "1/2 teaspoon dried oregano",
+            "4 cups vegetable broth",
+            "Salt and pepper to taste",
+            "1/2 cup heavy cream (optional)",
+            "Fresh basil leaves for garnish",
+          ],
+          instructions: [
+            "In a large pot, heat olive oil over medium heat. Add diced onion and sauté until translucent.",
+            "Add minced garlic and sauté for an additional 1-2 minutes until fragrant.",
+            "Pour in the canned crushed tomatoes, dried basil, and dried oregano. Stir to combine.",
+            "Add vegetable broth and season with salt and pepper. Bring the soup to a simmer.",
+            "Allow the soup to simmer for at least 15-20 minutes to allow the flavors to meld.",
+            "If desired, stir in heavy cream for a creamy texture.",
+            "Serve the tomato basil soup hot, garnished with fresh basil leaves.",
+          ],
+        ),
+        Recipe(
+          id: "16",
+          name: "Chicken Noodle Soup",
+          image:
+              "https://images.pexels.com/photos/2532442/pexels-photo-2532442.jpeg?auto=compress&cs=tinysrgb&w=800",
+          ingredients: [
+            "1 tablespoon olive oil",
+            "1 onion, chopped",
+            "2 carrots, sliced",
+            "2 celery stalks, sliced",
+            "2 cloves garlic, minced",
+            "6 cups chicken broth",
+            "1 bay leaf",
+            "1 teaspoon dried thyme",
+            "2 cups cooked chicken, shredded",
+            "1 cup egg noodles",
+            "Salt and pepper to taste",
+            "Fresh parsley for garnish",
+          ],
+          instructions: [
+            "In a large pot, heat olive oil over medium heat. Add chopped onion, sliced carrots, and sliced celery. Sauté until vegetables are softened.",
+            "Add minced garlic and sauté for an additional 1-2 minutes until fragrant.",
+            "Pour in chicken broth and add bay leaf and dried thyme. Bring the soup to a simmer.",
+            "Add shredded cooked chicken and egg noodles. Cook until noodles are tender.",
+            "Season the soup with salt and pepper to taste.",
+            "Remove the bay leaf and discard. Serve the chicken noodle soup hot, garnished with fresh parsley.",
+          ],
+        ),
+        // Add more soup recipes as needed
+      ],
+    ),
+    RecipeType(
+      typeName: "Sides",
+      recipeImage:
+          "https://images.pexels.com/photos/17965451/pexels-photo-17965451/free-photo-of-choice-at-food-court.jpeg?auto=compress&cs=tinysrgb&w=800",
+      recipes: [
+        Recipe(
+          id: "17",
+          name: "Garlic Parmesan Roasted Potatoes",
+          image:
+              "https://images.pexels.com/photos/8250190/pexels-photo-8250190.jpeg?auto=compress&cs=tinysrgb&w=800",
+          ingredients: [
+            "2 lbs (900g) baby potatoes, halved",
+            "3 tablespoons olive oil",
+            "4 cloves garlic, minced",
+            "1/4 cup grated Parmesan cheese",
+            "1 teaspoon dried rosemary",
+            "Salt and black pepper to taste",
+            "Chopped fresh parsley for garnish",
+          ],
+          instructions: [
+            "Preheat the oven to 400°F (200°C).",
+            "In a large bowl, toss halved baby potatoes with olive oil, minced garlic, Parmesan cheese, dried rosemary, salt, and black pepper.",
+            "Spread the potatoes on a baking sheet in a single layer.",
+            "Roast in the preheated oven for 25-30 minutes or until the potatoes are golden and crispy.",
+            "Remove from the oven, garnish with chopped fresh parsley, and serve hot.",
+          ],
+        ),
+        Recipe(
+          id: "18",
+          name: "Creamy Spinach Dip",
+          image:
+              "https://images.pexels.com/photos/6252725/pexels-photo-6252725.jpeg?auto=compress&cs=tinysrgb&w=800",
+          ingredients: [
+            "1 cup frozen chopped spinach, thawed and drained",
+            "1 cup cream cheese, softened",
+            "1/2 cup mayonnaise",
+            "1/2 cup sour cream",
+            "1 cup shredded mozzarella cheese",
+            "1/4 cup grated Parmesan cheese",
+            "1 teaspoon garlic powder",
+            "Salt and black pepper to taste",
+            "Bread or veggies for dipping",
+          ],
+          instructions: [
+            "In a bowl, combine thawed and drained chopped spinach, softened cream cheese, mayonnaise, sour cream, shredded mozzarella cheese, grated Parmesan cheese, garlic powder, salt, and black pepper.",
+            "Mix until all ingredients are well combined and smooth.",
+            "Transfer the mixture to a serving dish and refrigerate for at least 1 hour before serving.",
+            "Serve the creamy spinach dip with bread or veggies for dipping.",
+          ],
+        ),
+        // Add more side dish recipes as needed
+      ],
+    ),
+    RecipeType(
+      typeName: "Beverages",
+      recipeImage:
+          "https://images.pexels.com/photos/2531184/pexels-photo-2531184.jpeg?auto=compress&cs=tinysrgb&w=800",
+      recipes: [
+        Recipe(
+          id: "19",
+          name: "Mojito",
+          image:
+              "https://images.pexels.com/photos/4021887/pexels-photo-4021887.jpeg?auto=compress&cs=tinysrgb&w=800",
+          ingredients: [
+            "10 fresh mint leaves",
+            "1/2 lime, cut into wedges",
+            "2 tablespoons white sugar",
+            "1 cup ice cubes",
+            "1 1/2 oz (45ml) white rum",
+            "1/2 cup club soda",
+            "Lime slices and mint sprigs for garnish",
+          ],
+          instructions: [
+            "Place mint leaves and 1 lime wedge into a glass. Use a muddler to crush the mint and lime to release the mint's flavor.",
+            "Add 2 more lime wedges and the sugar, and muddle again to release the lime juice. Do not strain the mixture.",
+            "Fill the glass almost to the top with ice. Pour the rum over the ice, and fill the glass with club soda. Stir, taste, and add more sugar if desired.",
+            "Garnish with lime slices and mint sprigs. Serve immediately and enjoy your refreshing mojito!",
+          ],
+        ),
+        Recipe(
+          id: "20",
+          name: "Iced Coffee",
+          image:
+              "https://images.pexels.com/photos/1162455/pexels-photo-1162455.jpeg?auto=compress&cs=tinysrgb&w=800",
+          ingredients: [
+            "1 cup strong brewed coffee, cooled",
+            "1/2 cup milk of your choice",
+            "2 tablespoons sugar (adjust to taste)",
+            "Ice cubes",
+            "Whipped cream (optional)",
+            "Chocolate syrup (optional)",
+          ],
+          instructions: [
+            "In a glass, combine strong brewed coffee, milk, and sugar. Stir well until the sugar is dissolved.",
+            "Add ice cubes to the coffee mixture.",
+            "Optional: Top with whipped cream and drizzle with chocolate syrup for extra indulgence.",
+            "Stir and enjoy your homemade iced coffee!",
+          ],
+        ),
+        // Add more beverage recipes as needed
+      ],
+    ),
     // Add more RecipeType with recipes as needed
   ];
 }
 
 class FavoriteManager {
-  static final ValueNotifier<List<int>> favoriteRecipeIds =
-      ValueNotifier<List<int>>([]);
+  static final ValueNotifier<List<String>> favoriteRecipeIds =
+      ValueNotifier<List<String>>([]);
 }
 
 class FavoriteScreenData {

@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FirestoreExample extends StatefulWidget {
+  const FirestoreExample({super.key});
+
   @override
-  _FirestoreExampleState createState() => _FirestoreExampleState();
+  State<FirestoreExample> createState() => _FirestoreExampleState();
 }
 
 class _FirestoreExampleState extends State<FirestoreExample> {

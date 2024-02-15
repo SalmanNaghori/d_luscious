@@ -11,7 +11,7 @@ import 'widget/ingredient_widget.dart';
 class RecipeDetailScreen extends StatefulWidget {
   final String title;
   final String imageUrl;
-  final int id;
+  final String id;
   final List<String> ingredients;
   final List<String> instruction;
   const RecipeDetailScreen({
@@ -37,7 +37,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
           widget.title,
           style: const TextStyle(
             color: Colors.black,
-            fontSize: 20,
+            fontSize: 16,
             decorationStyle: TextDecorationStyle.double,
             decorationThickness: 1.5,
           ),
@@ -53,7 +53,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Hero(
-              tag: widget.id,
+              tag: widget.title,
               child: DetailScreenImageWidget(
                 image: widget.imageUrl,
                 width: double.infinity,
