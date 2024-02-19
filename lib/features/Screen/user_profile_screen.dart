@@ -31,13 +31,14 @@ class _UserProfileScreenTabState extends State<UserProfileScreenTab> {
     super.initState();
     // RecipeService.storeRecipes();
     fetchData();
+    log(SharedPrefUtils.getUserName());
   }
 
   Future<void> fetchData() async {
     try {
       var snapshot = await FirebaseFirestore.instance
           .collection("users")
-          .doc(user!.uid)
+          .doc(user!.email)
           .get();
       log("Fetched Data: ${snapshot.data()}");
       loggedInUser = UserModel.fromMap(snapshot.data());

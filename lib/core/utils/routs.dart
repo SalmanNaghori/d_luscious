@@ -1,5 +1,5 @@
 import 'package:d_luscious/features/Screen/category_screen_tab.dart';
-import 'package:d_luscious/features/favorite/favorite.dart';
+import 'package:d_luscious/features/favorite/favorite_screen_tab.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../features/dash_board/dash_board.dart';

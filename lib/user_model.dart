@@ -5,14 +5,15 @@ class UserModel {
   String? firstName;
   String? secondName;
   String? image;
+  String? deviceId;
 
-  UserModel({
-    this.uid,
-    this.email,
-    this.firstName,
-    this.secondName,
-    this.image,
-  });
+  UserModel(
+      {this.uid,
+      this.email,
+      this.firstName,
+      this.secondName,
+      this.image,
+      this.deviceId});
 
   // receiving data from server
   factory UserModel.fromMap(Map<String, dynamic>? map) {
@@ -22,6 +23,7 @@ class UserModel {
       firstName: map?['firstName'],
       secondName: map?['secondName'],
       image: map?['image'],
+      deviceId: map?['deviceId'],
     );
   }
 
@@ -33,11 +35,12 @@ class UserModel {
       'firstName': firstName,
       'secondName': secondName,
       'image': image,
+      'deviceId': deviceId, // Remove the space before deviceId
     };
   }
 
   @override
   String toString() {
-    return 'UserModel{uid: $uid, email: $email, firstName: $firstName, secondName: $secondName, image:$image }';
+    return 'UserModel{uid: $uid, email: $email, firstName: $firstName, secondName: $secondName, image:$image ,deviceId: $deviceId}';
   }
 }

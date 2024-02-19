@@ -733,6 +733,11 @@ class FavoriteManager {
       ValueNotifier<List<String>>([]);
 }
 
+class FavoriteDocId {
+  static final ValueNotifier<List<String>> favoriteDocId =
+      ValueNotifier<List<String>>([]);
+}
+
 class FavoriteScreenData {
   static final ValueNotifier<List<Favorite>> favorite =
       ValueNotifier<List<Favorite>>([]);

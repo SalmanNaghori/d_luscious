@@ -4,15 +4,15 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:d_luscious/core/constant/app_image.dart';
 import 'package:d_luscious/core/constant/colors_const.dart';
-import 'package:d_luscious/core/navigator/navigator.dart';
+import 'package:d_luscious/core/constant/const.dart';
 import 'package:d_luscious/core/storage/shared_pref_utils.dart';
+import 'package:d_luscious/core/utils/get_device_info.dart';
 import 'package:d_luscious/features/Authenticate/login_screen.dart';
 import 'package:d_luscious/features/d_luscious.dart';
-import 'package:d_luscious/features/home/widget/commun_list_shimmer_widget.dart';
-import 'package:d_luscious/features/home/widget/grid_view.dart';
-import 'package:d_luscious/features/home/widget/listview_widget.dart';
+import 'package:d_luscious/features/home/widget/circle_widget.dart';
 import 'package:d_luscious/features/home/widget/selected_food_widget.dart';
 import 'package:d_luscious/features/model/recipe_model.dart';
+import 'package:d_luscious/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -44,10 +44,15 @@ class _HomeScreenTabState extends State<HomeScreenTab> {
   List<Recipe> lunchRecipes = [];
   List<Recipe> dinnerRecipes = [];
   List<Recipe> dessertRecipes = [];
-  ValueNotifier<int> selectedFoodIndex = ValueNotifier<int>(0);
+  UserModel loggedInUser = UserModel();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
 
-  //TODO: DOCID
-  List<String> docId = [];
+    getAllDocumentIdsWithDelay();
+    authListener();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -96,51 +101,7 @@ class _HomeScreenTabState extends State<HomeScreenTab> {
               pageNo: pageNo,
             ),
             const SizedBox(height: 20),
-            FutureBuilder(
-              future: getAllDocumentIds(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const CommunListShimmerWidget(
-                    fontSize: 18,
-                    height: 120,
-                    radius: 35,
-                    title: "",
-                  );
-                } else if (snapshot.hasError) {
-                  return Center(child: Text('Error: ${snapshot.error}'));
-                } else {
-                  return Column(
-                    children: [
-                      ListViewWidget(
-                        selectedFood: (value) {
-                          MyApp.logger.d("out side $value");
-                          selectedFoodIndex.value = value;
-
-                          // selectedFoodIndex.notifyListeners();
-                        },
-                        selectedId: docId[0],
-                        id: docId,
-                      ),
-                      Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
-                          child: ValueListenableBuilder(
-                            valueListenable: selectedFoodIndex,
-                            builder: (context, selectedIndex, _) {
-                              gridViewKey.currentState
-                                  ?.refresh(docId[selectedIndex]);
-                              // print(
-                              //     "Selected index inside builder: $selectedIndex");
-                              return GridViewWidget(
-                                key: gridViewKey,
-                                selectedId: docId[selectedIndex],
-                              );
-                            },
-                          )),
-                    ],
-                  );
-                }
-              },
-            ),
+            CircleWidget(),
             const SizedBox(height: 20),
           ],
         ),
@@ -227,26 +188,91 @@ class _HomeScreenTabState extends State<HomeScreenTab> {
   }
 
   Future getAllDocumentIds() async {
-    DateTime startTime = DateTime.now();
-    log("Fetching document IDs started at: $startTime");
+    final user = _auth.currentUser;
 
-    DateTime fetchDataStartTime = DateTime.now();
-    log("Fetching data started at: $fetchDataStartTime");
+    print('listening just started......');
+    final collection = FirebaseFirestore.instance
+        .collection('users')
+        .doc(user?.email)
+        .collection('favorites');
 
-    QuerySnapshot<Map<String, dynamic>> querySnapshot =
-        await db.collection("recipeTypes").get();
+    final listener = collection.snapshots().listen((change) {
+      if (change.docChanges.isNotEmpty) {
+        log("Yes, it has data");
+        List<String> updatedFavorites = List<String>.from(
+            FavoriteDocId.favoriteDocId.value); // Convert to List<String>
 
-    for (var document in querySnapshot.docs) {
-      // MyApp.logger.f("document.id========${document.id}");
-      docId.add(document.id);
+        for (var change in change.docChanges) {
+          if (updatedFavorites.contains(change.doc.id)) {
+            // updatedFavorites.remove(change.doc.id);
+          } else {
+            updatedFavorites.add(change.doc.id);
+          }
+
+          log("Document ID: ${change.doc.id}");
+        }
+
+        FavoriteDocId.favoriteDocId.value = updatedFavorites;
+      } else {
+        log("ooooooo No data");
+      }
+    });
+
+    listener.onDone(() {
+      listener.cancel();
+    });
+  }
+
+  Future<void> getAllDocumentIdsWithDelay() async {
+    // await Future.delayed(Duration(seconds: 2)); // Adjust the duration as needed
+    await getAllDocumentIds();
+  }
+
+  Future<void> authListener() async {
+    try {
+      final user = FirebaseAuth.instance.currentUser;
+      final doc =
+          FirebaseFirestore.instance.collection("users").doc(user?.email);
+
+      await doc.get().then((snapshot) async {
+        if (snapshot.exists) {
+          loggedInUser = UserModel.fromMap(snapshot.data());
+          // MyApp.logger.d("Before UserModel.fromMap: ${snapshot.data()}");
+          loggedInUser = UserModel.fromMap(snapshot.data()!);
+          // MyApp.logger.f("After UserModel.fromMap: $loggedInUser");
+          log("Fetched data: ${snapshot.data()}");
+          log("loggedInUser.deviceId: ${loggedInUser.deviceId}");
+          // log("Fetched data: ${snapshot.data()}");
+          // log("loggedInUser.deviceId: ${loggedInUser.deviceId}");
+
+          // Check if the same id, if not the same, then logout and navigate to the login screen
+          final deviceId = await getDeviceId();
+          if (
+              // loggedInUser.deviceId != null &&
+              loggedInUser.deviceId != deviceId) {
+            await logout(true);
+          }
+        }
+      });
+    } catch (e) {
+      MyApp.logger.e("Error in authListener: $e");
+    }
+  }
+
+  Future<void> logout(bool isShowSnackbar) async {
+    await FirebaseAuth.instance.signOut();
+
+    if (isShowSnackbar) {
+      // ignore: use_build_context_synchronously
+      showSnackbar(context, 'Your account logged in another device', false);
     }
 
-    DateTime fetchDataEndTime = DateTime.now();
-    log("Fetching data ended at: $fetchDataEndTime");
-    log("Time taken to fetch data: ${fetchDataEndTime.difference(fetchDataStartTime)}");
-
-    DateTime endTime = DateTime.now();
-    log("Fetching document IDs ended at: $endTime");
-    log("Total time taken: ${endTime.difference(startTime)}");
+    // ignore: use_build_context_synchronously
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (_) => const LoginScreen(),
+      ),
+    );
   }
 }

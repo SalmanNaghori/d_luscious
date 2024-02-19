@@ -3,10 +3,10 @@ import 'dart:developer';
 import 'package:d_luscious/core/constant/app_string.dart';
 import 'package:d_luscious/core/constant/colors_const.dart';
 import 'package:d_luscious/core/navigator/navigator.dart';
-import 'package:d_luscious/core/storage/shared_pref_utils.dart';
 import 'package:d_luscious/features/Authenticate/login_screen.dart';
 import 'package:d_luscious/features/dash_board/dash_board.dart';
 import 'package:d_luscious/features/dash_board/dash_board_cubit.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -93,8 +93,8 @@ class _MyAppState extends State<MyApp> {
   }
 
   Widget getRootWidget() {
-    log(SharedPrefUtils.getIsUserLoggedIn().toString());
-    return SharedPrefUtils.getIsUserLoggedIn()
+    log("User logged in==${FirebaseAuth.instance.currentUser != null}");
+    return FirebaseAuth.instance.currentUser != null
         ? const DashboardScreen()
         : const LoginScreen();
   }

@@ -9,7 +9,7 @@ import '../../core/widgets/appbard.dart';
 import '../Screen/category_screen_tab.dart';
 import '../Screen/search_screen_tab.dart';
 import '../Screen/user_profile_screen.dart';
-import '../favorite/favorite.dart';
+import '../favorite/favorite_screen_tab.dart';
 import '../home/home_screen_tab.dart';
 
 class DashboardScreen extends StatefulWidget {

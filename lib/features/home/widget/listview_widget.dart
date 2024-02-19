@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:d_luscious/features/d_luscious.dart';
 import 'package:d_luscious/features/home/widget/single_circle_shimmer_widget.dart';
@@ -6,46 +7,27 @@ import 'package:d_luscious/features/model/recipe_model.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-class ListViewWidget extends StatelessWidget {
+class ListViewWidget extends StatefulWidget {
   final List<String> id;
-  final String selectedId;
+  final ValueNotifier<int> selectedFoodIndex;
   final Function? selectedFood;
 
   ListViewWidget({
     Key? key,
     required this.id,
-    required this.selectedId,
+    required this.selectedFoodIndex,
     this.selectedFood,
   }) : super(key: key);
-  Future<List<RecipeType>> fetchRecipeTypes() async {
-    recipeName.clear(); // Clear the list before populating it with new names
 
-    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-        .collection("recipeTypes")
-        .where(FieldPath.documentId, whereIn: id)
-        .get();
+  @override
+  State<ListViewWidget> createState() => _ListViewWidgetState();
+}
 
-    List<RecipeType> recipeTypes = querySnapshot.docs.map((doc) {
-      RecipeType recipeType = RecipeType.fromFirestore(doc.data());
-
-      if (recipeName.contains(recipeType.typeName)) {
-        MyApp.logger.d(recipeType.typeName);
-      } else {
-        recipeName.add(recipeType.typeName ?? "");
-      }
-
-      return recipeType;
-    }).toList();
-
-    // Sort the recipeTypes list based on a property, for example, typeName
-    // recipeTypes.sort((a, b) => a.typeName!.compareTo(b.typeName ?? ""));
-
-    return recipeTypes;
-  }
-
+class _ListViewWidgetState extends State<ListViewWidget> {
   final List<String> recipeName = [];
+
   final String selectedRecipeName = "";
-  final ValueNotifier<int> selectedFoodIndex = ValueNotifier<int>(-1);
+
   final List<String> selected = [];
 
   @override
@@ -86,9 +68,8 @@ class ListViewWidget extends StatelessWidget {
               itemCount: recipeTypes.length,
               itemBuilder: (context, index) {
                 RecipeType recipeType = recipeTypes[index];
-
                 return ValueListenableBuilder(
-                  valueListenable: selectedFoodIndex,
+                  valueListenable: widget.selectedFoodIndex,
                   builder: (context, recipeIndex, _) {
                     return index == recipeIndex
                         ? SingleCircleWidget(
@@ -132,14 +113,40 @@ class ListViewWidget extends StatelessWidget {
         if (recipeName[i] == selectedRecipeName) {
           // MyApp.logger.f("is selected$i");
           // MyApp.logger.f("is selected${recipeName[i]}");
-          selectedFoodIndex.value = i;
-          selectedFood!(i);
+          widget.selectedFoodIndex.value = i;
+          widget.selectedFood!(i);
           selected.add(selectedRecipeName);
-          MyApp.logger.e("selectedRecipeName${recipeName[i]}");
+          // MyApp.logger.e("selectedRecipeName${recipeName[i]}");
         } else {
-          MyApp.logger.f("else condition${recipeName[i]}");
+          // MyApp.logger.f("else condition${recipeName[i]}");
         }
       }
     }
+  }
+
+  Future<List<RecipeType>> fetchRecipeTypes() async {
+    recipeName.clear(); // Clear the list before populating it with new names
+
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection("recipeTypes")
+        .where(FieldPath.documentId, whereIn: widget.id)
+        .get();
+
+    List<RecipeType> recipeTypes = querySnapshot.docs.map((doc) {
+      RecipeType recipeType = RecipeType.fromFirestore(doc.data());
+
+      if (recipeName.contains(recipeType.typeName)) {
+        MyApp.logger.d(recipeType.typeName);
+      } else {
+        recipeName.add(recipeType.typeName ?? "");
+      }
+
+      return recipeType;
+    }).toList();
+
+    // Sort the recipeTypes list based on a property, for example, typeName
+    // recipeTypes.sort((a, b) => a.typeName!.compareTo(b.typeName ?? ""));
+
+    return recipeTypes;
   }
 }
