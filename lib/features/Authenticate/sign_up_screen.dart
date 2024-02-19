@@ -6,6 +6,7 @@ import 'package:d_luscious/core/constant/app_string.dart';
 import 'package:d_luscious/core/extension/extension.dart';
 import 'package:d_luscious/core/navigator/navigator.dart';
 import 'package:d_luscious/core/storage/shared_pref_utils.dart';
+import 'package:d_luscious/core/utils/get_device_info.dart';
 import 'package:d_luscious/core/widgets/appbard.dart';
 import 'package:d_luscious/core/widgets/custom_textfield.dart';
 import 'package:d_luscious/core/widgets/my_button.dart';
@@ -280,6 +281,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       userModel.firstName = firstNameEditingController.text;
       userModel.secondName = secondNameEditingController.text;
       userModel.image = imageUrl;
+      // userModel.deviceId = await getDeviceId();
+
       SharedPrefUtils.setUesrEmail(user.email.toString());
       SharedPrefUtils.setUserName(firstNameEditingController.text.toString());
       await firebaseFirestore

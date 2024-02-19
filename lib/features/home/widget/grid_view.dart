@@ -24,7 +24,8 @@ class GridViewWidgetState extends State<GridViewWidget> {
   late Future<List<Recipe>> futureRecipes;
 
   Future<List<Recipe>> getAllDocumentIds(String selectedId) async {
-    recipe.clear();
+    List<Recipe> newRecipeList = []; // Create a new list
+
     try {
       QuerySnapshot<Map<String, dynamic>> querySnapshot = await db
           .collection('recipeTypes')
@@ -33,11 +34,11 @@ class GridViewWidgetState extends State<GridViewWidget> {
           .get();
 
       for (var document in querySnapshot.docs) {
-        recipe.add(Recipe.fromFirestore(document.data()));
+        newRecipeList.add(Recipe.fromFirestore(document.data()));
         docId.add(document.id);
       }
 
-      return recipe;
+      return newRecipeList;
     } catch (e) {
       MyApp.logger.e("Error fetching data: $e");
       return []; // Return an empty list in case of an error
@@ -47,10 +48,14 @@ class GridViewWidgetState extends State<GridViewWidget> {
   @override
   void initState() {
     super.initState();
+    recipe.clear();
+
     futureRecipes = getAllDocumentIds(widget.selectedId);
   }
 
-  refresh(String index) {
+  refresh(String index) async {
+    // Clear the list and assign a new future
+    recipe.clear();
     futureRecipes = getAllDocumentIds(index);
   }
 
@@ -66,6 +71,7 @@ class GridViewWidgetState extends State<GridViewWidget> {
           }
 
           return RecipeItemWidget(
+            userId: widget.selectedId,
             recipeModel: snapshot.data ?? [],
           );
         } else {

@@ -37,9 +37,9 @@ class _ProfileNetworkImageState extends State<ProfileNetworkImage> {
                 onTap: () async {
                   if (await requestStoragePermission()) {
                     picImage(ImageSource.camera);
-                    navigatePop();
+                    navigatePop(context);
                   } else {
-                    navigatePop(); // Close the dialog
+                    navigatePop(context); // Close the dialog
                   }
                 },
                 child: const ListTile(
@@ -51,9 +51,11 @@ class _ProfileNetworkImageState extends State<ProfileNetworkImage> {
                 onTap: () async {
                   if (await requestStoragePermission()) {
                     picImage(ImageSource.gallery);
-                    navigatePop();
+                    log("yessss");
+                    navigatePop(context);
                   } else {
-                    navigatePop(); // Close the dialog
+                    log("nooo");
+                    navigatePop(context); // Close the dialog
                   }
                 },
                 child: const ListTile(
@@ -123,7 +125,7 @@ class _ProfileNetworkImageState extends State<ProfileNetworkImage> {
     }
   }
 
-  navigatePop() async {
+  navigatePop(BuildContext context) {
     Navigator.pop(context);
   }
 }

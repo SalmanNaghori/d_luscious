@@ -49,12 +49,14 @@ class _SelectedFoodWidgetState extends State<SelectedFoodWidget> {
 
   Timer _getTimer() {
     return Timer.periodic(const Duration(seconds: 3), (timer) {
-      int nextPage = (pageController.page!.toInt() + 1) % 5;
-      pageController.animateToPage(
-        nextPage,
-        duration: const Duration(seconds: 2),
-        curve: Curves.easeInOutCirc,
-      );
+      if (pageController.positions.isNotEmpty && pageController.page != null) {
+        int nextPage = (pageController.page!.toInt() + 1) % 5;
+        pageController.animateToPage(
+          nextPage,
+          duration: const Duration(seconds: 2),
+          curve: Curves.easeInOutCirc,
+        );
+      }
     });
   }
 

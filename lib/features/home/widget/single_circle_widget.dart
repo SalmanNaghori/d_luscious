@@ -1,13 +1,11 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:d_luscious/core/constant/app_image.dart';
+import 'package:d_luscious/core/constant/colors_const.dart';
 import 'package:d_luscious/features/d_luscious.dart';
+import 'package:d_luscious/features/model/recipe_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-
-import 'package:d_luscious/core/constant/app_image.dart';
-import 'package:d_luscious/core/constant/colors_const.dart';
-import 'package:d_luscious/features/model/recipe_model.dart';
 
 class SingleCircleWidget extends StatefulWidget {
   final double? radius;
@@ -40,6 +38,8 @@ class _SingleCircleWidgetState extends State<SingleCircleWidget> {
   @override
   void initState() {
     super.initState();
+
+    isSelectedFun();
   }
 
   bool isSelectedFun() {
@@ -48,10 +48,11 @@ class _SingleCircleWidgetState extends State<SingleCircleWidget> {
         if (i == widget.index) {
           MyApp.logger.d("==selected=$isSelected===");
           MyApp.logger.d("===widget.listOfFood[i]===${widget.listOfFood[i]}");
-
           return true;
         }
       }
+    } else if (0 == widget.index) {
+      return true;
     }
     return false; // Add a return statement for the case when isSelected is empty or no match is found.
   }
@@ -86,7 +87,6 @@ class _SingleCircleWidgetState extends State<SingleCircleWidget> {
                     return CircleAvatar(
                       radius: widget.radius ?? 50,
                       backgroundImage: provider,
-                      backgroundColor: Colors.red,
                     );
                   },
                   imageUrl: widget.recipeType.recipeImage ?? "",
